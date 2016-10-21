@@ -1,0 +1,264 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>asterism.pipeline_manager.analysis_tasks &#8212; asterism 1.0.a documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0.a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<br><img src="../../../_static/logo.png" style=width:80%; " />  <br>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+     <div class="documentwrapper">
+       <div class="bodywrapper">
+        <div class="body">
+         <div class="align-left figure align-left">
+
+
+        </div>
+           
+  <h1>Source code for asterism.pipeline_manager.analysis_tasks</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">.analysis_parameters</span> <span class="k">import</span> <span class="n">ParametersList</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">from</span> <span class="nn">.processing_tools</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;andrea tramacere&#39;</span>
+
+<div class="viewcode-block" id="AnalysisTask"><a class="viewcode-back" href="../../../api/asterism.pipeline_manager.analysis_tasks.html#asterism.pipeline_manager.analysis_tasks.AnalysisTask">[docs]</a><span class="k">class</span> <span class="nc">AnalysisTask</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class for single Task</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">func</span><span class="p">,</span><span class="n">parser</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">process</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+       
+       
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">=</span><span class="n">name</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="o">=</span><span class="n">func</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters_list</span><span class="o">=</span><span class="n">ParametersList</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="bp">self</span><span class="p">,</span><span class="n">parser</span><span class="o">=</span><span class="n">parser</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_build_par_dic</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parsing_done</span><span class="o">=</span><span class="k">False</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">=</span><span class="n">parser</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">conf_file_dict</span><span class="o">=</span><span class="k">None</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">=</span><span class="n">process</span>
+   
+   
+    <span class="k">def</span> <span class="nf">_build_par_dic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c">#print &quot;----------&gt; FUNC in _build_par_dic &lt;------------------&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_par_dic</span><span class="o">=</span><span class="p">{}</span>
+        <span class="n">varnames</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">getargs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">func_code</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">getargspec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+            <span class="n">d</span><span class="o">=</span><span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">d</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">varnames</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ID</span><span class="p">,</span><span class="n">vname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">varnames</span><span class="p">):</span>
+            <span class="c">#print&quot;var name&quot;,vname</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_par_dic</span><span class="p">[</span><span class="n">vname</span><span class="p">]</span><span class="o">=</span><span class="k">None</span>
+        <span class="k">if</span> <span class="n">d</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">varnames</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_par_dic</span><span class="p">[</span><span class="n">vname</span><span class="p">]</span><span class="o">=</span><span class="n">default</span><span class="p">[</span><span class="n">ID</span><span class="o">-</span><span class="n">d</span><span class="p">]</span>
+                <span class="c">#print &quot;keywordarg&quot;,varnames[ID],default[ID-d]</span>
+
+        <span class="c">#self._par_dic={key: None for (key) in varnames}</span>
+        <span class="c">#print &#39;v&#39;,varnames, self._par_dic</span>
+        <span class="c">#print &quot;----------------------------------------&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_build_conf_pars_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">conf_file_lines</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conf_file_dict</span><span class="o">=</span><span class="n">parse_process_section</span><span class="p">(</span><span class="n">conf_file_lines</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        
+        
+    <span class="k">def</span> <span class="nf">_set_par_dic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        
+        <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters_list</span><span class="o">.</span><span class="n">pars</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_par_dic</span><span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">=</span><span class="n">par</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="k">for</span> <span class="n">mex_group</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters_list</span><span class="o">.</span><span class="n">mex_groups</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="n">mex_group</span><span class="o">.</span><span class="n">pars</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_par_dic</span><span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">=</span><span class="n">par</span><span class="o">.</span><span class="n">value</span>
+                <span class="c">#print par.name</span>
+                
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_par_dic</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+
+
+    
+<div class="viewcode-block" id="AnalysisTask.set_par"><a class="viewcode-back" href="../../../api/asterism.pipeline_manager.analysis_tasks.html#asterism.pipeline_manager.analysis_tasks.AnalysisTask.set_par">[docs]</a>    <span class="k">def</span> <span class="nf">set_par</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters_list</span><span class="o">.</span><span class="n">set_par</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+           
+      
+<div class="viewcode-block" id="AnalysisTask.get_par_value"><a class="viewcode-back" href="../../../api/asterism.pipeline_manager.analysis_tasks.html#asterism.pipeline_manager.analysis_tasks.AnalysisTask.get_par_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_par_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c">#print &quot;-&gt;&quot;, name</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters_list</span><span class="o">.</span><span class="n">get_par_value</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+           
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="n">e</span></div>
+        
+<div class="viewcode-block" id="AnalysisTask.add_par"><a class="viewcode-back" href="../../../api/asterism.pipeline_manager.analysis_tasks.html#asterism.pipeline_manager.analysis_tasks.AnalysisTask.add_par">[docs]</a>    <span class="k">def</span> <span class="nf">add_par</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters_list</span><span class="o">.</span><span class="n">add_par</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="n">e</span></div>
+        
+<div class="viewcode-block" id="AnalysisTask.list_parameters"><a class="viewcode-back" href="../../../api/asterism.pipeline_manager.analysis_tasks.html#asterism.pipeline_manager.analysis_tasks.AnalysisTask.list_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">list_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters_list</span><span class="o">.</span><span class="n">list_paremters</span><span class="p">()</span></div>
+         
+    
+  
+    
+<div class="viewcode-block" id="AnalysisTask.set_pars_from_parser"><a class="viewcode-back" href="../../../api/asterism.pipeline_manager.analysis_tasks.html#asterism.pipeline_manager.analysis_tasks.AnalysisTask.set_pars_from_parser">[docs]</a>    <span class="k">def</span> <span class="nf">set_pars_from_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">args</span><span class="p">,</span><span class="n">argv</span><span class="p">,</span><span class="n">args_dict</span><span class="p">,</span><span class="n">conf_file_lines</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">conf_file_lines</span><span class="o">!=</span><span class="k">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_build_conf_pars_dict</span><span class="p">(</span><span class="n">conf_file_lines</span><span class="p">)</span>
+            <span class="c">#print&quot;--&gt;&quot;, self.name</span>
+            <span class="c">#print&quot;--&gt;&quot;, self.conf_file_dict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters_list</span><span class="o">.</span><span class="n">set_pars_from_parser</span><span class="p">(</span><span class="n">args</span><span class="p">,</span><span class="n">argv</span><span class="p">,</span><span class="n">args_dict</span><span class="p">,</span><span class="n">conf_file_dict</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conf_file_dict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parsing_done</span><span class="o">=</span><span class="k">True</span></div>
+
+        
+<div class="viewcode-block" id="AnalysisTask.run"><a class="viewcode-back" href="../../../api/asterism.pipeline_manager.analysis_tasks.html#asterism.pipeline_manager.analysis_tasks.AnalysisTask.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">extra_message</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_message</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">!=</span><span class="k">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parsing_done</span><span class="o">==</span><span class="k">False</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="s">&quot;set_par_from_parser&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_pars_from_parser</span><span class="p">()</span>
+
+        
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_par_dic</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        
+
+
+
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_par_dic</span><span class="p">)</span>
+        
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">exception_mess</span><span class="o">=</span><span class="n">e</span>
+            <span class="n">exit_status</span><span class="o">=</span><span class="s">&#39;FAILED&#39;</span>
+            <span class="nb">print</span> <span class="s">&quot;Failed, task:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+            <span class="nb">print</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="k">None</span></div>
+
+
+
+<div class="viewcode-block" id="AnalysisTask.start_message"><a class="viewcode-back" href="../../../api/asterism.pipeline_manager.analysis_tasks.html#asterism.pipeline_manager.analysis_tasks.AnalysisTask.start_message">[docs]</a>    <span class="k">def</span> <span class="nf">start_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">extra_message</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s">&quot;|------------------------------&quot;</span>
+        <span class="nb">print</span> <span class="s">&quot;| Task:&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s">&quot;Start&quot;</span>
+        <span class="nb">print</span> <span class="s">&quot;|------------------------------&quot;</span>
+        <span class="k">if</span> <span class="n">extra_message</span> <span class="o">!=</span> <span class="k">None</span><span class="p">:</span>
+                <span class="nb">print</span> <span class="s">&quot;|&quot;</span><span class="p">,</span><span class="n">extra_message</span></div>
+
+
+<div class="viewcode-block" id="AnalysisTask.stop_message"><a class="viewcode-back" href="../../../api/asterism.pipeline_manager.analysis_tasks.html#asterism.pipeline_manager.analysis_tasks.AnalysisTask.stop_message">[docs]</a>    <span class="k">def</span> <span class="nf">stop_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,):</span>
+        <span class="nb">print</span> <span class="s">&quot;|-------------------------------------------------------&quot;</span>
+        <span class="nb">print</span> <span class="s">&quot;| Task:&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s">&quot;Done&quot;</span>
+        <span class="nb">print</span> <span class="s">&quot;|-------------------------------------------------------&quot;</span>
+        <span class="nb">print</span>
+        <span class="nb">print</span></div></div>
+
+    
+</pre></div>
+
+         </div>
+       </div>
+
+
+     </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, andrea tramacere.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

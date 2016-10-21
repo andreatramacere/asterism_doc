@@ -1,0 +1,20 @@
+
+package: asterism.core.machine_learning.models
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+
+
+Modules
+---------------
+.. toctree::
+   :maxdepth: 1
+
+
+   asterism.core.machine_learning.models.classification 
+   asterism.core.machine_learning.models.visualization 

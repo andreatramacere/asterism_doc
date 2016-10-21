@@ -1,0 +1,19 @@
+
+package: asterism.core.clustering.connectivity_based
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+
+
+Modules
+---------------
+.. toctree::
+   :maxdepth: 1
+
+
+   asterism.core.clustering.connectivity_based.connected_components 

@@ -1,0 +1,231 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>asterism.analysis_pipelines.source_detection &#8212; asterism 1.0.a documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0.a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<br><img src="../../../_static/logo.png" style=width:80%; " />  <br>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+     <div class="documentwrapper">
+       <div class="bodywrapper">
+        <div class="body">
+         <div class="align-left figure align-left">
+
+
+        </div>
+           
+  <h1>Source code for asterism.analysis_pipelines.source_detection</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module: source_detection</span>
+<span class="sd">========================</span>
+
+
+
+<span class="sd">Overview</span>
+<span class="sd">--------</span>
+
+<span class="sd">This modules provides the implementation of the :class:`.SrcDetectionPipeline` class</span>
+<span class="sd">used to create the pipeline for the source detection.</span>
+<span class="sd">The process in the pipeline are orchestrated by the :func:`.do_src_detection_pipeline_func`</span>
+
+<span class="sd">Classes relations</span>
+<span class="sd">---------------------------------------</span>
+<span class="sd">.. figure::</span>
+<span class="sd">   :align:   center</span>
+
+
+<span class="sd">Classes and Inheritance Structure</span>
+<span class="sd">----------------------------------------------</span>
+<span class="sd">.. inheritance-diagram:: asterism.analysis_pipelines.source_detection.SrcDetectionPipeline</span>
+
+
+
+
+<span class="sd">Summary</span>
+<span class="sd">---------</span>
+<span class="sd">.. autosummary::</span>
+<span class="sd">   do_src_detection_pipeline_func</span>
+<span class="sd">   SrcDetectionPipeline</span>
+
+
+<span class="sd">Module API</span>
+<span class="sd">-----------</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span>
+
+<span class="kn">from</span> <span class="nn">..pipeline_manager.analysis_pipeline</span> <span class="k">import</span> <span class="n">AnalysisPipeline</span>
+<span class="kn">from</span> <span class="nn">..analysis_processes.source_detection</span> <span class="k">import</span>   <span class="n">DoSrcDetectionProcess</span>
+<span class="kn">from</span> <span class="nn">..core.image_manager.image</span> <span class="k">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">..plotting.plot_tools</span> <span class="k">import</span>  <span class="n">analysis_plot</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;andrea tramacere&#39;</span>
+
+
+
+<div class="viewcode-block" id="do_src_detection_pipeline_func"><a class="viewcode-back" href="../../../api/asterism.analysis_pipelines.source_detection.html#asterism.analysis_pipelines.source_detection.do_src_detection_pipeline_func">[docs]</a><span class="k">def</span> <span class="nf">do_src_detection_pipeline_func</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span><span class="n">image</span><span class="p">,</span><span class="n">image_id</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">input_seg_map</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    -----------</span>
+
+<span class="sd">    pipeline : :class:`SrcDetectionPipeline`</span>
+<span class="sd">        instance of the base :class:`.AnalysisPipeline` class</span>
+
+<span class="sd">    image : :class:`Image`</span>
+<span class="sd">        instance of the class used as input for different processes</span>
+
+<span class="sd">    image_id :  int</span>
+<span class="sd">        id of the image</span>
+
+<span class="sd">    **kwargs:</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    src_detection_analysis_products : :class:`asterism.pipeline_manager.analysis_products.AnalysisProcessProducts`</span>
+<span class="sd">        class instance storing the analysis products for this pipeline</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">Image</span><span class="p">)</span><span class="o">==</span><span class="k">True</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&#39;image is not instance of Image class&#39;</span><span class="p">)</span>
+
+
+    <span class="n">src_detection_analysis_products</span><span class="o">=</span><span class="n">pipeline</span><span class="o">.</span><span class="n">do_src_detection</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">image_id</span><span class="o">=</span><span class="n">image_id</span><span class="p">,</span><span class="n">input_seg_map</span><span class="o">=</span><span class="n">input_seg_map</span><span class="p">)</span>
+
+    <span class="k">return</span>  <span class="n">src_detection_analysis_products</span></div>
+
+
+
+<div class="viewcode-block" id="SrcDetectionPipeline"><a class="viewcode-back" href="../../../api/asterism.analysis_pipelines.source_detection.html#asterism.analysis_pipelines.source_detection.SrcDetectionPipeline">[docs]</a><span class="k">class</span> <span class="nc">SrcDetectionPipeline</span><span class="p">(</span><span class="n">AnalysisPipeline</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Derived class  orchestrating the processes in the Pipeline</span>
+
+<span class="sd">        - do_src_detection                 :class:`asterism.analysis_processes.source_detection.DoSrcDetectionProcess`</span>
+
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name : str</span>
+<span class="sd">        the name for the Process</span>
+
+<span class="sd">    func : :func:</span>
+<span class="sd">        The function that handles tha processes</span>
+
+<span class="sd">    image_id : int</span>
+<span class="sd">        id of the image</span>
+
+<span class="sd">    plot_func : :func:</span>
+<span class="sd">        plotting function for this process</span>
+
+
+<span class="sd">    parser :</span>
+
+<span class="sd">    argv :</span>
+
+<span class="sd">    conf_file:</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;scr_detection_script&#39;</span><span class="p">,</span><span class="n">func</span><span class="o">=</span><span class="n">do_src_detection_pipeline_func</span><span class="p">,</span><span class="n">plot_func</span><span class="o">=</span><span class="n">analysis_plot</span><span class="p">,</span><span class="n">parser</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">argv</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">conf_file</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SrcDetectionPipeline</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">func</span><span class="p">,</span><span class="n">plot_func</span><span class="o">=</span><span class="n">analysis_plot</span><span class="p">,</span><span class="n">parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span><span class="n">argv</span><span class="o">=</span><span class="n">argv</span><span class="p">,</span><span class="n">conf_file</span><span class="o">=</span><span class="n">conf_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_analysis_process</span><span class="p">(</span><span class="n">DoSrcDetectionProcess</span><span class="p">,</span><span class="s">&#39;do_src_detection&#39;</span> <span class="p">)</span></div>
+
+
+
+
+
+
+</pre></div>
+
+         </div>
+       </div>
+
+
+     </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, andrea tramacere.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

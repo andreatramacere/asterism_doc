@@ -1,0 +1,223 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Module: learning_curves &#8212; asterism 1.0.a documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../index.html" />
+    <link rel="up" title="package: asterism.core.machine_learning.old.model_evaluation" href="asterism.core.machine_learning.old.model_evaluation.html" />
+    <link rel="next" title="Module: classification" href="asterism.core.machine_learning.old.classification.html" />
+    <link rel="prev" title="package: asterism.core.machine_learning.old.model_evaluation" href="asterism.core.machine_learning.old.model_evaluation.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<br><img src="../_static/logo.png" style=width:80%; " />  <br>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="asterism.core.machine_learning.old.classification.html" title="Module: classification"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="asterism.core.machine_learning.old.model_evaluation.html" title="package: asterism.core.machine_learning.old.model_evaluation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="asterism.html" >package: asterism</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="asterism.core.html" >package: asterism.core</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="asterism.core.machine_learning.html" >package: asterism.core.machine_learning</a> &#187;</li>
+          <li class="nav-item nav-item-4"><a href="asterism.core.machine_learning.old.html" >package: asterism.core.machine_learning.old</a> &#187;</li>
+          <li class="nav-item nav-item-5"><a href="asterism.core.machine_learning.old.model_evaluation.html" accesskey="U">package: asterism.core.machine_learning.old.model_evaluation</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="asterism.core.machine_learning.old.model_evaluation.html"
+                        title="previous chapter">package: asterism.core.machine_learning.old.model_evaluation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="asterism.core.machine_learning.old.classification.html"
+                        title="next chapter">Module: classification</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/asterism.core.machine_learning.old.model_evaluation.learning_curves.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+     <div class="documentwrapper">
+       <div class="bodywrapper">
+        <div class="body">
+         <div class="align-left figure align-left">
+
+
+        </div>
+           
+  <div class="section" id="module-learning-curves">
+<h1>Module: learning_curves<a class="headerlink" href="#module-learning-curves" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-asterism.core.machine_learning.old.model_evaluation.learning_curves"></span><dl class="function">
+<dt id="asterism.core.machine_learning.old.model_evaluation.learning_curves.do_learning_curve">
+<code class="descname">do_learning_curve</code><span class="sig-paren">(</span><em>model</em>, <em>features_set</em>, <em>sub_sample_sizes_ratios_array</em>, <em>scoring=None</em>, <em>cv_n_folds=3</em>, <em>sampling_array=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/model_evaluation/learning_curves.html#do_learning_curve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.model_evaluation.learning_curves.do_learning_curve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produces a learning curve using a cross-fold validation, and train/test scoring.
+If train_sizes_ratios_array=np.array([0.1,0.5,0.8]) a sub features sets are extracted according
+to sub_sizes_cv=train_sizes_ratios_array*features_set.features_N_rows and cv is performed on each
+sub features_set with sizes sub_sizes_cv
+A train/test score is also extracted for a train/test extracted with train_sizes_ratios_array</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">model:</p>
+<p>features_set:</p>
+<p>sub_sample_sizes_ratios_array: array-like, shape (n_ticks,), dtype float or int.</p>
+<blockquote>
+<div>Relative (for float) or absolute (for int) numbers of training examples that will be used to generate the learning curve</div></blockquote>
+<dl class="docutils">
+<dt>scoring</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string, callable or None, optional, default: None</span><dd>A string (see model evaluation documentation in skleran) or
+a scorer callable object / function with signature
+<code class="docutils literal"><span class="pre">scorer(estimator,</span> <span class="pre">X,</span> <span class="pre">y)</span></code>.</dd>
+</dl>
+<p>cv_n_folds: int, default 3</p>
+<p class="last">sampling_array: array-like, optional, a stratified KFold is performed stratifying on sampling_array</p>
+</dd>
+<dt>Returns:</dt>
+<dd><p class="first">sub_sizes: array, shape = (n_unique_ticks,), dtype int
+Numbers of training examples that has been used to generate the learning curve.</p>
+<p>Note that the number of ticks might be less than n_ticks because duplicate entries will be removed.</p>
+<p>cv_train_scores: array, shape (n_ticks, n_cv_folds) Scores on training sets</p>
+<p>cv_test_scores: array, shape (n_ticks, n_cv_folds) Scores on training sets</p>
+<p>train_score:</p>
+<p class="last">test_score:</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.model_evaluation.learning_curves.do_validation_curve">
+<code class="descname">do_validation_curve</code><span class="sig-paren">(</span><em>model</em>, <em>features_set</em>, <em>param_name</em>, <em>param_values_array</em>, <em>scoring</em>, <em>cv_n_folds=3</em>, <em>sampling_array=None</em>, <em>train_test_split_ratio=0.5</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/model_evaluation/learning_curves.html#do_validation_curve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.model_evaluation.learning_curves.do_validation_curve" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>model</strong></p>
+<p><strong>features_set</strong></p>
+<p><strong>param_name</strong></p>
+<p><strong>param_values_array</strong></p>
+<p><strong>scoring</strong></p>
+<p><strong>cv_n_folds</strong></p>
+<p><strong>sampling_array</strong></p>
+<p class="last"><strong>train_test_split_ratio</strong></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.model_evaluation.learning_curves.plot_learning_curve">
+<code class="descname">plot_learning_curve</code><span class="sig-paren">(</span><em>cv_train_scores</em>, <em>cv_test_scores</em>, <em>cv_train_sizes</em>, <em>full_size</em>, <em>train_sizes=None</em>, <em>train_score=None</em>, <em>test_score=None</em>, <em>plot=False</em>, <em>scorer_name='score'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/model_evaluation/learning_curves.html#plot_learning_curve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.model_evaluation.learning_curves.plot_learning_curve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the learning_curves</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">cv_train_scores: cross validation train scores</p>
+<p>cv_test_scores:  cross validation test scores</p>
+<p>sub_sizes: array-like, shape (n_ticks,) Numbers of training examples that has been used to generate the learning curve.</p>
+<p>full_size: Num of rows in the full features set, i.e. number of the full featues set training examples</p>
+<p>train_score: optional, the array of train set scores</p>
+<p>test_score: optional, the array of test set scores</p>
+<p class="last">plot: boolean, optional</p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.model_evaluation.learning_curves.plot_validation_curve">
+<code class="descname">plot_validation_curve</code><span class="sig-paren">(</span><em>cv_train_scores</em>, <em>cv_test_scores</em>, <em>score_test_array</em>, <em>param_values_array</em>, <em>par_name</em>, <em>scorer_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/model_evaluation/learning_curves.html#plot_validation_curve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.model_evaluation.learning_curves.plot_validation_curve" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+         </div>
+       </div>
+
+
+     </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="asterism.core.machine_learning.old.classification.html" title="Module: classification"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="asterism.core.machine_learning.old.model_evaluation.html" title="package: asterism.core.machine_learning.old.model_evaluation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="asterism.html" >package: asterism</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="asterism.core.html" >package: asterism.core</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="asterism.core.machine_learning.html" >package: asterism.core.machine_learning</a> &#187;</li>
+          <li class="nav-item nav-item-4"><a href="asterism.core.machine_learning.old.html" >package: asterism.core.machine_learning.old</a> &#187;</li>
+          <li class="nav-item nav-item-5"><a href="asterism.core.machine_learning.old.model_evaluation.html" >package: asterism.core.machine_learning.old.model_evaluation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, andrea tramacere.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+
+package: asterism.core.image_manager
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+
+
+Modules
+---------------
+.. toctree::
+   :maxdepth: 1
+
+
+   asterism.core.image_manager.image 
+   asterism.core.image_manager.utils 

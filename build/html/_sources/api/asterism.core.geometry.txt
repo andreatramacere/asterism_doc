@@ -1,0 +1,20 @@
+
+package: asterism.core.geometry
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+
+
+Modules
+---------------
+.. toctree::
+   :maxdepth: 1
+
+
+   asterism.core.geometry.distance 
+   asterism.core.geometry.transformations_2d 

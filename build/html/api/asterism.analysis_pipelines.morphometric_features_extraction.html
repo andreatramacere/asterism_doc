@@ -1,0 +1,328 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Module: morphometric_features_extraction &#8212; asterism 1.0.a documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../index.html" />
+    <link rel="up" title="package: asterism.analysis_pipelines" href="asterism.analysis_pipelines.html" />
+    <link rel="prev" title="package: asterism.analysis_pipelines" href="asterism.analysis_pipelines.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<br><img src="../_static/logo.png" style=width:80%; " />  <br>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="asterism.analysis_pipelines.html" title="package: asterism.analysis_pipelines"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="asterism.html" >package: asterism</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="asterism.analysis_pipelines.html" accesskey="U">package: asterism.analysis_pipelines</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Module: morphometric_features_extraction</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#classes-and-inheritance-structure">Classes and Inheritance Structure</a></li>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+<li><a class="reference internal" href="#module-api">Module API</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="asterism.analysis_pipelines.html"
+                        title="previous chapter">package: asterism.analysis_pipelines</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/asterism.analysis_pipelines.morphometric_features_extraction.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+     <div class="documentwrapper">
+       <div class="bodywrapper">
+        <div class="body">
+         <div class="align-left figure align-left">
+
+
+        </div>
+           
+  <div class="section" id="module-morphometric-features-extraction">
+<h1>Module: morphometric_features_extraction<a class="headerlink" href="#module-morphometric-features-extraction" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-asterism.analysis_pipelines.morphometric_features_extraction"></span><div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This module provides the implementation of the <a class="reference internal" href="#asterism.analysis_pipelines.morphometric_features_extraction.MorphometricFeatureExtractionPipeline" title="asterism.analysis_pipelines.morphometric_features_extraction.MorphometricFeatureExtractionPipeline"><code class="xref py py-class docutils literal"><span class="pre">MorphometricFeatureExtractionPipeline</span></code></a> class,
+used to create the pipeline for the morphometric features extraction.
+The processes in the pipeline are orchestrated by the <a class="reference internal" href="#asterism.analysis_pipelines.morphometric_features_extraction.do_morphometric_feature_extraction_pipeline_func" title="asterism.analysis_pipelines.morphometric_features_extraction.do_morphometric_feature_extraction_pipeline_func"><code class="xref py py-func docutils literal"><span class="pre">do_morphometric_feature_extraction_pipeline_func()</span></code></a>, according to
+the algorithm  shown by the following flow chart:</p>
+<img src="../_images/graphviz-958cbe31fc6ba98abb26559e95ce5a5acb61a808.png" alt="digraph deblending {
+subgraph morphometrt_flow {
+
+&quot;Image&quot;-&gt;&quot;do_src_detection&quot; -&gt; &quot;cluster_list&quot;-&gt;&quot;do_morphometric_input_products&quot;-&gt;&quot;morph_input_prods&quot;-&gt;&quot;do_morphometric_features_extraction&quot;;
+&quot;Image&quot; [shape=parallelogram]
+&quot;do_src_detection&quot; [shape=polygon,sides=4]
+&quot;cluster_list&quot; [shape=parallelogram]
+&quot;do_morphometric_input_products&quot; [shape=polygon,sides=4]
+&quot;morph_input_prods&quot;  [shape=parallelogram]
+&quot;do_morphometric_features_extraction&quot; [shape=polygon,sides=4]
+}
+}" />
+</div>
+<div class="section" id="classes-and-inheritance-structure">
+<h2>Classes and Inheritance Structure<a class="headerlink" href="#classes-and-inheritance-structure" title="Permalink to this headline">¶</a></h2>
+<img src="../_images/inheritance-c5d708e8822943de57240129b303bbf463804c4e.png" alt="Inheritance diagram of asterism.analysis_pipelines.morphometric_features_extraction.MorphometricFeatureExtractionPipeline" usemap="#inheritance70a21e4a6f" class="inheritance"/>
+<map id="inheritance70a21e4a6f" name="inheritance70a21e4a6f">
+<area shape="rect" id="node1" href="#asterism.analysis_pipelines.morphometric_features_extraction.MorphometricFeatureExtractionPipeline" target="_top" title=":class:`.AnalysisPipeline` class for the &#160;Morphometric Feature Extraction Pipeline. The following processes are glued" alt="" coords="316,3,764,21"/>
+<area shape="rect" id="node2" href="asterism.pipeline_manager.analysis_pipeline.html#asterism.pipeline_manager.analysis_pipeline.AnalysisPipeline" target="_top" title="asterism.pipeline_manager.analysis_pipeline.AnalysisPipeline" alt="" coords="4,3,281,21"/>
+</map>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.analysis_pipelines.morphometric_features_extraction.do_morphometric_feature_extraction_pipeline_func" title="asterism.analysis_pipelines.morphometric_features_extraction.do_morphometric_feature_extraction_pipeline_func"><code class="xref py py-obj docutils literal"><span class="pre">do_morphometric_feature_extraction_pipeline_func</span></code></a>(...)</td>
+<td>Function implementing the Pipeline  algorithm  for the  morphometric features extraction.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.analysis_pipelines.morphometric_features_extraction.MorphometricFeatureExtractionPipeline" title="asterism.analysis_pipelines.morphometric_features_extraction.MorphometricFeatureExtractionPipeline"><code class="xref py py-obj docutils literal"><span class="pre">MorphometricFeatureExtractionPipeline</span></code></a>([...])</td>
+<td><a class="reference internal" href="asterism.pipeline_manager.analysis_pipeline.html#asterism.pipeline_manager.analysis_pipeline.AnalysisPipeline" title="asterism.pipeline_manager.analysis_pipeline.AnalysisPipeline"><code class="xref py py-class docutils literal"><span class="pre">AnalysisPipeline</span></code></a> class for the  Morphometric Feature Extraction Pipeline. The following processes are glued</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-api">
+<h2>Module API<a class="headerlink" href="#module-api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="asterism.analysis_pipelines.morphometric_features_extraction.MorphometricFeatureExtractionPipeline">
+<em class="property">class </em><code class="descname">MorphometricFeatureExtractionPipeline</code><span class="sig-paren">(</span><em>name='morph_features_script'</em>, <em>func=&lt;function do_morphometric_feature_extraction_pipeline_func&gt;</em>, <em>plot_func=&lt;function analysis_plot&gt;</em>, <em>parser=None</em>, <em>argv=None</em>, <em>conf_file=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/analysis_pipelines/morphometric_features_extraction.html#MorphometricFeatureExtractionPipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.analysis_pipelines.morphometric_features_extraction.MorphometricFeatureExtractionPipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="asterism.pipeline_manager.analysis_pipeline.html#asterism.pipeline_manager.analysis_pipeline.AnalysisPipeline" title="asterism.pipeline_manager.analysis_pipeline.AnalysisPipeline"><code class="xref py py-class docutils literal"><span class="pre">asterism.pipeline_manager.analysis_pipeline.AnalysisPipeline</span></code></a></p>
+<p><a class="reference internal" href="asterism.pipeline_manager.analysis_pipeline.html#asterism.pipeline_manager.analysis_pipeline.AnalysisPipeline" title="asterism.pipeline_manager.analysis_pipeline.AnalysisPipeline"><code class="xref py py-class docutils literal"><span class="pre">AnalysisPipeline</span></code></a> class for the  Morphometric Feature Extraction Pipeline. The following processes are glued
+by the pipeline:</p>
+<blockquote>
+<div><ul class="simple">
+<li>do_src_detection                 <a class="reference internal" href="asterism.analysis_processes.source_detection.html#asterism.analysis_processes.source_detection.DoSrcDetectionProcess" title="asterism.analysis_processes.source_detection.DoSrcDetectionProcess"><code class="xref py py-class docutils literal"><span class="pre">DoSrcDetectionProcess</span></code></a></li>
+<li>do_morphometric_input_products   <a class="reference internal" href="asterism.analysis_processes.morphometric_features_input_products.html#asterism.analysis_processes.morphometric_features_input_products.DoMorphometricInputProducts" title="asterism.analysis_processes.morphometric_features_input_products.DoMorphometricInputProducts"><code class="xref py py-class docutils literal"><span class="pre">DoMorphometricInputProducts</span></code></a></li>
+<li>do_morphometric_features_extraction <a class="reference internal" href="asterism.analysis_processes.morphometric_feature_extraction.html#asterism.analysis_processes.morphometric_feature_extraction.DoMorphometricFeaturesExtraction" title="asterism.analysis_processes.morphometric_feature_extraction.DoMorphometricFeaturesExtraction"><code class="xref py py-class docutils literal"><span class="pre">DoMorphometricFeaturesExtraction</span></code></a></li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>name</strong> : str</p>
+<blockquote>
+<div><p>the name for the Process</p>
+</div></blockquote>
+<p><strong>func</strong> : :func:</p>
+<blockquote>
+<div><p>The function that handles tha pipeline algorithm</p>
+</div></blockquote>
+<p><strong>image_id</strong> : int</p>
+<blockquote>
+<div><p>id of the image</p>
+</div></blockquote>
+<p><strong>plot_func</strong> : :func:</p>
+<blockquote>
+<div><p>plotting function for this process</p>
+</div></blockquote>
+<p><strong>parser :</strong></p>
+<p><strong>argv :</strong></p>
+<p class="last"><strong>conf_file:</strong></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_analysis_process</span></code>(process_class,&nbsp;name[,&nbsp;...])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">assign_out_files_values</span></code>(prods_collection[,&nbsp;...])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">build_out_files</span></code>(prods_collection)</td>
+<td>builds the <a class="reference internal" href="asterism.pipeline_manager.analysis_products.html#asterism.pipeline_manager.analysis_products.OutFilesCollection" title="asterism.pipeline_manager.analysis_products.OutFilesCollection"><code class="xref py py-class docutils literal"><span class="pre">OutFilesCollection</span></code></a> that stores the output data corresponding</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">check_all_processes_exit_status</span></code>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">dump_configuration_file</span></code>(file_name)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_process</span></code>(proc_name)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">list_parameters</span></code>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">run</span></code>(\*args,&nbsp;\*\*kwargs)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_images_list</span></code>(image_file)</td>
+<td>get images list</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_infiles_list</span></code>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_io_conf</span></code>([infile])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_pars_from_conf_file</span></code>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_pars_from_parser</span></code>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_plotting</span></code>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_job_exit_file</span></code>(exit_status,&nbsp;exception_mess)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">write_out_products</span></code>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_to_script_exit_file</span></code>(image_id)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="asterism.analysis_pipelines.morphometric_features_extraction.do_morphometric_feature_extraction_pipeline_func">
+<code class="descname">do_morphometric_feature_extraction_pipeline_func</code><span class="sig-paren">(</span><em>pipeline</em>, <em>image</em>, <em>image_id=None</em>, <em>input_seg_map=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/analysis_pipelines/morphometric_features_extraction.html#do_morphometric_feature_extraction_pipeline_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.analysis_pipelines.morphometric_features_extraction.do_morphometric_feature_extraction_pipeline_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function implementing the Pipeline  algorithm  for the  morphometric features extraction.</p>
+<blockquote>
+<div><ul class="simple">
+<li>do_src_detection  <a class="reference internal" href="asterism.analysis_processes.source_detection.html#asterism.analysis_processes.source_detection.DoSrcDetectionProcess" title="asterism.analysis_processes.source_detection.DoSrcDetectionProcess"><code class="xref py py-class docutils literal"><span class="pre">DoSrcDetectionProcess</span></code></a> , extraction of clusters list from input Image</li>
+<li>selection of central cluster from clusters list</li>
+<li>do_morphometric_input_products   <a class="reference internal" href="asterism.analysis_processes.morphometric_features_input_products.html#asterism.analysis_processes.morphometric_features_input_products.DoMorphometricInputProducts" title="asterism.analysis_processes.morphometric_features_input_products.DoMorphometricInputProducts"><code class="xref py py-class docutils literal"><span class="pre">DoMorphometricInputProducts</span></code></a>, extraction of :class:&#8217;asterism.analysis_processes.morphometric_features_input_products.MorphometryInputData&#8217;</li>
+<li>do_morphometric_features_extraction <a class="reference internal" href="asterism.analysis_processes.morphometric_feature_extraction.html#asterism.analysis_processes.morphometric_feature_extraction.DoMorphometricFeaturesExtraction" title="asterism.analysis_processes.morphometric_feature_extraction.DoMorphometricFeaturesExtraction"><code class="xref py py-class docutils literal"><span class="pre">DoMorphometricFeaturesExtraction</span></code></a></li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>pipeline</strong> : <a class="reference internal" href="#asterism.analysis_pipelines.morphometric_features_extraction.MorphometricFeatureExtractionPipeline" title="asterism.analysis_pipelines.morphometric_features_extraction.MorphometricFeatureExtractionPipeline"><code class="xref py py-class docutils literal"><span class="pre">MorphometricFeatureExtractionPipeline</span></code></a></p>
+<blockquote>
+<div><p>instance of the base <a class="reference internal" href="asterism.pipeline_manager.analysis_pipeline.html#asterism.pipeline_manager.analysis_pipeline.AnalysisPipeline" title="asterism.pipeline_manager.analysis_pipeline.AnalysisPipeline"><code class="xref py py-class docutils literal"><span class="pre">AnalysisPipeline</span></code></a> class</p>
+</div></blockquote>
+<p><strong>image</strong> : <a class="reference internal" href="asterism.core.image_manager.image.html#asterism.core.image_manager.image.Image" title="asterism.core.image_manager.image.Image"><code class="xref py py-class docutils literal"><span class="pre">Image</span></code></a></p>
+<blockquote>
+<div><p>instance of the class used as input for different processes</p>
+</div></blockquote>
+<p><strong>image_id</strong> :  int</p>
+<blockquote>
+<div><p>id of the image</p>
+</div></blockquote>
+<p><strong>**kwargs:</strong></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>morphometric_features_analysis_products</strong> : <code class="xref py py-class docutils literal"><span class="pre">asterism.pipeline_manager.analysis_products.AnalysisProcessProducts</span></code></p>
+<blockquote class="last">
+<div><p>class instance storing the analysis products for this pipeline</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+         </div>
+       </div>
+
+
+     </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="asterism.analysis_pipelines.html" title="package: asterism.analysis_pipelines"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="asterism.html" >package: asterism</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="asterism.analysis_pipelines.html" >package: asterism.analysis_pipelines</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, andrea tramacere.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

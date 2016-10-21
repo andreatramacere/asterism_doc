@@ -1,0 +1,226 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Module: dbscan_binned &#8212; asterism 1.0.a documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../index.html" />
+    <link rel="up" title="package: asterism.core.clustering.density_based" href="asterism.core.clustering.density_based.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<br><img src="../_static/logo.png" style=width:80%; " />  <br>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="asterism.html" >package: asterism</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="asterism.core.html" >package: asterism.core</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="asterism.core.clustering.html" >package: asterism.core.clustering</a> &#187;</li>
+          <li class="nav-item nav-item-4"><a href="asterism.core.clustering.density_based.html" accesskey="U">package: asterism.core.clustering.density_based</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Module: dbscan_binned</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#classes-and-inheritance-structure">Classes and Inheritance Structure</a></li>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+<li><a class="reference internal" href="#module-api">Module API</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/asterism.core.clustering.density_based.dbscan_binned.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+     <div class="documentwrapper">
+       <div class="bodywrapper">
+        <div class="body">
+         <div class="align-left figure align-left">
+
+
+        </div>
+           
+  <div class="section" id="module-dbscan-binned">
+<h1>Module: dbscan_binned<a class="headerlink" href="#module-dbscan-binned" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-asterism.core.clustering.density_based.dbscan_binned"></span><div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This modules provides the implementation of <cite>.DBSCANBinned</cite> class, to perform
+a DBSCAN clustering on a binned dataset, as is in the case of an image.</p>
+</div>
+<div class="section" id="classes-and-inheritance-structure">
+<h2>Classes and Inheritance Structure<a class="headerlink" href="#classes-and-inheritance-structure" title="Permalink to this headline">¶</a></h2>
+<img src="../_images/inheritance-38d87e536b8464b263a2569027ef1843b81b9652.png" alt="Inheritance diagram of asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned" usemap="#inheritance309b4a2222" class="inheritance"/>
+<map id="inheritance309b4a2222" name="inheritance309b4a2222">
+<area shape="rect" id="node1" href="asterism.core.clustering.density_based.dbscan.html#asterism.core.clustering.density_based.dbscan.BaseDBSCAN" target="_top" title="asterism.core.clustering.density_based.dbscan.BaseDBSCAN" alt="" coords="5,4,338,26"/>
+<area shape="rect" id="node2" href="#asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned" target="_top" title="asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned" alt="" coords="379,4,763,26"/>
+</map>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned" title="asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned"><code class="xref py py-obj docutils literal"><span class="pre">DBSCANBinned</span></code></a>(eps,&nbsp;K[,&nbsp;metric,&nbsp;K_pix])</td>
+<td><p class="rubric">Methods</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-api">
+<h2>Module API<a class="headerlink" href="#module-api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned">
+<em class="property">class </em><code class="descname">DBSCANBinned</code><span class="sig-paren">(</span><em>eps</em>, <em>K</em>, <em>metric='euclidean'</em>, <em>K_pix=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/clustering/density_based/dbscan_binned.html#DBSCANBinned"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="asterism.core.clustering.density_based.dbscan.html#asterism.core.clustering.density_based.dbscan.BaseDBSCAN" title="asterism.core.clustering.density_based.dbscan.BaseDBSCAN"><code class="xref py py-class docutils literal"><span class="pre">asterism.core.clustering.density_based.dbscan.BaseDBSCAN</span></code></a></p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.add_to_cluster_as_core" title="asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.add_to_cluster_as_core"><code class="xref py py-obj docutils literal"><span class="pre">add_to_cluster_as_core</span></code></a>(cl_ID,&nbsp;seed_list,&nbsp;r1,&nbsp;...)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.build_cluster" title="asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.build_cluster"><code class="xref py py-obj docutils literal"><span class="pre">build_cluster</span></code></a>(cluster_ID,&nbsp;position_array,&nbsp;...)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.dist_eval" title="asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.dist_eval"><code class="xref py py-obj docutils literal"><span class="pre">dist_eval</span></code></a>(index[,&nbsp;selected])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.get_neigh_and_set_point_type" title="asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.get_neigh_and_set_point_type"><code class="xref py py-obj docutils literal"><span class="pre">get_neigh_and_set_point_type</span></code></a>(image,&nbsp;r,&nbsp;c,&nbsp;...)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.run" title="asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.run"><code class="xref py py-obj docutils literal"><span class="pre">run</span></code></a>(image[,&nbsp;masked,&nbsp;verbose])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.start_new_cluster" title="asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.start_new_cluster"><code class="xref py py-obj docutils literal"><span class="pre">start_new_cluster</span></code></a>(cl_ID,&nbsp;image,&nbsp;r,&nbsp;c,&nbsp;r1,&nbsp;...)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.add_to_cluster_as_core">
+<code class="descname">add_to_cluster_as_core</code><span class="sig-paren">(</span><em>cl_ID</em>, <em>seed_list</em>, <em>r1</em>, <em>r2</em>, <em>c1</em>, <em>c2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/clustering/density_based/dbscan_binned.html#DBSCANBinned.add_to_cluster_as_core"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.add_to_cluster_as_core" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.build_cluster">
+<code class="descname">build_cluster</code><span class="sig-paren">(</span><em>cluster_ID</em>, <em>position_array</em>, <em>weight_array</em>, <em>point_type</em>, <em>bkg_level</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/clustering/density_based/dbscan_binned.html#DBSCANBinned.build_cluster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.build_cluster" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.dist_eval">
+<code class="descname">dist_eval</code><span class="sig-paren">(</span><em>index</em>, <em>selected=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/clustering/density_based/dbscan_binned.html#DBSCANBinned.dist_eval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.dist_eval" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.get_neigh_and_set_point_type">
+<code class="descname">get_neigh_and_set_point_type</code><span class="sig-paren">(</span><em>image</em>, <em>r</em>, <em>c</em>, <em>rows</em>, <em>cols</em>, <em>masked=None</em>, <em>density_reach=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/clustering/density_based/dbscan_binned.html#DBSCANBinned.get_neigh_and_set_point_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.get_neigh_and_set_point_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>image</em>, <em>masked=None</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/clustering/density_based/dbscan_binned.html#DBSCANBinned.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.start_new_cluster">
+<code class="descname">start_new_cluster</code><span class="sig-paren">(</span><em>cl_ID</em>, <em>image</em>, <em>r</em>, <em>c</em>, <em>r1</em>, <em>r2</em>, <em>c1</em>, <em>c2</em>, <em>rows</em>, <em>cols</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/clustering/density_based/dbscan_binned.html#DBSCANBinned.start_new_cluster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.clustering.density_based.dbscan_binned.DBSCANBinned.start_new_cluster" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+         </div>
+       </div>
+
+
+     </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="asterism.html" >package: asterism</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="asterism.core.html" >package: asterism.core</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="asterism.core.clustering.html" >package: asterism.core.clustering</a> &#187;</li>
+          <li class="nav-item nav-item-4"><a href="asterism.core.clustering.density_based.html" >package: asterism.core.clustering.density_based</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, andrea tramacere.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+
+package: asterism.analysis_processes
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+
+
+Modules
+---------------
+.. toctree::
+   :maxdepth: 1
+
+
+   asterism.analysis_processes.morphometric_feature_extraction 
+   asterism.analysis_processes.morphometric_features_input_products 
+   asterism.analysis_processes.source_detection 

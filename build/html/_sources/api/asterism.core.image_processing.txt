@@ -1,0 +1,22 @@
+
+package: asterism.core.image_processing
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+
+
+Modules
+---------------
+.. toctree::
+   :maxdepth: 1
+
+
+   asterism.core.image_processing.features 
+   asterism.core.image_processing.filters 
+   asterism.core.image_processing.geometry_transformation 
+   asterism.core.image_processing.utils 

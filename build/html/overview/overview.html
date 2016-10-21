@@ -1,0 +1,210 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Overview of the Asetrims Project &#8212; asterism 1.0.a documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../index.html" />
+    <link rel="next" title="ASTErIsM User Guide" href="../user_guide/user_guide.html" />
+    <link rel="prev" title="Content" href="../index.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<br><img src="../_static/logo.png" style=width:80%; " />  <br>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../user_guide/user_guide.html" title="ASTErIsM User Guide"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Content"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">asterism 1.0.a documentation</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Overview of the Asetrims Project</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#overview-of-the-subpackages">overview of the subpackages</a></li>
+<li><a class="reference internal" href="#deeper-view-of-pipeline-implementations">deeper view of pipeline implementations</a></li>
+<li><a class="reference internal" href="#users-custom-pipelines">users custom pipelines</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter">Content</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../user_guide/user_guide.html"
+                        title="next chapter">ASTErIsM User Guide</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/overview/overview.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+     <div class="documentwrapper">
+       <div class="bodywrapper">
+        <div class="body">
+         <div class="align-left figure align-left">
+
+
+        </div>
+           
+  <div class="section" id="overview-of-the-asetrims-project">
+<h1>Overview of the Asetrims Project<a class="headerlink" href="#overview-of-the-asetrims-project" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#introduction" id="id1">Introduction</a></li>
+<li><a class="reference internal" href="#overview-of-the-subpackages" id="id2">overview of the subpackages</a></li>
+<li><a class="reference internal" href="#deeper-view-of-pipeline-implementations" id="id3">deeper view of pipeline implementations</a></li>
+<li><a class="reference internal" href="#users-custom-pipelines" id="id4">users custom pipelines</a></li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2><a class="toc-backref" href="#id1">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>ASTErIsM is a ptyhon-based framework for detection of astronomical sources, and extraction of morphometric features.
+The detection and features extraction are based maninly on denisty clustering algorithms (DBSCAN and DENCLUE).
+ASTErIsM also offers tools for machine learning supervised classification, based on the scikit-learn framework.
+The kernel computation in the DENCLUE algorithm has been written in Cython to speed up the computational time.
+Both the DBSCAN and DENCLUE algorithms have been modified in order to work with digital images. Some image processing
+tasks are performed using the ndimage package from the scipy, the python wrapper of the OpenCV library, and the
+scikit-image framework. ASTErIsM implements also the possibility to desgin flexible user-oriented pipelines, by the use
+of its pipiline manager sub-package, that allows to combine together different task, with the possibility to configure
+parameters through configuration files</p>
+</div>
+<div class="section" id="overview-of-the-subpackages">
+<h2><a class="toc-backref" href="#id2">overview of the subpackages</a><a class="headerlink" href="#overview-of-the-subpackages" title="Permalink to this headline">¶</a></h2>
+<p>Asterism provides five main subpackages:</p>
+<ul>
+<li><p class="first"><strong>core</strong>: where the algorithms are implemented. This subpackage relies of well knows and robust library such as numpy scipy,
+open-CV, scikit-learn, scikit-image, astropy, and provides alghorithms regarding</p>
+<blockquote>
+<div><ul class="simple">
+<li>clustering: clustring algorithms (dbscan/denclue/nn), and clusters characterization as detected sources</li>
+<li>image processing (filters,geometric manipulation)</li>
+<li>geometry: metrics and geometric manipulation</li>
+<li>morphometry : shape measurements (invariants moments, statistical distributions of attractors)</li>
+<li>photometry : basic photometric support</li>
+<li>statistics: basis support for histograms and spatial 2D distribution (radial distributions etc...)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>pipeline_manager</strong>: this subpackage offers all the facilities to embed algorithms into tasks, to facilitate the developing
+of pipelines. The basic idea is that <strong>task</strong> provides a bridge between the <strong>core</strong> algorithms and the <strong>pipeline manager</strong>
+package. Tasks can be combined into processes and processes into pipelines (as shown in the blue-dashed box) and the
+<strong>pipeline manager</strong> will orchestrate all the data flow, together with the I/O and the configuration</p>
+</li>
+<li><p class="first"><strong>analysis_tasks</strong> subpackage contains implemented tasks</p>
+</li>
+<li><p class="first"><strong>analysis_processes</strong> subpackage contains implemented procesess</p>
+</li>
+<li><p class="first"><strong>analysis_piepelines</strong> subpackage contains implemented pipelines</p>
+</li>
+</ul>
+<p>The following diagram gives a schematic view of the packages relations.</p>
+<img alt="../_images/asterism_overview_fig1.png" src="../_images/asterism_overview_fig1.png" />
+</div>
+<div class="section" id="deeper-view-of-pipeline-implementations">
+<h2><a class="toc-backref" href="#id3">deeper view of pipeline implementations</a><a class="headerlink" href="#deeper-view-of-pipeline-implementations" title="Permalink to this headline">¶</a></h2>
+<p>The following diagram shows a more detailed view of the combination of the functional decomposition of pipeline in processes
+and tasks. The <strong>analysis tasks</strong> package contains the implemented analysis tasks, a process can be composed from
+any combination of tasks, and a pipeline can incorporate any combination of processes. The functional relation between
+tasks in a process, and process in pipeline is implemented by a specific method.</p>
+<img alt="../_images/asterism_overview_fig2.png" src="../_images/asterism_overview_fig2.png" />
+</div>
+<div class="section" id="users-custom-pipelines">
+<h2><a class="toc-backref" href="#id4">users custom pipelines</a><a class="headerlink" href="#users-custom-pipelines" title="Permalink to this headline">¶</a></h2>
+<p>Users can either develop their own
+tasks, processes, and pipelines, as new combination of the provided ones, ore developing thier own. At the same time users
+can develop their own core functionalities</p>
+<img alt="../_images/asterism_overview_fig3.png" src="../_images/asterism_overview_fig3.png" />
+</div>
+</div>
+
+
+         </div>
+       </div>
+
+
+     </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../user_guide/user_guide.html" title="ASTErIsM User Guide"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Content"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">asterism 1.0.a documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, andrea tramacere.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

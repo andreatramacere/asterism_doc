@@ -1,0 +1,21 @@
+
+package: asterism.analysis_tasks
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+
+   asterism.analysis_tasks.image_processing 
+   asterism.analysis_tasks.morphometry_features 
+   asterism.analysis_tasks.source_detection 
+
+Modules
+---------------
+.. toctree::
+   :maxdepth: 1
+
+

@@ -1,0 +1,354 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>asterism.plotting.plot_tools &#8212; asterism 1.0.a documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0.a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<br><img src="../../../_static/logo.png" style=width:80%; " />  <br>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+     <div class="documentwrapper">
+       <div class="bodywrapper">
+        <div class="body">
+         <div class="align-left figure align-left">
+
+
+        </div>
+           
+  <h1>Source code for asterism.plotting.plot_tools</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;Example Google style docstrings.</span>
+
+<span class="sd">This module demonstrates documentation as specified by the `Google Python</span>
+<span class="sd">Style Guide`_. Docstrings may extend over multiple lines. Sections are created</span>
+<span class="sd">with a section header and a colon followed by a block of indented text.</span>
+
+<span class="sd">Example:</span>
+<span class="sd">    Examples can be given using either the ``Example`` or ``Examples``</span>
+<span class="sd">    sections. Sections support any reStructuredText formatting, including</span>
+<span class="sd">    literal blocks::</span>
+
+<span class="sd">        $ python example_google.py</span>
+
+<span class="sd">Section breaks are created by resuming unindented text. Section breaks</span>
+<span class="sd">are also implicitly created anytime a new section starts.</span>
+
+<span class="sd">Attributes:</span>
+<span class="sd">    module_level_variable1 (int): Module level variables may be documented in</span>
+<span class="sd">        either the ``Attributes`` section of the module docstring, or in an</span>
+<span class="sd">        inline docstring immediately following the variable.</span>
+
+<span class="sd">        Either form is acceptable, but the two should not be mixed. Choose</span>
+<span class="sd">        one convention to document module level variables and be consistent</span>
+<span class="sd">        with it.</span>
+
+<span class="sd">.. _Google Python Style Guide:</span>
+<span class="sd">   http://google.github.io/styleguide/pyguide.html</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span>
+<span class="c">#from ..core.image_manager.image import Image</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">fabs</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;andrea tramacere&#39;</span>
+
+<span class="c">#from skimage import exposure</span>
+<span class="c">#from ..image_processing.filters import normalize</span>
+
+
+
+<span class="k">try</span><span class="p">:</span>
+
+    <span class="kn">import</span> <span class="nn">matplotlib</span>
+    <span class="c">#matplotlib.use(&#39;Agg&#39;)</span>
+
+
+    <span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+    <span class="c">#from scipy import ndimag</span>
+    <span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="k">import</span> <span class="n">Ellipse</span><span class="p">,</span> <span class="n">Circle</span>
+
+    <span class="c">#from  matplotlib.pyplot.arrow as arrow</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.gridspec</span> <span class="k">as</span> <span class="nn">gridspec</span>
+
+    <span class="c">#from scipy import ndimage</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.cm</span> <span class="k">as</span> <span class="nn">cm</span>
+    <span class="c">#from matplotlib.colors import Normalize</span>
+    <span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="k">import</span> <span class="n">LogNorm</span><span class="p">,</span> <span class="n">PowerNorm</span>
+
+<span class="k">except</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s">&quot;no pylab found&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Formatter"><a class="viewcode-back" href="../../../api/asterism.plotting.plot_tools.html#asterism.plotting.plot_tools.Formatter">[docs]</a><span class="k">class</span> <span class="nc">Formatter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">im</span> <span class="o">=</span> <span class="n">im</span>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">im</span><span class="o">.</span><span class="n">get_array</span><span class="p">()[</span><span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="s">&#39;x={:.01f}, y={:.01f}, flux={:.05f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="show_image"><a class="viewcode-back" href="../../../api/asterism.plotting.plot_tools.html#asterism.plotting.plot_tools.show_image">[docs]</a><span class="k">def</span> <span class="nf">show_image</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span><span class="n">plot</span><span class="o">=</span><span class="k">False</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">clim</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+
+    <span class="n">y_size</span><span class="p">,</span><span class="n">x_size</span><span class="o">=</span><span class="n">image_array</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+    <span class="n">im</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span><span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;nearest&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">format_coord</span> <span class="o">=</span> <span class="n">Formatter</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">plot</span><span class="o">==</span><span class="k">True</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="n">y_size</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="n">x_size</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">clim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+        <span class="n">im</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="n">image_array</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span><span class="n">clim</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">im</span><span class="p">,</span><span class="n">ax</span></div>
+
+
+<div class="viewcode-block" id="plot_contour"><a class="viewcode-back" href="../../../api/asterism.plotting.plot_tools.html#asterism.plotting.plot_tools.plot_contour">[docs]</a><span class="k">def</span> <span class="nf">plot_contour</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">x_contour</span><span class="p">,</span><span class="n">y_contour</span><span class="p">,</span><span class="n">color</span><span class="p">,</span><span class="n">delta_max</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_contour</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">3</span><span class="p">:</span>
+        <span class="n">dx</span><span class="o">=</span><span class="n">fabs</span><span class="p">(</span><span class="n">x_contour</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">x_contour</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">dy</span><span class="o">=</span><span class="n">fabs</span><span class="p">(</span><span class="n">y_contour</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">y_contour</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">dx</span><span class="o">&lt;=</span><span class="n">delta_max</span> <span class="ow">and</span> <span class="n">dy</span><span class="o">&lt;=</span><span class="n">delta_max</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x_contour</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">x_contour</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],[</span><span class="n">y_contour</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">y_contour</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span><span class="s">&#39;-&#39;</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="c">#linestyle=&#39;None&#39;)</span>
+
+        <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">x_contour</span><span class="o">.</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">dx</span><span class="o">=</span><span class="n">fabs</span><span class="p">(</span><span class="n">x_contour</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span><span class="o">-</span><span class="n">x_contour</span><span class="p">[</span><span class="n">ID</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">dy</span><span class="o">=</span><span class="n">fabs</span><span class="p">(</span><span class="n">y_contour</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span><span class="o">-</span><span class="n">y_contour</span><span class="p">[</span><span class="n">ID</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">dx</span><span class="o">&lt;=</span><span class="n">delta_max</span> <span class="ow">and</span> <span class="n">dy</span><span class="o">&lt;=</span><span class="n">delta_max</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x_contour</span><span class="p">[</span><span class="n">ID</span><span class="p">],</span><span class="n">x_contour</span><span class="p">[</span><span class="n">ID</span><span class="o">+</span><span class="mi">1</span><span class="p">]],[</span><span class="n">y_contour</span><span class="p">[</span><span class="n">ID</span><span class="p">],</span><span class="n">y_contour</span><span class="p">[</span><span class="n">ID</span><span class="o">+</span><span class="mi">1</span><span class="p">]],</span><span class="s">&#39;-&#39;</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="c">#linestyle=&#39;None&#39;)</span></div>
+
+
+
+<div class="viewcode-block" id="do_detection_plot"><a class="viewcode-back" href="../../../api/asterism.plotting.plot_tools.html#asterism.plotting.plot_tools.do_detection_plot">[docs]</a><span class="k">def</span> <span class="nf">do_detection_plot</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">image</span><span class="p">,</span><span class="n">cluster_list</span><span class="p">,</span><span class="n">sex_srcs_array</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">plot_core_points</span><span class="o">=</span><span class="k">True</span><span class="p">,</span><span class="n">plot_cnt</span><span class="o">=</span><span class="k">True</span><span class="p">,</span><span class="n">arrows</span><span class="o">=</span><span class="k">True</span><span class="p">,</span><span class="n">plot_ID</span><span class="o">=</span><span class="k">True</span><span class="p">,</span><span class="n">plot_cl_centroid</span><span class="o">=</span><span class="k">True</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s">&#39;detection plot&#39;</span><span class="p">,</span><span class="n">font_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">plot_image_center</span><span class="o">=</span><span class="k">False</span><span class="p">):</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="n">font_size</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="s">&#39;array&#39;</span><span class="p">):</span>
+            <span class="n">image_array</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">array</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">image_array</span><span class="o">=</span><span class="n">image</span>
+        <span class="n">imgplot</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">show_image</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+
+
+        <span class="n">image_center_y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="mf">2.0</span>
+        <span class="n">image_center_x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mf">2.0</span>
+
+        <span class="k">if</span> <span class="n">plot_image_center</span><span class="o">==</span><span class="k">True</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">image_center_x</span><span class="p">,</span><span class="n">image_center_y</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s">&#39;black&#39;</span><span class="p">)</span>
+
+    <span class="n">clip_flux</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cluster_list</span><span class="p">))</span>
+    <span class="n">clip_size</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cluster_list</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">ID</span><span class="p">,</span><span class="n">cluster</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cluster_list</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">hsv</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">ID</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">clip_flux</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span><span class="o">=</span><span class="n">cluster</span><span class="o">.</span><span class="n">pts_weight</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">+</span><span class="mf">2.0</span><span class="o">*</span><span class="n">cluster</span><span class="o">.</span><span class="n">pts_weight</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+        <span class="n">clip_size</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span><span class="o">=</span><span class="n">cluster</span><span class="o">.</span><span class="n">pts_weight</span><span class="o">.</span><span class="n">size</span>
+
+        <span class="k">if</span> <span class="n">plot_ID</span><span class="o">==</span><span class="k">True</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s">&#39;C.ID=%d&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">ID</span><span class="p">),</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">x_c</span><span class="p">,</span><span class="n">cluster</span><span class="o">.</span><span class="n">y_c</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;w&#39;</span>   <span class="p">)</span>
+        <span class="k">if</span> <span class="n">plot_core_points</span><span class="o">==</span><span class="k">True</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">cartesian</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="n">cluster</span><span class="o">.</span><span class="n">cartesian</span><span class="o">.</span><span class="n">y</span><span class="p">,</span><span class="s">&#39;s&#39;</span><span class="p">,</span><span class="n">mew</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">plot_cl_centroid</span><span class="o">==</span><span class="k">True</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">x_c</span><span class="p">,</span><span class="n">cluster</span><span class="o">.</span><span class="n">y_c</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s">&#39;+&#39;</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">169</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s">&#39;black&#39;</span><span class="p">)</span>
+            <span class="n">ellipse</span><span class="o">=</span><span class="n">Ellipse</span><span class="p">(</span><span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">x_c</span><span class="p">,</span><span class="n">cluster</span><span class="o">.</span><span class="n">y_c</span><span class="p">),</span> <span class="n">width</span><span class="o">=</span><span class="n">cluster</span><span class="o">.</span><span class="n">sig_x</span><span class="o">*</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">cluster</span><span class="o">.</span><span class="n">sig_y</span><span class="o">*</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="n">cluster</span><span class="o">.</span><span class="n">semi_major_angle</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="s">&#39;y&#39;</span><span class="p">,</span><span class="n">fc</span><span class="o">=</span><span class="s">&#39;None&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">ellipse</span><span class="p">)</span>
+
+
+        <span class="k">if</span> <span class="n">plot_cnt</span><span class="o">==</span><span class="k">True</span> <span class="ow">and</span> <span class="n">cluster</span><span class="o">.</span><span class="n">contour_shape</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+
+
+            <span class="k">if</span> <span class="n">cluster</span><span class="o">.</span><span class="n">contour_shape</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+                <span class="n">plot_contour</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">cluster</span><span class="o">.</span><span class="n">contour_shape</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">cluster</span><span class="o">.</span><span class="n">contour_shape</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+
+
+        <span class="k">if</span> <span class="n">arrows</span><span class="o">==</span><span class="k">True</span><span class="p">:</span>
+            <span class="n">delta_x</span><span class="o">=</span><span class="n">cluster</span><span class="o">.</span><span class="n">sig_x</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">semi_major_angle</span><span class="p">))</span>
+            <span class="n">delta_y</span><span class="o">=</span><span class="n">cluster</span><span class="o">.</span><span class="n">sig_x</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">semi_major_angle</span><span class="p">))</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">x_c</span><span class="p">,</span><span class="n">cluster</span><span class="o">.</span><span class="n">y_c</span><span class="p">,</span><span class="n">delta_x</span> <span class="p">,</span><span class="n">delta_y</span> <span class="p">,</span><span class="n">head_width</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">head_length</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+            <span class="n">delta_x</span><span class="o">=</span><span class="n">image_center_x</span><span class="o">-</span><span class="n">cluster</span><span class="o">.</span><span class="n">x_c</span>
+            <span class="n">delta_y</span><span class="o">=</span><span class="n">image_center_y</span><span class="o">-</span><span class="n">cluster</span><span class="o">.</span><span class="n">y_c</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">x_c</span><span class="p">,</span><span class="n">cluster</span><span class="o">.</span><span class="n">y_c</span><span class="p">,</span><span class="n">delta_x</span> <span class="p">,</span><span class="n">delta_y</span> <span class="p">,</span><span class="n">head_width</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">head_length</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cluster_list</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">clip_flux_level</span><span class="o">=</span><span class="n">clip_flux</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">clip_size</span><span class="p">)]</span><span class="o">*</span><span class="mf">1.5</span>
+        <span class="k">if</span> <span class="n">image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="n">imgplot</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="n">image_array</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span><span class="n">clip_flux_level</span><span class="p">)</span>
+
+
+    <span class="k">if</span> <span class="n">sex_srcs_array</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+         <span class="k">for</span> <span class="n">sex_src</span> <span class="ow">in</span> <span class="n">sex_srcs_array</span><span class="p">:</span>
+            <span class="n">ellipse</span><span class="o">=</span><span class="n">Ellipse</span><span class="p">(</span><span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">sex_src</span><span class="p">[</span><span class="s">&#39;X_IMAGE&#39;</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">sex_src</span><span class="p">[</span><span class="s">&#39;Y_IMAGE&#39;</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">width</span><span class="o">=</span><span class="n">sex_src</span><span class="p">[</span><span class="s">&#39;A_IMAGE&#39;</span><span class="p">],</span> <span class="n">height</span><span class="o">=</span><span class="n">sex_src</span><span class="p">[</span><span class="s">&#39;B_IMAGE&#39;</span><span class="p">],</span> <span class="n">angle</span><span class="o">=</span><span class="n">sex_src</span><span class="p">[</span><span class="s">&#39;THETA_IMAGE&#39;</span><span class="p">],</span><span class="n">edgecolor</span><span class="o">=</span><span class="s">&#39;white&#39;</span><span class="p">,</span><span class="n">fc</span><span class="o">=</span><span class="s">&#39;None&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">ellipse</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">clip_flux_level</span></div>
+
+
+
+<div class="viewcode-block" id="analysis_plot"><a class="viewcode-back" href="../../../api/asterism.plotting.plot_tools.html#asterism.plotting.plot_tools.analysis_plot">[docs]</a><span class="k">def</span> <span class="nf">analysis_plot</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">selected_coords</span><span class="p">,</span><span class="n">fluxes</span><span class="p">,</span><span class="n">cluster_list</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s">&#39;fig&#39;</span><span class="p">,</span><span class="n">plot</span><span class="o">=</span><span class="k">False</span><span class="p">,</span><span class="n">gal_id</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">threshold</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">K</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">only_detection</span><span class="o">=</span><span class="k">False</span><span class="p">,</span><span class="n">fig_name</span><span class="o">=</span><span class="s">&#39;detection_plot&#39;</span><span class="p">,</span><span class="n">msk</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">only_detection</span><span class="o">==</span><span class="k">True</span><span class="p">:</span>
+        <span class="n">fig</span><span class="p">,((</span><span class="n">ax</span><span class="p">))</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">do_detection_plot</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">image</span><span class="p">,</span><span class="n">cluster_list</span><span class="p">,</span><span class="n">sex_srcs_array</span><span class="o">=</span><span class="k">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">plot</span><span class="o">==</span><span class="k">True</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="k">return</span>
+
+    <span class="n">fig</span><span class="p">,((</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">,</span><span class="n">ax3</span><span class="p">),(</span><span class="n">ax4</span><span class="p">,</span><span class="n">ax5</span><span class="p">,</span><span class="n">ax6</span><span class="p">))</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">set_window_title</span><span class="p">(</span><span class="n">fig_name</span><span class="p">)</span>
+
+
+
+    <span class="k">if</span> <span class="n">gal_id</span><span class="o">!=</span><span class="k">None</span><span class="p">:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s">&#39;gal ID=%d&#39;</span><span class="o">%</span><span class="n">gal_id</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+
+
+
+    <span class="n">clip_flux_level</span><span class="o">=</span><span class="n">do_detection_plot</span><span class="p">(</span><span class="n">ax3</span><span class="p">,</span><span class="n">image</span><span class="p">,</span><span class="n">cluster_list</span><span class="p">,</span><span class="n">sex_srcs_array</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">plot_core_points</span><span class="o">=</span><span class="k">False</span><span class="p">,</span><span class="n">arrows</span><span class="o">=</span><span class="k">False</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">&#39;original image&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">show_image</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">array</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span><span class="n">clim</span><span class="o">=</span><span class="n">clip_flux_level</span><span class="p">)</span>
+
+
+    <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">&#39;bool mask&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">show_image</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">array</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span><span class="n">clim</span><span class="o">=</span><span class="n">clip_flux_level</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">selected_coords</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">selected_coords</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s">&#39;.&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="s">&#39;0&#39;</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s">&#39;white&#39;</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+
+    <span class="n">ax</span><span class="o">=</span><span class="n">ax5</span>
+
+
+
+    <span class="k">if</span> <span class="n">threshold</span><span class="o">!=</span><span class="k">None</span><span class="p">:</span>
+
+        <span class="n">bins</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="nb">int</span><span class="p">(</span><span class="n">fluxes</span><span class="o">.</span><span class="n">size</span><span class="o">/</span><span class="mi">100</span><span class="p">))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>  <span class="n">fluxes</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">threshold</span><span class="p">,</span><span class="n">threshold</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">()[</span><span class="mi">3</span><span class="p">]])</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>  <span class="n">image</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span><span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+
+
+    <span class="n">ax</span><span class="o">=</span><span class="n">ax6</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">fluxes</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,)</span>
+    <span class="k">if</span> <span class="n">K</span><span class="o">!=</span><span class="k">None</span><span class="p">:</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span> <span class="p">[</span><span class="n">K</span><span class="o">*</span><span class="n">threshold</span><span class="p">,</span><span class="n">K</span><span class="o">*</span><span class="n">threshold</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">()[</span><span class="mi">3</span><span class="p">]],</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+
+
+
+    <span class="n">ax</span><span class="o">=</span><span class="n">ax4</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">&#39;Final Image&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+        <span class="n">show_image</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">array</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax4</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+
+    <span class="k">if</span> <span class="n">plot</span><span class="o">==</span><span class="k">True</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">fig</span></div>
+</pre></div>
+
+         </div>
+       </div>
+
+
+     </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, andrea tramacere.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,242 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>asterism.pipeline_manager.processing_tools &#8212; asterism 1.0.a documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0.a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<br><img src="../../../_static/logo.png" style=width:80%; " />  <br>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+     <div class="documentwrapper">
+       <div class="bodywrapper">
+        <div class="body">
+         <div class="align-left figure align-left">
+
+
+        </div>
+           
+  <h1>Source code for asterism.pipeline_manager.processing_tools</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;andrea tramacere&#39;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<div class="viewcode-block" id="mkdir"><a class="viewcode-back" href="../../../api/asterism.pipeline_manager.processing_tools.html#asterism.pipeline_manager.processing_tools.mkdir">[docs]</a><span class="k">def</span> <span class="nf">mkdir</span><span class="p">(</span><span class="n">dir_name</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">dir_name</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s">&quot;dir %s exists&quot;</span><span class="o">%</span><span class="n">dir_name</span>
+    <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">dir_name</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s">&quot;dir %s exists as file&quot;</span><span class="o">%</span><span class="n">dir_name</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;dir %s exists as file&quot;</span><span class="o">%</span><span class="n">dir_name</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+            <span class="k">pass</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="read_config_file"><a class="viewcode-back" href="../../../api/asterism.pipeline_manager.processing_tools.html#asterism.pipeline_manager.processing_tools.read_config_file">[docs]</a><span class="k">def</span> <span class="nf">read_config_file</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+    <span class="n">f</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">lines</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    
+    <span class="k">return</span> <span class="n">lines</span></div>
+
+
+
+<div class="viewcode-block" id="parse_process_section"><a class="viewcode-back" href="../../../api/asterism.pipeline_manager.processing_tools.html#asterism.pipeline_manager.processing_tools.parse_process_section">[docs]</a><span class="k">def</span> <span class="nf">parse_process_section</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span><span class="n">process_name</span><span class="p">,</span><span class="n">task_name</span><span class="p">):</span>
+    
+    <span class="nb">dict</span><span class="o">=</span><span class="p">{}</span>
+
+    <span class="n">start_p</span><span class="o">=</span><span class="k">False</span>
+    <span class="n">stop_p</span><span class="o">=</span><span class="k">False</span>
+    <span class="n">start_t</span><span class="o">=</span><span class="k">False</span>
+    <span class="n">stop_t</span><span class="o">=</span><span class="k">False</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+
+        <span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+
+        
+
+            <span class="k">if</span> <span class="n">start_t</span><span class="o">==</span><span class="k">True</span> <span class="ow">and</span> <span class="n">stop_t</span><span class="o">==</span><span class="k">False</span> <span class="ow">and</span> <span class="n">start_p</span><span class="o">==</span><span class="k">True</span> <span class="ow">and</span> <span class="n">stop_p</span><span class="o">==</span><span class="k">False</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="s">&#39;#&#39;</span><span class="p">:</span>
+                    <span class="n">tkn</span><span class="o">=</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;=&#39;</span><span class="p">)</span>
+                
+                
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tkn</span><span class="p">)</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
+
+                    <span class="nb">dict</span><span class="p">[</span><span class="n">tkn</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span><span class="o">=</span><span class="n">tkn</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="s">&#39;#&#39;</span> <span class="ow">and</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;[&#39;</span><span class="p">:</span>
+                <span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;]\[&#39;</span><span class="p">)</span>
+                <span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">tkn</span><span class="o">=</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">tkn</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">process_name</span> <span class="ow">and</span> <span class="n">tkn</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;start&#39;</span><span class="p">:</span>
+                    <span class="n">start_p</span><span class="o">=</span><span class="k">True</span>
+
+                <span class="k">if</span> <span class="n">tkn</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">process_name</span> <span class="ow">and</span> <span class="n">tkn</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;stop&#39;</span><span class="p">:</span>
+                    <span class="n">stop_p</span><span class="o">=</span><span class="k">True</span>
+
+                <span class="k">if</span> <span class="n">tkn</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">task_name</span> <span class="ow">and</span> <span class="n">tkn</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;start&#39;</span> <span class="ow">and</span> <span class="n">start_p</span><span class="o">==</span><span class="k">True</span><span class="p">:</span>
+                    <span class="n">start_t</span><span class="o">=</span><span class="k">True</span>
+
+                <span class="k">if</span> <span class="n">tkn</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">task_name</span> <span class="ow">and</span> <span class="n">tkn</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">==</span><span class="s">&#39;stop&#39;</span> <span class="ow">and</span> <span class="n">start_p</span><span class="o">==</span><span class="k">True</span><span class="p">:</span>
+                    <span class="n">stop_t</span><span class="o">=</span><span class="k">True</span>
+
+    <span class="nb">print</span> <span class="nb">dict</span>     
+    <span class="k">return</span> <span class="nb">dict</span></div>
+
+<div class="viewcode-block" id="conv_str"><a class="viewcode-back" href="../../../api/asterism.pipeline_manager.processing_tools.html#asterism.pipeline_manager.processing_tools.conv_str">[docs]</a><span class="k">def</span> <span class="nf">conv_str</span><span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="k">False</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">eval</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">val</span></div>
+
+
+
+
+<div class="viewcode-block" id="write_html_page"><a class="viewcode-back" href="../../../api/asterism.pipeline_manager.processing_tools.html#asterism.pipeline_manager.processing_tools.write_html_page">[docs]</a><span class="k">def</span> <span class="nf">write_html_page</span><span class="p">(</span><span class="n">html_file_name</span><span class="p">,</span><span class="n">images_list</span><span class="p">,</span><span class="n">images_per_page</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+    <span class="n">html_index_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">html_file_name</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span>    
+    
+    <span class="n">N_pages</span><span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">images_list</span><span class="p">)</span><span class="o">/</span><span class="n">images_per_page</span><span class="o">+</span><span class="mi">1</span>
+    <span class="n">path_html_images_file</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">html_file_name</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">N_pages</span><span class="p">):</span>
+        <span class="n">images_page</span><span class="o">=</span><span class="s">&#39;images_%4.4d-%4.4d_&#39;</span><span class="o">%</span><span class="p">(</span> <span class="n">i</span><span class="o">*</span><span class="n">images_per_page</span><span class="p">,(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">images_per_page</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;images.html&#39;</span>
+       
+
+        <span class="nb">print</span><span class="o">&gt;&gt;</span><span class="n">html_index_file</span><span class="p">,</span><span class="s">&quot;&quot;&quot;&lt;a href=&quot;%s&quot;&gt; Images %4.4d - %4.4d &lt;/a&gt; &lt;br&gt;&quot;&quot;&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">images_page</span><span class="p">,</span><span class="n">i</span><span class="o">*</span><span class="n">images_per_page</span><span class="p">,(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">images_per_page</span><span class="p">)</span>
+                
+        <span class="n">write_images_page</span><span class="p">(</span><span class="n">path_html_images_file</span><span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span><span class="n">images_page</span><span class="p">,</span><span class="n">images_list</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">images_per_page</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">images_per_page</span><span class="p">])</span></div>
+    
+  
+    
+   
+    
+    
+    
+<div class="viewcode-block" id="write_images_page"><a class="viewcode-back" href="../../../api/asterism.pipeline_manager.processing_tools.html#asterism.pipeline_manager.processing_tools.write_images_page">[docs]</a><span class="k">def</span> <span class="nf">write_images_page</span><span class="p">(</span><span class="n">html_file_name</span><span class="p">,</span><span class="n">images_list</span><span class="p">):</span>
+    <span class="n">html_file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">html_file_name</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+    <span class="n">header</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">  &lt;!DOCTYPE html&gt;</span>
+<span class="s">&lt;html&gt;</span>
+<span class="s">  &lt;head&gt;</span>
+<span class="s">    &lt;title&gt;Images&lt;/title&gt;</span>
+<span class="s">  &lt;/head&gt;</span>
+<span class="s">  &lt;body&gt;</span>
+<span class="s">    &lt;h1&gt;Images&lt;/h1&gt;</span>
+<span class="s">&quot;&quot;&quot;</span>
+
+    <span class="n">end</span><span class="o">=</span><span class="s">&quot;&quot;&quot;&lt;/body&gt;</span>
+<span class="s">&lt;/html&gt;&quot;&quot;&quot;</span>
+    
+    <span class="nb">print</span><span class="o">&gt;&gt;</span><span class="n">html_file</span><span class="p">,</span><span class="n">header</span>
+    <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">images_list</span><span class="p">:</span>
+        <span class="nb">print</span><span class="o">&gt;&gt;</span><span class="n">html_file</span><span class="p">,</span><span class="n">div_image</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="nb">print</span><span class="o">&gt;&gt;</span><span class="n">html_file</span><span class="p">,</span><span class="n">end</span>
+    
+    <span class="n">html_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+    
+    
+<div class="viewcode-block" id="div_image"><a class="viewcode-back" href="../../../api/asterism.pipeline_manager.processing_tools.html#asterism.pipeline_manager.processing_tools.div_image">[docs]</a><span class="k">def</span> <span class="nf">div_image</span><span class="p">(</span><span class="n">image_file</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">&quot;&quot;&quot;&lt;/div&gt;</span>
+<span class="s">    &lt;div class=&quot;image&quot;&gt;</span>
+<span class="s">      &lt;img src=&quot;%s&quot;&gt;</span>
+<span class="s">    &lt;/div&gt;&quot;&quot;&quot;</span><span class="o">%</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">image_file</span><span class="p">)</span></div>
+
+
+</pre></div>
+
+         </div>
+       </div>
+
+
+     </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, andrea tramacere.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

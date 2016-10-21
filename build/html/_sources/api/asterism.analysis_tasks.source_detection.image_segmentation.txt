@@ -1,0 +1,20 @@
+
+package: asterism.analysis_tasks.source_detection.image_segmentation
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+
+
+Modules
+---------------
+.. toctree::
+   :maxdepth: 1
+
+
+   asterism.analysis_tasks.source_detection.image_segmentation.catalog 
+   asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation 

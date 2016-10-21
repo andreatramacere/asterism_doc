@@ -1,0 +1,16 @@
+
+ASTErIsM User Guide
+=========================
+
+src detection
+
+
+
+Content
+-------------------------
+
+.. toctree::
+   :maxdepth: 0
+
+    src detection <src_detection/src_detection.rst>
+

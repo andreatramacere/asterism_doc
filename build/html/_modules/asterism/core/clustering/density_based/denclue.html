@@ -1,0 +1,414 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>asterism.core.clustering.density_based.denclue &#8212; asterism 1.0.a documentation</title>
+    
+    <link rel="stylesheet" href="../../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '1.0.a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../../index.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<br><img src="../../../../../_static/logo.png" style=width:80%; " />  <br>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+     <div class="documentwrapper">
+       <div class="bodywrapper">
+        <div class="body">
+         <div class="align-left figure align-left">
+
+
+        </div>
+           
+  <h1>Source code for asterism.core.clustering.density_based.denclue</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">.denclue_tools</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">asterism.core.clustering.source_cluster</span> <span class="k">import</span> <span class="n">SourceCluster2Dim</span>
+<span class="kn">import</span>  <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span>  <span class="nn">..cluster</span> <span class="k">import</span>  <span class="n">BaseCluster</span>
+<span class="kn">from</span> <span class="nn">...tools.tools</span> <span class="k">import</span> <span class="n">check_choice_name</span>
+<span class="kn">from</span> <span class="nn">.dbscan_unbinned</span> <span class="k">import</span> <span class="n">DBSCANUnbinned</span>
+<span class="kn">from</span> <span class="nn">....core.image_processing.features</span> <span class="k">import</span> <span class="n">PeakLocalMaxima</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">_allowed_kernels_</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;mex&#39;</span><span class="p">,</span><span class="s">&#39;epanen&#39;</span><span class="p">,</span><span class="s">&#39;biweight&#39;</span><span class="p">,</span><span class="s">&#39;triweight&#39;</span><span class="p">,</span><span class="s">&#39;tricube&#39;</span><span class="p">,</span><span class="s">&#39;gauss&#39;</span><span class="p">,</span><span class="s">&#39;gauss_cos&#39;</span><span class="p">,</span><span class="s">&#39;gauss_cos2&#39;</span><span class="p">,</span><span class="s">&#39;uniform&#39;</span><span class="p">,</span><span class="s">&#39;logistic&#39;</span><span class="p">]</span>
+<span class="n">_allowed_R_max_methods_</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;kern_rel_th&#39;</span><span class="p">,</span><span class="s">&#39;fixed&#39;</span><span class="p">,</span><span class="s">&#39;auto&#39;</span><span class="p">]</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;andrea tramacere&#39;</span>
+
+<div class="viewcode-block" id="DENCLUE_cluster"><a class="viewcode-back" href="../../../../../api/asterism.core.clustering.density_based.denclue.html#asterism.core.clustering.density_based.denclue.DENCLUE_cluster">[docs]</a><span class="k">class</span> <span class="nc">DENCLUE_cluster</span><span class="p">(</span><span class="n">BaseCluster</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">ID</span><span class="p">,</span><span class="n">position_array</span><span class="p">,</span><span class="n">kernel</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">eps</span><span class="p">,</span><span class="n">weight_array</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ID:</span>
+<span class="sd">            members_ID_list:</span>
+<span class="sd">            position_array:</span>
+<span class="sd">            dist_method:</span>
+<span class="sd">            K:</span>
+<span class="sd">            eps:</span>
+<span class="sd">            weight_array:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DENCLUE_cluster</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">ID</span><span class="p">,</span><span class="n">position_array</span><span class="p">,</span><span class="n">weight_array</span><span class="o">=</span><span class="n">weight_array</span><span class="p">,</span><span class="n">bkg_th</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">position_array_IDs</span><span class="o">=</span><span class="k">None</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="o">=</span><span class="n">kernel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eps</span><span class="o">=</span><span class="n">eps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="o">=</span><span class="n">h</span>
+
+
+
+
+
+<div class="viewcode-block" id="DENCLUE_cluster.SourceCluster_factory"><a class="viewcode-back" href="../../../../../api/asterism.core.clustering.density_based.denclue.html#asterism.core.clustering.density_based.denclue.DENCLUE_cluster.SourceCluster_factory">[docs]</a>    <span class="k">def</span> <span class="nf">SourceCluster_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x_off_set</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">y_off_set</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">ID</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">ID</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+            <span class="n">ID</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ID</span>
+
+        <span class="n">cls</span><span class="o">=</span><span class="n">SourceCluster2Dim</span><span class="o">.</span><span class="n">build_from_cartesian_position_array</span><span class="p">(</span><span class="n">ID</span><span class="p">,</span><span class="n">position_array</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">position_array</span><span class="o">+</span><span class="p">[</span><span class="n">x_off_set</span><span class="p">,</span><span class="n">y_off_set</span><span class="p">],</span><span class="n">weight_array</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">weight_array</span><span class="p">)</span>
+
+
+        <span class="n">cls</span><span class="o">.</span><span class="n">kernel</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">eps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eps</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">h</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">h</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">position_array</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">position_array</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">weight_array</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">weight_array</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">ID</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ID</span>
+
+        <span class="k">return</span> <span class="n">cls</span></div></div>
+
+
+
+
+<div class="viewcode-block" id="DENCLUE"><a class="viewcode-back" href="../../../../../api/asterism.core.clustering.density_based.denclue.html#asterism.core.clustering.density_based.denclue.DENCLUE">[docs]</a><span class="k">class</span> <span class="nc">DENCLUE</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">eps</span><span class="p">,</span>
+                 <span class="n">h</span><span class="p">,</span>
+                 <span class="n">kernel</span><span class="p">,</span>
+                 <span class="n">k_table_size</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+                 <span class="n">R_max_method</span><span class="o">=</span><span class="s">&#39;auto&#39;</span><span class="p">,</span>
+                 <span class="n">R_max_th_rel</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+                 <span class="n">R_max</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+                 <span class="n">dbscan_eps</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+                 <span class="n">dbscan_K</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+
+        <span class="n">check_choice_name</span><span class="p">(</span><span class="s">&#39;kernel&#39;</span><span class="p">,</span><span class="n">kernel</span><span class="p">,</span><span class="n">_allowed_kernels_</span><span class="p">)</span>
+        <span class="n">check_choice_name</span><span class="p">(</span><span class="s">&#39;R_max_method&#39;</span><span class="p">,</span><span class="n">R_max_method</span><span class="p">,</span><span class="n">_allowed_R_max_methods_</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_allowed_kernels</span><span class="o">=</span><span class="n">_allowed_kernels_</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_allowed_R_max_methods</span> <span class="o">=</span><span class="n">_allowed_R_max_methods_</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_R_max_th_rel</span><span class="o">=</span><span class="n">R_max_th_rel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="o">=</span><span class="n">kernel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">R_max_method</span><span class="o">=</span><span class="n">R_max_method</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="o">=</span><span class="n">h</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">eps</span><span class="o">=</span><span class="n">eps</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="o">=</span><span class="n">kernel</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">clusters_list</span><span class="o">=</span><span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_R_max</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="n">R_max_method</span><span class="p">,</span><span class="n">R_max_th_rel</span><span class="o">=</span><span class="n">R_max_th_rel</span><span class="p">,</span><span class="n">R_max</span><span class="o">=</span><span class="n">R_max</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_kernel_table</span><span class="p">(</span><span class="n">k_table_size</span><span class="p">)</span>
+
+
+        <span class="k">if</span> <span class="n">dbscan_eps</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dbscan_eps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">h</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dbscan_eps</span><span class="o">=</span><span class="n">dbscan_eps</span>
+
+        <span class="k">if</span> <span class="n">dbscan_K</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dbscan_K</span><span class="o">=</span><span class="mi">2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dbscan_K</span><span class="o">=</span><span class="n">dbscan_K</span>
+
+
+<div class="viewcode-block" id="DENCLUE.run"><a class="viewcode-back" href="../../../../../api/asterism.core.clustering.density_based.denclue.html#asterism.core.clustering.density_based.denclue.DENCLUE.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">position_array</span><span class="p">,</span>
+            <span class="n">weight_array</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+            <span class="n">mask_unchanged</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">get_only_attractors</span><span class="o">=</span><span class="k">False</span><span class="p">,</span>
+            <span class="n">R_max</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+            <span class="n">make_convolved_image</span><span class="o">=</span><span class="k">False</span><span class="p">,</span>
+            <span class="n">digitize_attractors</span><span class="o">=</span><span class="k">False</span><span class="p">,</span>
+            <span class="n">precomputed</span><span class="o">=</span><span class="k">False</span><span class="p">,</span>
+            <span class="n">target_coordinates</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+            <span class="n">target_coordinates_w_array</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+            <span class="n">eps</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+            <span class="n">h</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+            <span class="n">dbscan_eps</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+            <span class="n">dbscan_K</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+            <span class="n">attractors_th</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="k">False</span><span class="p">):</span>
+
+
+        <span class="k">if</span> <span class="n">h</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+            <span class="n">h</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">h</span>
+
+
+        <span class="k">if</span> <span class="n">eps</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+            <span class="n">eps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eps</span>
+
+
+
+        <span class="k">if</span> <span class="n">R_max</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_R_max</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">R_max_method</span><span class="p">,</span><span class="n">R_max_th_rel</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_R_max_th_rel</span><span class="p">,</span><span class="n">R_max</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">R_max</span><span class="p">)</span>
+            <span class="n">R_max</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">R_max</span>
+
+
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;|R_max&quot;</span><span class="p">,</span><span class="n">R_max</span><span class="p">)</span>
+
+
+
+
+
+        <span class="k">if</span> <span class="n">dbscan_eps</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+            <span class="n">dbscan_eps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dbscan_eps</span>
+
+        <span class="k">if</span> <span class="n">dbscan_K</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+            <span class="n">dbscan_K</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dbscan_K</span>
+
+        <span class="k">if</span> <span class="n">verbose</span><span class="o">==</span><span class="k">True</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s">&quot;|running denclue with&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s">&quot;|kernel &quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s">&quot;|h &quot;</span><span class="p">,</span><span class="n">h</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s">&quot;|eps&quot;</span><span class="p">,</span><span class="n">eps</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s">&quot;|R_max set to&quot;</span><span class="p">,</span><span class="n">R_max</span><span class="p">)</span>
+
+
+
+        <span class="c">#if downsampling_th_size is not None:</span>
+        <span class="c">#    make_convolved_image= True</span>
+
+        <span class="k">if</span> <span class="n">make_convolved_image</span> <span class="ow">is</span> <span class="k">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">convolved_image</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">convolved_image_offset_x</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">convolved_image_offset_y</span><span class="o">=</span><span class="n">convolved_map</span><span class="p">(</span><span class="n">position_array</span><span class="p">,</span>
+                                                                                                           <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="p">,</span>
+                                                                                                           <span class="n">h</span><span class="p">,</span>
+                                                                                                           <span class="n">weight_array</span><span class="o">=</span><span class="n">weight_array</span><span class="p">,</span>
+                                                                                                           <span class="n">R_max</span><span class="o">=</span><span class="n">R_max</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">convolved_image</span><span class="o">=</span><span class="k">None</span>
+
+
+
+
+
+        <span class="n">t_start</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">attractors_position_array</span><span class="p">,</span><span class="n">f_array</span><span class="o">=</span><span class="n">find_attractors</span><span class="p">(</span><span class="n">position_array</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="p">,</span>
+                                                  <span class="n">h</span><span class="p">,</span>
+                                                  <span class="n">eps</span><span class="p">,</span>
+                                                  <span class="n">weight_array</span><span class="o">=</span><span class="n">weight_array</span><span class="p">,</span>
+                                                  <span class="n">attractors_th</span><span class="o">=</span><span class="n">attractors_th</span><span class="p">,</span>
+                                                  <span class="n">R_max</span><span class="o">=</span><span class="n">R_max</span><span class="p">,</span>
+                                                  <span class="n">k_table_x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">k_table_x</span><span class="p">,</span>
+                                                  <span class="n">k_table_y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">k_table_y</span><span class="p">,</span>
+                                                  <span class="n">k_table_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">k_table_size</span><span class="p">,</span>
+                                                  <span class="n">precomputed</span><span class="o">=</span><span class="n">precomputed</span><span class="p">,</span>
+                                                  <span class="n">target_position_array</span><span class="o">=</span><span class="n">target_coordinates</span><span class="p">,</span>
+                                                  <span class="n">target_weight_array</span><span class="o">=</span><span class="n">target_coordinates_w_array</span><span class="p">,</span>
+                                                  <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+
+
+
+
+
+
+
+        <span class="k">if</span> <span class="n">mask_unchanged</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">mask_unchanged</span><span class="o">==-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">th_changed</span><span class="o">=</span><span class="n">eps</span><span class="o">*</span><span class="n">eps</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">th_changed</span><span class="o">=</span><span class="n">mask_unchanged</span><span class="o">*</span><span class="n">mask_unchanged</span>
+
+            <span class="k">if</span> <span class="n">verbose</span><span class="o">==</span><span class="k">True</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s">&#39;|size pre masking unchanged&#39;</span><span class="p">,</span><span class="n">attractors_position_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">selected</span><span class="o">=</span><span class="n">mask_unchanged_attractors</span><span class="p">(</span><span class="n">th_changed</span><span class="p">,</span><span class="n">attractors_position_array</span><span class="p">,</span><span class="n">position_array</span><span class="p">)</span>
+            <span class="n">attractors_position_array</span><span class="o">=</span><span class="n">attractors_position_array</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+            <span class="n">weight_array</span><span class="o">=</span><span class="n">weight_array</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+            <span class="n">f_array</span><span class="o">=</span><span class="n">f_array</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="o">==</span><span class="k">True</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s">&#39;|size post masking unchanged&#39;</span><span class="p">,</span><span class="n">attractors_position_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+
+
+
+        <span class="k">if</span> <span class="n">attractors_th</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span> <span class="ow">and</span> <span class="n">attractors_position_array</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="o">==</span><span class="k">True</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s">&#39;|size pre th filtering&#39;</span><span class="p">,</span><span class="n">attractors_position_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">f_array</span><span class="o">=</span><span class="n">f_array</span><span class="o">/</span><span class="n">f_array</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+            <span class="n">selected</span><span class="o">=</span><span class="n">f_array</span><span class="o">&gt;</span><span class="n">attractors_th</span>
+            <span class="n">attractors_position_array</span><span class="o">=</span><span class="n">attractors_position_array</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+            <span class="n">weight_array</span><span class="o">=</span><span class="n">weight_array</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="o">==</span><span class="k">True</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s">&#39;|size post th filtering&#39;</span><span class="p">,</span><span class="n">attractors_position_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">digitize_attractors</span> <span class="o">==</span><span class="k">True</span>  <span class="ow">and</span> <span class="n">attractors_position_array</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">attractors_position_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">(</span><span class="n">attractors_position_array</span><span class="p">)</span>
+
+
+        <span class="k">if</span> <span class="n">attractors_position_array</span><span class="o">.</span><span class="n">size</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attractors_position_array</span><span class="o">=</span><span class="n">attractors_position_array</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attractors_position_array</span><span class="o">=</span><span class="k">None</span>
+
+
+        <span class="k">if</span> <span class="n">get_only_attractors</span><span class="o">==</span> <span class="k">False</span>  <span class="ow">and</span> <span class="n">attractors_position_array</span><span class="o">.</span><span class="n">size</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">dbscan_attractors</span><span class="o">=</span><span class="n">DBSCANUnbinned</span><span class="p">(</span><span class="n">dbscan_eps</span><span class="p">,</span> <span class="n">dbscan_K</span><span class="p">,</span> <span class="n">buffer_size</span><span class="o">=</span><span class="k">None</span><span class="p">)</span>
+            <span class="n">dbscan_attractors</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">attractors_position_array</span><span class="p">,</span><span class="n">store_position_array_IDs</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">attractors_clusters_list</span><span class="o">=</span><span class="n">dbscan_attractors</span><span class="o">.</span><span class="n">clusters_list</span>
+
+            <span class="k">for</span> <span class="n">ID</span><span class="p">,</span><span class="n">cl</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dbscan_attractors</span><span class="o">.</span><span class="n">clusters_list</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">clusters_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">build_cluster</span><span class="p">(</span><span class="n">ID</span><span class="p">,</span><span class="n">position_array</span><span class="p">,</span><span class="n">cl</span><span class="o">.</span><span class="n">position_array_IDs</span><span class="p">,</span><span class="n">weight_array</span><span class="o">=</span><span class="n">weight_array</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attractors_clusters_list</span><span class="o">=</span><span class="p">[]</span>
+
+
+
+
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;|comp. time&quot;</span><span class="p">,</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t_start</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DENCLUE.set_kernel_table"><a class="viewcode-back" href="../../../../../api/asterism.core.clustering.density_based.denclue.html#asterism.core.clustering.density_based.denclue.DENCLUE.set_kernel_table">[docs]</a>    <span class="k">def</span>  <span class="nf">set_kernel_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">k_table_size</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">k_table_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span> <span class="p">:</span>
+            <span class="c">#print(&quot;| use kernel table with size&quot;,k_table_size)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">k_table_size</span><span class="o">=</span><span class="n">k_table_size</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">k_table_x</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">k_table_y</span><span class="o">=</span><span class="n">eval_kernel_table</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">R_max</span><span class="p">,</span><span class="n">k_table_size</span><span class="p">,</span><span class="n">kern_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">k_table_x</span><span class="o">=</span><span class="k">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">k_table_y</span><span class="o">=</span><span class="k">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">k_table_size</span><span class="o">=</span><span class="k">None</span></div>
+
+<div class="viewcode-block" id="DENCLUE.set_R_max"><a class="viewcode-back" href="../../../../../api/asterism.core.clustering.density_based.denclue.html#asterism.core.clustering.density_based.denclue.DENCLUE.set_R_max">[docs]</a>    <span class="k">def</span> <span class="nf">set_R_max</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">method</span><span class="p">,</span><span class="n">R_max_th_rel</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">R_max</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+        <span class="n">check_choice_name</span><span class="p">(</span><span class="s">&#39;R_max_method&#39;</span><span class="p">,</span><span class="n">method</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_allowed_R_max_methods</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">method</span><span class="o">==</span><span class="s">&#39;auto&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">R_max</span><span class="o">=</span><span class="n">set_kernel_R_max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="p">,</span><span class="n">h</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">method</span><span class="o">==</span><span class="s">&#39;kern_rel_th&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">R_max_th_rel</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;th_rel can not be None&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">R_max</span><span class="o">=</span><span class="n">set_kernel_R_max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">th_rel</span><span class="o">=</span><span class="n">R_max_th_rel</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">method</span><span class="o">==</span><span class="s">&#39;fixed&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">R_max</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;R_max can not be None&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">R_max</span><span class="o">=</span><span class="n">R_max</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">R_max_method</span><span class="o">=</span><span class="n">method</span></div>
+        <span class="c">#print (&quot;| set R_max to %f, method=%s&quot;%(self.R_max,self.R_max_method))</span>
+
+
+
+<div class="viewcode-block" id="DENCLUE.build_cluster"><a class="viewcode-back" href="../../../../../api/asterism.core.clustering.density_based.denclue.html#asterism.core.clustering.density_based.denclue.DENCLUE.build_cluster">[docs]</a>    <span class="k">def</span> <span class="nf">build_cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cluster_ID</span><span class="p">,</span><span class="n">position_array</span><span class="p">,</span><span class="n">cluster_members_list</span><span class="p">,</span><span class="n">weight_array</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">weight_array</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="n">w</span><span class="o">=</span><span class="n">weight_array</span><span class="p">[</span><span class="n">cluster_members_list</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">w</span><span class="o">=</span><span class="k">None</span>
+
+        <span class="k">return</span> <span class="n">DENCLUE_cluster</span><span class="p">(</span><span class="n">cluster_ID</span><span class="p">,</span>
+                              <span class="n">position_array</span><span class="p">[</span><span class="n">cluster_members_list</span><span class="p">],</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="p">,</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">eps</span><span class="p">,</span>
+                              <span class="n">weight_array</span><span class="o">=</span><span class="n">w</span><span class="p">)</span></div>
+
+
+
+    <span class="k">def</span> <span class="nf">_find_attractors_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">position_array</span><span class="p">,</span><span class="n">weight_array</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">R_max</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">find_attractors</span><span class="p">(</span><span class="n">position_array</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">eps</span><span class="p">,</span><span class="n">weight_array</span><span class="o">=</span><span class="n">weight_array</span><span class="p">,</span><span class="n">R_max</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span></div>
+
+
+
+</pre></div>
+
+         </div>
+       </div>
+
+
+     </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, andrea tramacere.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,223 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Module: dbscan_unbinned &#8212; asterism 1.0.a documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../index.html" />
+    <link rel="up" title="package: asterism.core.clustering.density_based" href="asterism.core.clustering.density_based.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<br><img src="../_static/logo.png" style=width:80%; " />  <br>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="asterism.html" >package: asterism</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="asterism.core.html" >package: asterism.core</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="asterism.core.clustering.html" >package: asterism.core.clustering</a> &#187;</li>
+          <li class="nav-item nav-item-4"><a href="asterism.core.clustering.density_based.html" accesskey="U">package: asterism.core.clustering.density_based</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/asterism.core.clustering.density_based.dbscan_unbinned.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+     <div class="documentwrapper">
+       <div class="bodywrapper">
+        <div class="body">
+         <div class="align-left figure align-left">
+
+
+        </div>
+           
+  <div class="section" id="module-dbscan-unbinned">
+<h1>Module: dbscan_unbinned<a class="headerlink" href="#module-dbscan-unbinned" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-asterism.core.clustering.density_based.dbscan_unbinned"></span><dl class="class">
+<dt id="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned">
+<em class="property">class </em><code class="descname">DBSCANUnbinned</code><span class="sig-paren">(</span><em>eps</em>, <em>K</em>, <em>buffer_size=None</em>, <em>metric='euclidean'</em>, <em>check_core_is_already_cluster_min_size=100</em>, <em>K_pix=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/clustering/density_based/dbscan_unbinned.html#DBSCANUnbinned"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="asterism.core.clustering.density_based.dbscan.html#asterism.core.clustering.density_based.dbscan.BaseDBSCAN" title="asterism.core.clustering.density_based.dbscan.BaseDBSCAN"><code class="xref py py-class docutils literal"><span class="pre">asterism.core.clustering.density_based.dbscan.BaseDBSCAN</span></code></a></p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.build_cluster" title="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.build_cluster"><code class="xref py py-obj docutils literal"><span class="pre">build_cluster</span></code></a>(cluster_ID,&nbsp;cluster_members_list)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.check_core_is_already_cluster" title="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.check_core_is_already_cluster"><code class="xref py py-obj docutils literal"><span class="pre">check_core_is_already_cluster</span></code></a>(core_list)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.dist_eval" title="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.dist_eval"><code class="xref py py-obj docutils literal"><span class="pre">dist_eval</span></code></a>(index[,&nbsp;selected])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.expand_list" title="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.expand_list"><code class="xref py py-obj docutils literal"><span class="pre">expand_list</span></code></a>(list_to_expand,&nbsp;candidate_list)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.get_buffer_mask" title="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.get_buffer_mask"><code class="xref py py-obj docutils literal"><span class="pre">get_buffer_mask</span></code></a>(ID)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.get_neigh" title="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.get_neigh"><code class="xref py py-obj docutils literal"><span class="pre">get_neigh</span></code></a>(ID)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.grow_core" title="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.grow_core"><code class="xref py py-obj docutils literal"><span class="pre">grow_core</span></code></a>(core_seed)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.run" title="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.run"><code class="xref py py-obj docutils literal"><span class="pre">run</span></code></a>(position_array[,&nbsp;weight_array,&nbsp;...])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.scan" title="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.scan"><code class="xref py py-obj docutils literal"><span class="pre">scan</span></code></a>(ID)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.set_point_type" title="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.set_point_type"><code class="xref py py-obj docutils literal"><span class="pre">set_point_type</span></code></a>(ID[,&nbsp;density_reach])</td>
+<td>set point type (core,border,noise), according to local density and K</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.build_cluster">
+<code class="descname">build_cluster</code><span class="sig-paren">(</span><em>cluster_ID</em>, <em>cluster_members_list</em>, <em>IDs=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/clustering/density_based/dbscan_unbinned.html#DBSCANUnbinned.build_cluster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.build_cluster" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.check_core_is_already_cluster">
+<code class="descname">check_core_is_already_cluster</code><span class="sig-paren">(</span><em>core_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/clustering/density_based/dbscan_unbinned.html#DBSCANUnbinned.check_core_is_already_cluster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.check_core_is_already_cluster" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.dist_eval">
+<code class="descname">dist_eval</code><span class="sig-paren">(</span><em>index</em>, <em>selected=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/clustering/density_based/dbscan_unbinned.html#DBSCANUnbinned.dist_eval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.dist_eval" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.expand_list">
+<code class="descname">expand_list</code><span class="sig-paren">(</span><em>list_to_expand</em>, <em>candidate_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/clustering/density_based/dbscan_unbinned.html#DBSCANUnbinned.expand_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.expand_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.get_buffer_mask">
+<code class="descname">get_buffer_mask</code><span class="sig-paren">(</span><em>ID</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/clustering/density_based/dbscan_unbinned.html#DBSCANUnbinned.get_buffer_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.get_buffer_mask" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.get_neigh">
+<code class="descname">get_neigh</code><span class="sig-paren">(</span><em>ID</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/clustering/density_based/dbscan_unbinned.html#DBSCANUnbinned.get_neigh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.get_neigh" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.grow_core">
+<code class="descname">grow_core</code><span class="sig-paren">(</span><em>core_seed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/clustering/density_based/dbscan_unbinned.html#DBSCANUnbinned.grow_core"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.grow_core" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>position_array</em>, <em>weight_array=None</em>, <em>store_position_array_IDs=False</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/clustering/density_based/dbscan_unbinned.html#DBSCANUnbinned.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.scan">
+<code class="descname">scan</code><span class="sig-paren">(</span><em>ID</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/clustering/density_based/dbscan_unbinned.html#DBSCANUnbinned.scan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.scan" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.set_point_type">
+<code class="descname">set_point_type</code><span class="sig-paren">(</span><em>ID</em>, <em>density_reach=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/clustering/density_based/dbscan_unbinned.html#DBSCANUnbinned.set_point_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.clustering.density_based.dbscan_unbinned.DBSCANUnbinned.set_point_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>set point type (core,border,noise), according to local density and K
+Args:</p>
+<blockquote>
+<div>ID:
+neigh_id_array:
+density_reach:</div></blockquote>
+<p>Returns:</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+         </div>
+       </div>
+
+
+     </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="asterism.html" >package: asterism</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="asterism.core.html" >package: asterism.core</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="asterism.core.clustering.html" >package: asterism.core.clustering</a> &#187;</li>
+          <li class="nav-item nav-item-4"><a href="asterism.core.clustering.density_based.html" >package: asterism.core.clustering.density_based</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, andrea tramacere.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,722 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>asterism.core.machine_learning.data_sets.features &#8212; asterism 1.0.a documentation</title>
+    
+    <link rel="stylesheet" href="../../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '1.0.a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../../index.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<br><img src="../../../../../_static/logo.png" style=width:80%; " />  <br>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+     <div class="documentwrapper">
+       <div class="bodywrapper">
+        <div class="body">
+         <div class="align-left figure align-left">
+
+
+        </div>
+           
+  <h1>Source code for asterism.core.machine_learning.data_sets.features</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module: features</span>
+<span class="sd">==================</span>
+
+<span class="sd">Summary</span>
+<span class="sd">-------</span>
+<span class="sd">.. autosummary::</span>
+<span class="sd">   FeaturesSetBase</span>
+
+
+<span class="sd">Module API</span>
+<span class="sd">-----------</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">.sampling</span> <span class="k">import</span>  <span class="n">sampling_split</span>
+<span class="kn">from</span> <span class="nn">.tools</span> <span class="k">import</span> <span class="n">build_names_list</span>
+<span class="kn">from</span> <span class="nn">.visualization</span> <span class="k">import</span> <span class="n">plot_feature_histogram</span><span class="p">,</span><span class="n">contour_scatter_plot</span>
+<span class="kn">from</span>  <span class="nn">sklearn.cross_validation</span> <span class="k">import</span> <span class="n">StratifiedShuffleSplit</span><span class="p">,</span><span class="n">ShuffleSplit</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;andrea tramacere&#39;</span>
+
+
+<div class="viewcode-block" id="write_table"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.features.html#asterism.core.machine_learning.data_sets.features.write_table">[docs]</a><span class="k">def</span> <span class="nf">write_table</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">fp</span><span class="p">,</span><span class="n">target</span><span class="p">):</span>
+
+    <span class="c">#print (target)</span>
+    <span class="n">nrows_tot</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">nrows_tot</span><span class="p">):</span>
+        <span class="c">#print data[ID].size</span>
+        <span class="n">a</span><span class="o">=</span><span class="s">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+            <span class="n">a</span><span class="o">+=</span><span class="s">&quot;%s, &quot;</span><span class="o">%</span><span class="n">data</span><span class="p">[</span><span class="n">ID</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="c">#a+=&quot;%s &quot;%data[ID][-1]</span>
+        <span class="nb">str</span><span class="o">=</span><span class="n">a</span> <span class="o">+</span> <span class="s">&quot; %s&quot;</span><span class="o">%</span><span class="n">target</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">file</span><span class="o">=</span><span class="n">fp</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="write_weka_file"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.features.html#asterism.core.machine_learning.data_sets.features.write_weka_file">[docs]</a><span class="k">def</span> <span class="nf">write_weka_file</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span><span class="n">features</span><span class="p">,</span><span class="n">features_names</span><span class="p">,</span><span class="n">class_ids</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">class_labels</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">relation</span><span class="o">=</span><span class="s">&#39;None&#39;</span><span class="p">,):</span>
+
+
+    <span class="n">fp</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+
+    <span class="nb">str</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">    % 1. Title:</span>
+<span class="s">    %</span>
+<span class="s">    % 2. Sources:</span>
+<span class="s">    &quot;&quot;&quot;</span>
+
+    <span class="nb">str</span><span class="o">+=</span><span class="s">&quot;@RELATION %s&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">relation</span><span class="p">)</span>
+
+
+    <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">file</span><span class="o">=</span><span class="n">fp</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">col_name</span> <span class="ow">in</span> <span class="n">features_names</span><span class="p">:</span>
+            <span class="c">#if &#39;i1xx&#39; == columns_dtype[col_name]:</span>
+            <span class="c">#    datatype=&#39;{True,False}&#39;</span>
+            <span class="c">#else:</span>
+            <span class="n">datatype</span><span class="o">=</span><span class="s">&#39;NUMERIC&#39;</span>
+            <span class="nb">str</span><span class="o">=</span><span class="s">&quot;@ATTRIBUTE &quot;</span><span class="o">+</span> <span class="n">col_name</span> <span class="o">+</span><span class="s">&quot; &quot;</span><span class="o">+</span> <span class="n">datatype</span>
+            <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">file</span><span class="o">=</span><span class="n">fp</span><span class="p">)</span>
+
+    <span class="c">#print len(features_names)</span>
+    <span class="k">if</span> <span class="n">class_labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+        <span class="n">data_classes</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">class_labels</span><span class="p">)</span>
+        <span class="n">data_classes_str</span><span class="o">=</span><span class="s">&#39;&#39;</span>
+
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">data_classes</span><span class="p">:</span>
+            <span class="n">data_classes_str</span><span class="o">+=</span><span class="s">&#39;%s,&#39;</span><span class="o">%</span><span class="n">c</span>
+
+        <span class="c">#if t_set==True:</span>
+        <span class="nb">str</span><span class="o">=</span><span class="s">&quot;@ATTRIBUTE class {%s}&quot;</span><span class="o">%</span><span class="n">data_classes_str</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">file</span><span class="o">=</span><span class="n">fp</span><span class="p">)</span>
+        <span class="n">target</span><span class="o">=</span><span class="n">class_labels</span>
+
+    <span class="k">if</span> <span class="n">class_ids</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+        <span class="n">datatype</span><span class="o">=</span><span class="s">&#39;NUMERIC&#39;</span>
+        <span class="nb">str</span><span class="o">=</span><span class="s">&quot;@ATTRIBUTE target &quot;</span><span class="o">+</span> <span class="n">datatype</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">file</span><span class="o">=</span><span class="n">fp</span><span class="p">)</span>
+
+    <span class="nb">str</span><span class="o">=</span><span class="s">&quot;@DATA&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">file</span><span class="o">=</span><span class="n">fp</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span><span class="n">file</span><span class="o">=</span><span class="n">fp</span><span class="p">)</span>
+
+
+    <span class="n">write_table</span><span class="p">(</span><span class="n">features</span><span class="p">,</span><span class="n">fp</span><span class="p">,</span><span class="n">target</span><span class="p">)</span>
+
+    <span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="FeaturesSetBase"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.features.html#asterism.core.machine_learning.data_sets.features.FeaturesSetBase">[docs]</a><span class="k">class</span> <span class="nc">FeaturesSetBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">features_array</span><span class="p">,</span>\
+                 <span class="n">features_names</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>\
+                 <span class="n">target_array</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>\
+                 <span class="n">weight_array</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>\
+                 <span class="n">features_original_entry_ID</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">=</span><span class="n">features_array</span>
+
+        <span class="k">if</span> <span class="n">features_names</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span><span class="o">=</span><span class="n">features_names</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;F_%d&#39;</span><span class="o">%</span><span class="n">ID</span> <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">features_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+
+
+        <span class="k">if</span> <span class="n">target_array</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_target_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">target_array</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_target_array</span><span class="o">=</span><span class="k">None</span>
+
+        <span class="k">if</span> <span class="n">weight_array</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_weight_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">weight_array</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_weight_array</span><span class="o">=</span><span class="k">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features_original_entry_ID</span><span class="o">=</span><span class="n">features_original_entry_ID</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">clean_features_nan_inf</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features_N_rows</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_N_cols</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| features built&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| Rows,Cols&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_N_rows</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_N_cols</span><span class="p">)</span>
+        <span class="c">#print(&quot;| column names&quot;,self._features_names)</span>
+
+        <span class="c">#for name in self._features_names:</span>
+        <span class="c">#    print(&quot;|&quot;,name)</span>
+        <span class="c">#print(&quot;&quot;)</span>
+
+
+    <span class="c">#------------------------------------</span>
+    <span class="c"># Properties</span>
+    <span class="c">#------------------------------------</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">features</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">features_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span>
+
+    <span class="nd">@features_names</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">features_names</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">names</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_same_size</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">features_N_cols</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span><span class="o">=</span><span class="n">names</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">target</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target_array</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">target_array</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target_array</span>
+
+    <span class="nd">@target_array</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">target_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">array</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_is_1dim</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_same_size</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">size</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">features_N_rows</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_target_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">weight_array</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weight_array</span>
+
+    <span class="nd">@weight_array</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">weight_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">array</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_is_1dim</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_same_size</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">size</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">features_N_rows</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_weight_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">features_original_entry_ID</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_original_entry_ID</span>
+
+    <span class="nd">@features_original_entry_ID</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">features_original_entry_ID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">array</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_is_1dim</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_same_size</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">size</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">features_N_rows</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features_original_entry_ID</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">features_N_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span>  <span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">features_N_cols</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span>  <span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+
+
+    <span class="c">#------------------------------------</span>
+    <span class="c"># constructors</span>
+    <span class="c">#------------------------------------</span>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="FeaturesSetBase.new_from_table"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.features.html#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.new_from_table">[docs]</a>    <span class="k">def</span> <span class="nf">new_from_table</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span><span class="n">table</span><span class="p">,</span>\
+                                   <span class="n">target_array</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>\
+                                   <span class="n">weight_array</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>\
+                                   <span class="n">target_col_name</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>\
+                                   <span class="n">target_col_num</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>\
+                                   <span class="n">original_entry_ID_col_name</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>\
+                                   <span class="n">use_col_names_list</span><span class="o">=</span><span class="p">[],</span>\
+                                   <span class="n">skip_col_names_list</span><span class="o">=</span><span class="p">[],</span>\
+                                   <span class="n">use_col_num_list</span><span class="o">=</span><span class="p">[],</span>\
+                                   <span class="n">skip_col_num_list</span><span class="o">=</span><span class="p">[],</span>\
+                                   <span class="n">regex</span><span class="o">=</span><span class="k">True</span><span class="p">,</span>\
+                                   <span class="n">rows_IDs_use_list</span><span class="o">=</span><span class="p">[],</span>\
+                                   <span class="n">rows_IDs_skip_list</span><span class="o">=</span><span class="p">[]):</span>
+
+
+
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| building features&quot;</span><span class="p">)</span>
+        <span class="n">cols_ID_use_list</span><span class="o">=</span><span class="n">xrange</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">_data_N_cols</span><span class="p">)</span>
+        <span class="n">names_list</span><span class="o">=</span><span class="n">table</span><span class="o">.</span><span class="n">_data_names</span>
+
+
+
+
+
+        <span class="c">#column filtering</span>
+        <span class="k">if</span> <span class="n">skip_col_num_list</span><span class="o">!=</span><span class="p">[]</span> <span class="ow">and</span> <span class="n">skip_col_num_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="n">cols_ID_use_list</span><span class="o">=</span><span class="p">[</span><span class="n">ID</span> <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">_data_N_cols</span><span class="p">)</span> <span class="k">if</span> <span class="n">ID</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">skip_col_num_list</span><span class="p">]</span>
+            <span class="n">names_list</span><span class="o">=</span><span class="n">names_list</span><span class="p">[</span><span class="n">cols_ID_use_list</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">use_col_num_list</span><span class="o">!=</span><span class="p">[]</span> <span class="ow">and</span> <span class="n">use_col_num_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="n">cols_ID_use_list</span><span class="o">=</span><span class="n">use_col_num_list</span>
+            <span class="n">names_list</span><span class="o">=</span><span class="n">names_list</span><span class="p">[</span><span class="n">cols_ID_use_list</span><span class="p">]</span>
+
+
+
+        <span class="k">if</span> <span class="n">use_col_names_list</span><span class="o">!=</span><span class="p">[]</span> <span class="ow">and</span> <span class="n">use_col_names_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="n">names_list</span><span class="o">=</span><span class="n">build_names_list</span><span class="p">(</span><span class="n">use_col_names_list</span><span class="p">,</span><span class="n">names_list</span><span class="p">,</span><span class="n">regex</span><span class="o">=</span><span class="n">regex</span><span class="p">)</span>
+
+
+        <span class="k">if</span> <span class="n">skip_col_names_list</span><span class="o">!=</span><span class="p">[]</span> <span class="ow">and</span> <span class="n">skip_col_names_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="n">names_list</span><span class="o">=</span><span class="n">build_names_list</span><span class="p">(</span><span class="n">skip_col_names_list</span><span class="p">,</span><span class="n">names_list</span><span class="p">,</span><span class="n">regex</span><span class="o">=</span><span class="n">regex</span><span class="p">,</span><span class="n">skip</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
+
+        <span class="n">features_names</span><span class="o">=</span><span class="n">names_list</span>
+        <span class="n">features_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">table</span><span class="o">.</span><span class="n">_data_array</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">names_list</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">features_original_entry_ID</span><span class="o">=</span><span class="n">table</span><span class="o">.</span><span class="n">_data_array</span><span class="p">[</span><span class="s">&#39;original_entry_ID&#39;</span><span class="p">]</span>
+
+
+
+        <span class="k">if</span> <span class="n">target_col_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">target_col_name</span> <span class="ow">in</span> <span class="n">features_names</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;features  can not be used as target&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">target_array</span><span class="o">=</span><span class="n">table</span><span class="o">.</span><span class="n">_data_array</span><span class="p">[</span><span class="n">target_col_name</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">target_col_num</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">target_col_num</span> <span class="ow">in</span> <span class="n">cols_ID_use_list</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;features  can not be used as target&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">target_array</span><span class="o">=</span><span class="n">table</span><span class="o">.</span><span class="n">_data_array</span><span class="p">[:,</span><span class="n">target_col_num</span><span class="p">]</span>
+
+
+        <span class="c">#row filtering</span>
+        <span class="k">if</span> <span class="n">rows_IDs_use_list</span><span class="o">!=</span><span class="p">[]</span> <span class="ow">and</span>    <span class="n">rows_IDs_use_list</span><span class="o">!=</span><span class="k">None</span><span class="p">:</span>
+            <span class="n">features_array</span><span class="o">=</span><span class="n">features_array</span><span class="p">[</span><span class="n">rows_IDs_use_list</span><span class="p">]</span>
+            <span class="n">features_original_entry_ID</span><span class="o">=</span><span class="n">features_original_entry_ID</span><span class="p">[</span><span class="n">rows_IDs_use_list</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">target_array</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+                <span class="n">target_array</span><span class="o">=</span><span class="n">target_array</span><span class="p">[</span><span class="n">rows_IDs_use_list</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">weight_array</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+                <span class="n">weight_array</span><span class="o">=</span><span class="n">weight_array</span><span class="p">[</span><span class="n">rows_IDs_use_list</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">rows_IDs_skip_list</span><span class="o">!=</span><span class="p">[]</span> <span class="ow">and</span>    <span class="n">rows_IDs_skip_list</span><span class="o">!=</span><span class="k">None</span><span class="p">:</span>
+            <span class="n">use_list</span><span class="o">=</span><span class="p">[</span><span class="n">ID</span> <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">_data_N_rows</span><span class="p">)</span> <span class="k">if</span> <span class="n">ID</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">rows_IDs_skip_list</span><span class="p">]</span>
+            <span class="n">features_array</span><span class="o">=</span><span class="n">features_array</span><span class="p">[</span><span class="n">use_list</span><span class="p">]</span>
+            <span class="n">features_original_entry_ID</span><span class="o">=</span><span class="n">features_original_entry_ID</span><span class="p">[</span><span class="n">use_list</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">target_array</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+                <span class="n">target_array</span><span class="o">=</span><span class="n">target_array</span><span class="p">[</span><span class="n">use_list</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">weight_array</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+                <span class="n">weight_array</span><span class="o">=</span><span class="n">weight_array</span><span class="p">[</span><span class="n">use_list</span><span class="p">]</span>
+
+
+
+
+
+        <span class="k">return</span> <span class="n">FeaturesSetBase</span><span class="p">(</span><span class="n">features_array</span><span class="p">,</span>\
+                            <span class="n">features_names</span><span class="o">=</span><span class="n">features_names</span><span class="p">,</span>\
+                            <span class="n">target_array</span><span class="o">=</span><span class="n">target_array</span><span class="p">,</span>\
+                            <span class="n">weight_array</span><span class="o">=</span><span class="n">weight_array</span><span class="p">,</span>\
+                            <span class="n">features_original_entry_ID</span><span class="o">=</span><span class="n">features_original_entry_ID</span><span class="p">)</span></div>
+
+
+
+
+<div class="viewcode-block" id="FeaturesSetBase.new_from_rows"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.features.html#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.new_from_rows">[docs]</a>    <span class="k">def</span> <span class="nf">new_from_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">selected</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a new FeaturesSet object from a slice of an existing FeaturesSet object</span>
+<span class="sd">        Args:</span>
+<span class="sd">            feature_obj:</span>
+<span class="sd">            selected: either bool array or IDs array</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">new</span><span class="o">.</span><span class="n">filter_features_rows</span><span class="p">(</span><span class="n">selected</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new</span></div>
+
+
+
+<div class="viewcode-block" id="FeaturesSetBase.plot_feature_histogram"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.features.html#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.plot_feature_histogram">[docs]</a>    <span class="k">def</span> <span class="nf">plot_feature_histogram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">names</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">normed</span><span class="o">=</span><span class="k">False</span><span class="p">,</span><span class="n">KDE</span><span class="o">=</span><span class="k">False</span><span class="p">,</span><span class="n">gridsize</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">bw</span><span class="o">=</span><span class="s">&#39;scott&#39;</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">plot</span><span class="o">=</span><span class="k">False</span><span class="p">,</span><span class="n">exclude_outliers</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">save_plot</span><span class="o">=</span><span class="k">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">names</span><span class="p">)</span><span class="o">!=</span><span class="nb">list</span><span class="p">:</span>
+            <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="n">names</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+        <span class="n">names_list</span><span class="o">=</span><span class="n">build_names_list</span><span class="p">(</span><span class="n">names</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">features_names</span><span class="p">,</span><span class="n">regex</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names_list</span><span class="p">:</span>
+            <span class="n">plot_feature_histogram</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_feature_by_name</span><span class="p">(</span><span class="n">name</span><span class="p">),</span>
+                                   <span class="n">name</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">,</span>
+                                   <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span>
+                                   <span class="n">normed</span><span class="o">=</span><span class="n">normed</span><span class="p">,</span>
+                                   <span class="n">KDE</span><span class="o">=</span><span class="n">KDE</span><span class="p">,</span>
+                                   <span class="n">gridsize</span><span class="o">=</span><span class="n">gridsize</span><span class="p">,</span>
+                                   <span class="n">bw</span><span class="o">=</span><span class="n">bw</span><span class="p">,</span>
+                                   <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+                                   <span class="n">plot</span><span class="o">=</span><span class="n">plot</span><span class="p">,</span>
+                                   <span class="n">exclude_outliers</span><span class="o">=</span><span class="n">exclude_outliers</span><span class="p">,</span>
+                                   <span class="n">save_plot</span><span class="o">=</span><span class="n">save_plot</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FeaturesSetBase.plot_contour_scatter_plot"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.features.html#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.plot_contour_scatter_plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot_contour_scatter_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name_1</span><span class="p">,</span><span class="n">name_2</span><span class="p">,</span><span class="n">n_levels</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">exclude_outliers</span><span class="o">=</span><span class="k">False</span><span class="p">,</span><span class="n">show_plot</span><span class="o">=</span><span class="k">False</span><span class="p">,</span><span class="n">plot_contour</span><span class="o">=</span><span class="k">True</span><span class="p">,</span><span class="n">plot_scatter</span><span class="o">=</span><span class="k">True</span><span class="p">):</span>
+
+        <span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_feature_by_name</span><span class="p">(</span><span class="n">name_1</span><span class="p">)</span>
+
+        <span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_feature_by_name</span><span class="p">(</span><span class="n">name_2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">contour_scatter_plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span>
+                                    <span class="n">y</span><span class="p">,</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">,</span>
+                                    <span class="n">x_name</span><span class="o">=</span><span class="n">name_1</span><span class="p">,</span>
+                                    <span class="n">y_name</span><span class="o">=</span><span class="n">name_2</span><span class="p">,</span>
+                                    <span class="n">n_levels</span><span class="o">=</span><span class="n">n_levels</span><span class="p">,</span>
+                                    <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+                                    <span class="n">exclude_outliers</span><span class="o">=</span><span class="n">exclude_outliers</span><span class="p">,</span>
+                                    <span class="n">show_plot</span><span class="o">=</span><span class="n">show_plot</span><span class="p">,</span>
+                                    <span class="n">plot_contour</span><span class="o">=</span><span class="n">plot_contour</span><span class="p">,</span>
+                                    <span class="n">plot_scatter</span><span class="o">=</span><span class="n">plot_scatter</span><span class="p">,</span>
+                                    <span class="n">point_size</span><span class="o">=.</span><span class="mi">5</span><span class="p">,</span>
+                                    <span class="n">color_list</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+                                    <span class="n">c_map_list</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+                                    <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span></div>
+
+
+
+    <span class="c">#------------------------------------</span>
+    <span class="c"># getters</span>
+    <span class="c">#------------------------------------</span>
+<div class="viewcode-block" id="FeaturesSetBase.get_feature_by_name"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.features.html#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.get_feature_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_feature_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">feature_name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">feature_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;feature name not existing&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ID</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">name</span><span class="o">==</span><span class="n">feature_name</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="p">[:,</span><span class="n">ID</span><span class="p">]</span></div>
+
+
+    <span class="c">#------------------------------------</span>
+    <span class="c"># train/test splitting</span>
+    <span class="c">#------------------------------------</span>
+<div class="viewcode-block" id="FeaturesSetBase.split_train_test"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.features.html#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.split_train_test">[docs]</a>    <span class="k">def</span> <span class="nf">split_train_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">train_test_split_ratio</span><span class="p">,</span><span class="n">sampling_array</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">stratified</span><span class="o">=</span><span class="k">True</span><span class="p">):</span>
+
+        <span class="n">N_split_train</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features_N_rows</span><span class="o">*</span><span class="n">train_test_split_ratio</span><span class="p">)</span>
+
+
+
+        <span class="k">if</span> <span class="n">N_split_train</span><span class="o">==</span><span class="bp">self</span><span class="o">.</span><span class="n">features_N_rows</span> <span class="ow">or</span> <span class="n">N_split_train</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;Splitting ratio produced train set size or test set size ==0&quot;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">stratified</span> <span class="o">==</span><span class="k">True</span> <span class="ow">and</span> <span class="n">sampling_array</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+
+                <span class="n">str_shuffle</span><span class="o">=</span><span class="n">StratifiedShuffleSplit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">1.0</span><span class="o">-</span><span class="n">train_test_split_ratio</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">train_IDs</span><span class="p">,</span><span class="n">test_IDs</span> <span class="ow">in</span> <span class="n">str_shuffle</span><span class="p">:</span>
+                    <span class="k">pass</span>
+
+            <span class="k">elif</span> <span class="n">stratified</span><span class="o">==</span><span class="k">False</span> <span class="ow">and</span> <span class="n">sampling_array</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+                <span class="n">shuffle</span><span class="o">=</span><span class="n">ShuffleSplit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features_N_rows</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">1.0</span><span class="o">-</span><span class="n">train_test_split_ratio</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">train_IDs</span><span class="p">,</span><span class="n">test_IDs</span> <span class="ow">in</span> <span class="n">shuffle</span><span class="p">:</span>
+                    <span class="k">pass</span>
+
+
+
+            <span class="k">elif</span> <span class="n">sampling_array</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+                <span class="n">train_IDs</span><span class="p">,</span><span class="n">ks_p_value</span><span class="o">=</span><span class="n">sampling_split</span><span class="p">(</span><span class="n">sampling_array</span><span class="p">,</span><span class="n">N_split_train</span><span class="p">)</span>
+                <span class="n">test_IDs</span><span class="o">=~</span><span class="n">train_IDs</span>
+
+
+
+        <span class="n">train_Features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">new_from_rows</span><span class="p">(</span><span class="n">train_IDs</span><span class="p">)</span>
+        <span class="n">test_Features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">new_from_rows</span><span class="p">(</span><span class="n">test_IDs</span><span class="p">)</span>
+
+
+        <span class="k">return</span> <span class="n">train_Features</span><span class="p">,</span><span class="n">test_Features</span></div>
+
+    <span class="c">#------------------------------------</span>
+    <span class="c"># add/remove</span>
+    <span class="c">#------------------------------------</span>
+<div class="viewcode-block" id="FeaturesSetBase.add_feature"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.features.html#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.add_feature">[docs]</a>    <span class="k">def</span> <span class="nf">add_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">feature</span><span class="p">,</span><span class="n">feature_name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="p">,</span><span class="n">feature</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feature_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features_N_rows</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_N_cols</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">.</span><span class="n">shape</span></div>
+
+
+<div class="viewcode-block" id="FeaturesSetBase.remove_feature"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.features.html#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.remove_feature">[docs]</a>    <span class="k">def</span> <span class="nf">remove_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">removing_feature_names_list</span><span class="p">,</span><span class="n">regex</span><span class="o">=</span><span class="k">True</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">removing_feature_names_list</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="n">removing_feature_names_list</span><span class="o">=</span><span class="p">[</span><span class="n">removing_feature_names_list</span><span class="p">]</span>
+
+
+
+        <span class="k">if</span> <span class="n">regex</span> <span class="ow">is</span> <span class="k">True</span><span class="p">:</span>
+            <span class="n">names_list</span><span class="o">=</span><span class="n">build_names_list</span><span class="p">(</span><span class="n">removing_feature_names_list</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span><span class="p">,</span><span class="n">regex</span><span class="o">=</span><span class="n">regex</span><span class="p">,</span><span class="n">skip</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
+                <span class="c">#self._build_skip_names_list(removing_feature_names_list,regex=regex)</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="n">names_list</span><span class="o">=</span><span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">removing_feature_names_list</span><span class="p">]</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| removing features :&quot;</span><span class="p">,</span><span class="n">names_list</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| features initial Rows,Cols=&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_N_rows</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_N_cols</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">feature_name</span> <span class="ow">in</span> <span class="n">names_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">feature_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;feature name not existing &#39;</span><span class="p">)</span>
+
+        <span class="n">remove_ID_list</span><span class="o">=</span><span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">ID</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span><span class="p">[:]):</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">names_list</span><span class="p">:</span>
+                <span class="n">remove_ID_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ID</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">remove_ID_list</span><span class="o">!=</span><span class="p">[]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="p">,</span><span class="n">remove_ID_list</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features_N_rows</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_N_cols</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">.</span><span class="n">shape</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| features final Rows,Cols=&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">features_N_rows</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">features_N_cols</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span></div>
+
+
+
+
+    <span class="c">#------------------------------------</span>
+    <span class="c"># cleaning</span>
+    <span class="c">#------------------------------------</span>
+
+<div class="viewcode-block" id="FeaturesSetBase.clean_features_bad_value"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.features.html#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.clean_features_bad_value">[docs]</a>    <span class="k">def</span> <span class="nf">clean_features_bad_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">bad_value</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| features cleaning for bad_value=&quot;</span><span class="p">,</span><span class="n">bad_value</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| features initial Rows,Cols=&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_N_rows</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_N_cols</span><span class="p">)</span>
+        <span class="c">#removes a whole column is all the elements in the are</span>
+        <span class="c"># all== inf or</span>
+        <span class="c"># all== nan or</span>
+        <span class="c"># all== inf or nan</span>
+        <span class="n">black_list</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">use_IDs_list</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">ID</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span><span class="p">):</span>
+
+            <span class="n">bad_column</span><span class="o">=~</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="p">[:,</span><span class="n">ID</span><span class="p">]</span><span class="o">==</span><span class="n">bad_value</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">bad_column</span> <span class="ow">is</span> <span class="k">True</span><span class="p">:</span>
+                <span class="n">use_IDs_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">ID</span><span class="p">)</span>
+                <span class="n">black_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;|removed columns&quot;</span><span class="p">,</span><span class="n">black_list</span><span class="p">)</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">select_columns_by_ID</span><span class="p">(</span><span class="n">use_IDs_list</span><span class="p">)</span>
+
+
+        <span class="c">#removes a row if any of the entry in the row is == bad_value</span>
+        <span class="n">masked</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_N_rows</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">masked</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span><span class="o">==</span><span class="n">bad_value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_features_rows</span><span class="p">(</span><span class="o">~</span><span class="n">masked</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| features cleaned Rows,Cols=&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">features_N_rows</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">features_N_cols</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FeaturesSetBase.clean_features_nan_inf"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.features.html#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.clean_features_nan_inf">[docs]</a>    <span class="k">def</span> <span class="nf">clean_features_nan_inf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| features cleaning for nan/inf&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| features initial Rows,Cols=&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">features_N_rows</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">features_N_cols</span><span class="p">)</span>
+        <span class="c">#removes a whole column is all the elements in the are</span>
+        <span class="c"># all== inf or</span>
+        <span class="c"># all== nan or</span>
+        <span class="c"># all== inf or nan</span>
+
+        <span class="n">use_IDs_list</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">black_list</span><span class="o">=</span><span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ID</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span><span class="p">):</span>
+
+            <span class="c">#we skip strings</span>
+
+            <span class="n">bad_column</span><span class="o">=~</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="p">[:,</span><span class="n">ID</span><span class="p">]),</span><span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="p">[:,</span><span class="n">ID</span><span class="p">])))</span>
+
+            <span class="k">if</span> <span class="n">bad_column</span> <span class="ow">is</span> <span class="k">True</span><span class="p">:</span>
+                <span class="n">use_IDs_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">ID</span><span class="p">)</span>
+                <span class="n">black_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;|removed columns&quot;</span><span class="p">,</span><span class="n">black_list</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">select_columns_by_ID</span><span class="p">(</span><span class="n">use_IDs_list</span><span class="p">)</span>
+
+
+        <span class="c">#removes a row if any of the entry in the row is inf or nan</span>
+        <span class="n">masked</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features_N_rows</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">masked</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="p">[</span><span class="n">ID</span><span class="p">]))</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="p">[</span><span class="n">ID</span><span class="p">]))</span>
+        <span class="c">#print(self._features_original_entry_ID[masked])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_features_rows</span><span class="p">(</span><span class="o">~</span><span class="n">masked</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| features cleaned Rows,Cols=&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">features_N_rows</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">features_N_cols</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FeaturesSetBase.filter_features_rows"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.features.html#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.filter_features_rows">[docs]</a>    <span class="k">def</span> <span class="nf">filter_features_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">selected</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_original_entry_ID</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_features_original_entry_ID</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_original_entry_ID</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target_array</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_target_array</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_target_array</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weight_array</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_weight_array</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_weight_array</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features_N_rows</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_N_cols</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">.</span><span class="n">shape</span></div>
+
+
+<div class="viewcode-block" id="FeaturesSetBase.sort_columns"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.features.html#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.sort_columns">[docs]</a>    <span class="k">def</span> <span class="nf">sort_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">id_array</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="p">[:,</span><span class="n">id_array</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">id_array</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features_N_rows</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="FeaturesSetBase.select_columns_by_ID"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.features.html#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.select_columns_by_ID">[docs]</a>    <span class="k">def</span> <span class="nf">select_columns_by_ID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">use_IDs_list</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| select features columns&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| features initial Rows,Cols=&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">if</span>  <span class="nb">hasattr</span><span class="p">(</span><span class="n">use_IDs_list</span><span class="p">,</span><span class="s">&#39;dtype&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">use_IDs_list</span><span class="o">.</span><span class="n">dtype</span><span class="o">==</span><span class="n">np</span><span class="o">.</span><span class="n">bool</span><span class="p">:</span>
+                <span class="n">use_IDs_list</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">use_IDs_list</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">use_IDs_list</span><span class="p">)</span><span class="o">!=</span><span class="nb">list</span><span class="p">:</span>
+            <span class="n">use_IDs_list</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">use_IDs_list</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">use_IDs_list</span><span class="p">)</span> <span class="o">&lt;=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span><span class="p">):</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="p">[:,</span><span class="n">use_IDs_list</span><span class="p">]</span>
+            <span class="n">_names</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span> <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span>  <span class="n">use_IDs_list</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span><span class="o">=</span><span class="n">_names</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_features_N_cols</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">use_IDs_list</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_features_N_rows</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| features selected Rows,Cols=&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FeaturesSetBase.merge"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.features.html#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.merge">[docs]</a>    <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">feature</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="p">,</span><span class="n">feature</span><span class="o">.</span><span class="n">_features_array</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_target_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_target_array</span><span class="p">,</span><span class="n">feature</span><span class="o">.</span><span class="n">_target_array</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features_N_rows</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_original_entry_ID</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_features_original_entry_ID</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_original_entry_ID</span><span class="p">,</span><span class="n">feature</span><span class="o">.</span><span class="n">_features_original_entry_ID</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weight_array</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_weight_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_weight_array</span><span class="p">,</span><span class="n">feature</span><span class="o">.</span><span class="n">_weight_array</span><span class="p">)</span></div>
+
+    <span class="c">#------------------------------------</span>
+    <span class="c"># check consistency</span>
+    <span class="c">#------------------------------------</span>
+    <span class="k">def</span> <span class="nf">_check_shapes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">.</span><span class="n">ndim</span><span class="o">!=</span><span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;features array has to be a 2dim array&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_names</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;features and features names have different size&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target_array</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target_array</span><span class="o">.</span><span class="n">ndim</span><span class="o">!=</span><span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;target array has to 1dim array&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="bp">self</span><span class="o">.</span><span class="n">_target_array</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;features and target names have different size&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weight_array</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target_array</span><span class="o">.</span><span class="n">ndim</span><span class="o">!=</span><span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;weight array has to 1dim array&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="bp">self</span><span class="o">.</span><span class="n">_weight_array</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;features and weight names have different size&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_original_entry_ID</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_features_original_entry_ID</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;features and features_original_entry_ID  have different size&quot;</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">_check_is_2dim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">array</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">array</span><span class="o">.</span><span class="n">ndim</span><span class="o">==</span><span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">_check_is_1dim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">array</span><span class="p">):</span>
+         <span class="k">return</span> <span class="n">array</span><span class="o">.</span><span class="n">ndim</span><span class="o">==</span><span class="mi">2</span>
+
+    <span class="k">def</span> <span class="nf">_check_same_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">size1</span><span class="p">,</span><span class="n">size2</span><span class="p">):</span>
+         <span class="k">return</span> <span class="n">size1</span><span class="o">==</span><span class="n">size2</span></div>
+
+
+
+
+    <span class="c">#def _build_skip_names_list(self,skip_names_list,regex=True):</span>
+    <span class="c">#    return  build_names_list(skip_names_list,self._features_names,regex=regex,skip=True)</span>
+
+
+    <span class="c">#def _build_use_names_list(self,use_names_list,regex=True):</span>
+    <span class="c">#    return  build_names_list(use_names_list,self._features_names,regex=regex,skip=False)</span>
+</pre></div>
+
+         </div>
+       </div>
+
+
+     </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, andrea tramacere.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

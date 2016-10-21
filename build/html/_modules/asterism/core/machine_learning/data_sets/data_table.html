@@ -1,0 +1,481 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>asterism.core.machine_learning.data_sets.data_table &#8212; asterism 1.0.a documentation</title>
+    
+    <link rel="stylesheet" href="../../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '1.0.a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../../index.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<br><img src="../../../../../_static/logo.png" style=width:80%; " />  <br>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+     <div class="documentwrapper">
+       <div class="bodywrapper">
+        <div class="body">
+         <div class="align-left figure align-left">
+
+
+        </div>
+           
+  <h1>Source code for asterism.core.machine_learning.data_sets.data_table</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Summary</span>
+<span class="sd">-------</span>
+<span class="sd">.. autosummary::</span>
+<span class="sd">   TableBase</span>
+
+
+<span class="sd">Module API</span>
+<span class="sd">-----------</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span>
+<span class="kn">import</span> <span class="nn">pyfits</span> <span class="k">as</span> <span class="nn">pf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">.tools</span> <span class="k">import</span> <span class="n">build_names_list</span>
+<span class="kn">from</span> <span class="nn">numpy.lib</span> <span class="k">import</span> <span class="n">recfunctions</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;andrea tramacere&#39;</span>
+
+
+
+
+
+
+
+
+<div class="viewcode-block" id="TableBase"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.data_table.html#asterism.core.machine_learning.data_sets.data_table.TableBase">[docs]</a><span class="k">class</span> <span class="nc">TableBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    input_ndarray : {array-like}, shape=[_data_N_rows,_data_N_cols]</span>
+<span class="sd">    id_column_name :  str</span>
+<span class="sd">         name of the column storing  positional/ordinal information</span>
+<span class="sd">    id_column_num : int</span>
+<span class="sd">         id of the column storing  positional/ordinal information</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    _data_dtype : int</span>
+<span class="sd">    _data_array : int</span>
+<span class="sd">    _data_names : list</span>
+<span class="sd">    _data_N_cols : int</span>
+<span class="sd">    _data_N_rows : int</span>
+<span class="sd">    _data_original_entry_ID : int</span>
+<span class="sd">    data</span>
+
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">input_ndarray</span><span class="p">,</span>\
+                 <span class="n">id_column_name</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>\
+                 <span class="n">id_column_num</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+
+
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_dtype</span><span class="o">=</span><span class="k">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">=</span><span class="k">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_names</span><span class="o">=</span><span class="k">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_N_cols</span><span class="o">=</span><span class="k">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_N_rows</span><span class="o">=</span><span class="k">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_original_entry_ID</span><span class="o">=</span><span class="k">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">input_ndarray</span><span class="p">,</span>\
+                       <span class="n">id_column_name</span><span class="o">=</span><span class="n">id_column_name</span><span class="p">,</span>\
+                       <span class="n">id_column_num</span><span class="o">=</span><span class="n">id_column_num</span><span class="p">)</span>
+        <span class="c">#self._clean_data_nan_inf()</span>
+        <span class="c">#self._clean_data_nan_inf()</span>
+
+
+
+    <span class="c">#------------------------------------</span>
+    <span class="c"># data Section</span>
+    <span class="c">#------------------------------------</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The numpy recarray storing the data</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span>
+
+
+<div class="viewcode-block" id="TableBase.filter_data"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.data_table.html#asterism.core.machine_learning.data_sets.data_table.TableBase.filter_data">[docs]</a>    <span class="k">def</span> <span class="nf">filter_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">mask</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| filtering data&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| data initial Rows,Cols=&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_N_rows</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_N_cols</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_N_rows</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| data filtered Rows,Cols=&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_N_rows</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_N_cols</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TableBase.set_data"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.data_table.html#asterism.core.machine_learning.data_sets.data_table.TableBase.set_data">[docs]</a>    <span class="k">def</span> <span class="nf">set_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="n">target_col_num</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">target_col_name</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">id_column_name</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">id_column_num</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data :</span>
+<span class="sd">        target_col_name : str</span>
+<span class="sd">            name of the column storing the target information</span>
+<span class="sd">             .. warning:: this has been dismissed</span>
+
+<span class="sd">        target_col_num : int</span>
+<span class="sd">            id of the column storing the target information</span>
+<span class="sd">             .. warning:: this has been dismissed</span>
+
+<span class="sd">        id_column_name : str</span>
+<span class="sd">            name of the column storing  positional/ordinal information</span>
+
+<span class="sd">        id_column_num : int</span>
+<span class="sd">            id of the column storing  positional/ordinal information</span>
+
+
+<span class="sd">        sets the following attributes:</span>
+<span class="sd">         - _data_dtype</span>
+<span class="sd">         - _data_array (dtype np.object)</span>
+<span class="sd">         - _data_names (list)</span>
+<span class="sd">         - _data_N_cols (int)</span>
+<span class="sd">         - _data_N_rows (int)</span>
+<span class="sd">         -  _data_original_entry_ID 1d np.array np.int</span>
+
+<span class="sd">        Columns storing ID positional/ordinal information, or target (i.e. class labels for</span>
+<span class="sd">        classification, or target variables for regression are removed)</span>
+
+<span class="sd">         - Removes the column storing ID positional information (id_column_name/id_column_num if given)</span>
+
+
+<span class="sd">         - Removes the column storing target information (target_col_name/target_col_num if given)</span>
+<span class="sd">         .. warning:: this has been removed</span>
+
+<span class="sd">        The input data can be either a 2dim numpy array or, a numpy recarray.</span>
+<span class="sd">        In the  former case, columns names are set to col_ plus the ordinal ID of the column, starting from zero</span>
+
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">is_table</span><span class="p">,</span><span class="n">is_2dimarray</span><span class="p">,</span><span class="n">is_recarray</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_check_input_data_type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+
+
+
+        <span class="k">if</span> <span class="n">is_2dimarray</span><span class="o">==</span><span class="k">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">id_column_num</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">id_column_num</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">id_column_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;input data has no column names, please provide id_col_num &quot;</span><span class="p">)</span>
+
+
+
+            <span class="n">selected_cols</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_dtype</span><span class="o">=</span> <span class="p">[(</span><span class="s">&#39;col_%d&#39;</span><span class="o">%</span><span class="n">ID</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span> <span class="k">for</span> <span class="n">ID</span><span class="p">,</span><span class="n">foo</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">selected_cols</span><span class="p">)]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_dtype</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">ID</span><span class="p">,</span><span class="n">col_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_names</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span><span class="o">=</span><span class="n">data</span><span class="p">[:,</span><span class="n">ID</span><span class="p">]</span>
+
+        <span class="k">else</span><span class="p">:</span>
+
+
+            <span class="c">#if target_col_name is not None:</span>
+
+
+
+            <span class="k">if</span> <span class="n">id_column_name</span> <span class="ow">is</span> <span class="k">None</span> <span class="ow">and</span> <span class="n">id_column_num</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">elif</span> <span class="n">id_column_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">=</span><span class="n">recfunctions</span><span class="o">.</span><span class="n">drop_fields</span><span class="p">(</span><span class="n">data</span><span class="p">,[</span><span class="n">id_column_name</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">id_column_num</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">=</span><span class="n">recfunctions</span><span class="o">.</span><span class="n">drop_fields</span><span class="p">(</span><span class="n">data</span><span class="p">,[</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="n">id_column_num</span><span class="p">]])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_names</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_dtype</span>
+
+
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">=</span><span class="n">recfunctions</span><span class="o">.</span><span class="n">append_fields</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="p">,</span><span class="s">&#39;original_entry_ID&#39;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">.</span><span class="n">size</span><span class="p">),</span><span class="n">usemask</span><span class="o">=</span><span class="k">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_names</span><span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_N_rows</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">.</span><span class="n">size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_N_cols</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_names</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| input data built&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| data Rows,Cols&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_N_rows</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_N_cols</span><span class="p">)</span></div>
+        <span class="c">#print(&quot;| column names&quot;, self._data_names)</span>
+        <span class="c">#for name in self._data_names:</span>
+        <span class="c">#    print(&quot;|&quot;,name)</span>
+        <span class="c">#print(&quot;&quot;)</span>
+
+
+
+<div class="viewcode-block" id="TableBase.add_column"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.data_table.html#asterism.core.machine_learning.data_sets.data_table.TableBase.add_column">[docs]</a>    <span class="k">def</span> <span class="nf">add_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">values_array</span><span class="p">,</span><span class="n">column_name</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a column to the data, using numpy recfunctions</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        values_array : {array-like}, shape =[self._data_N_rows]</span>
+<span class="sd">        column_name : str</span>
+<span class="sd">        dtype :</span>
+
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">=</span><span class="n">recfunctions</span><span class="o">.</span><span class="n">append_fields</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="p">,</span><span class="n">column_name</span><span class="p">,</span><span class="n">values_array</span><span class="p">,</span><span class="n">usemask</span><span class="o">=</span><span class="k">False</span><span class="p">,</span><span class="n">dtypes</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_names</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_N_rows</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">.</span><span class="n">size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_N_cols</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_names</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_clean_data_nan_inf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes a whole column is all the elements in the are</span>
+<span class="sd">         - all== inf or</span>
+<span class="sd">         - all== nan or</span>
+<span class="sd">         - all== inf or nan</span>
+
+<span class="sd">        Removes a row if any of the entry in the row is inf or nan</span>
+
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c">#removes a whole column is all the elements in the are</span>
+        <span class="c"># all== inf or</span>
+        <span class="c"># all== nan or</span>
+        <span class="c"># all== inf or nan</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&#39;| removing nan/inf&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| data initial Rows,Cols=&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_N_rows</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_N_cols</span><span class="p">)</span>
+        <span class="n">black_names_list</span><span class="o">=</span><span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ID</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span><span class="p">):</span>
+
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span><span class="o">==</span><span class="n">np</span><span class="o">.</span><span class="n">str_</span> <span class="p">:</span>
+                <span class="n">good_colum</span><span class="o">=</span><span class="k">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">good_colum</span><span class="o">=~</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="p">[</span><span class="n">name</span><span class="p">]),</span><span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="p">[</span><span class="n">name</span><span class="p">])))</span>
+
+
+            <span class="k">if</span> <span class="n">good_colum</span> <span class="ow">is</span> <span class="k">False</span><span class="p">:</span>
+                <span class="n">black_names_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s">&#39;black list&#39;</span><span class="p">,</span><span class="n">black_names_list</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">black_names_list</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">=</span><span class="n">recfunctions</span><span class="o">.</span><span class="n">drop_fields</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="p">,</span><span class="n">black_names_list</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_N_cols</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_names</span><span class="p">)</span>
+
+        <span class="c">#removes a row if any of the entry in the row is inf or nan</span>
+        <span class="n">full_col_masked</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">.</span><span class="n">size</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">ID</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span><span class="p">):</span>
+            <span class="n">single_col_masked</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="p">[</span><span class="n">name</span><span class="p">]),</span><span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="p">[</span><span class="n">name</span><span class="p">]))</span>
+            <span class="n">full_col_masked</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">full_col_masked</span><span class="p">,</span><span class="n">single_col_masked</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="p">[</span><span class="o">~</span><span class="n">full_col_masked</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_N_rows</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">.</span><span class="n">size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_N_cols</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_names</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| data filtered Rows,Cols=&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_N_rows</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_N_cols</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_clean_bad_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">bad_value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes a whole column is all the elements in the are</span>
+<span class="sd">         - all== bad_value</span>
+
+<span class="sd">        Removes a row if any of the entry in the row is == bad_value</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        bad_value :</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">black_names_list</span><span class="o">=</span><span class="p">[]</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s">&#39;| removing bad value&#39;</span><span class="p">,</span><span class="n">bad_value</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&quot;| data initial Rows,Cols=&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_N_rows</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_N_cols</span><span class="p">)</span>
+
+        <span class="c"># removes a whole column is all the elements in the are</span>
+        <span class="c"># all== bad_value</span>
+        <span class="k">for</span> <span class="n">ID</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span><span class="p">):</span>
+
+
+            <span class="n">good_colum</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">!=</span><span class="n">bad_value</span><span class="p">)</span>
+
+
+            <span class="k">if</span> <span class="n">good_colum</span> <span class="ow">is</span> <span class="k">False</span><span class="p">:</span>
+                <span class="n">black_names_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s">&#39;black list&#39;</span><span class="p">,</span><span class="n">black_names_list</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">black_names_list</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">=</span><span class="n">recfunctions</span><span class="o">.</span><span class="n">drop_fields</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="p">,</span><span class="n">black_names_list</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_N_cols</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_names</span><span class="p">)</span>
+
+        <span class="c">#removes a row if any of the entry in the row is inf or nan</span>
+        <span class="n">full_col_masked</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">.</span><span class="n">size</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ID</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span><span class="p">):</span>
+
+            <span class="c">#print(row_array,self._data_array.dtype)</span>
+            <span class="n">single_col_masked</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">==</span><span class="n">bad_value</span>
+            <span class="n">full_col_masked</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">full_col_masked</span><span class="p">,</span><span class="n">single_col_masked</span><span class="p">)</span>
+
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="p">[</span><span class="o">~</span><span class="n">full_col_masked</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_N_rows</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="o">.</span><span class="n">size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_N_cols</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_names</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">_check_same_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">size1</span><span class="p">,</span><span class="n">size2</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">size1</span><span class="o">==</span><span class="n">size2</span>
+
+    <span class="k">def</span> <span class="nf">_build_names_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">names_list</span><span class="p">,</span><span class="n">regex</span><span class="o">=</span><span class="k">True</span><span class="p">,</span><span class="n">skip</span><span class="o">=</span><span class="k">False</span><span class="p">):</span>
+        <span class="k">return</span>  <span class="n">build_names_list</span><span class="p">(</span><span class="n">names_list</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_names</span><span class="p">,</span><span class="n">regex</span><span class="o">=</span><span class="n">regex</span><span class="p">,</span><span class="n">skip</span><span class="o">=</span><span class="n">skip</span><span class="p">)</span>
+
+
+
+
+
+    <span class="k">def</span> <span class="nf">_check_input_data_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">is_table</span><span class="o">=</span><span class="k">False</span>
+        <span class="n">is_2dimarray</span><span class="o">=</span><span class="k">False</span>
+        <span class="n">is_recarray</span><span class="o">=</span><span class="k">False</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">is_table</span><span class="o">=</span><span class="k">True</span>
+            <span class="n">is_recarray</span><span class="o">=</span><span class="k">True</span>
+
+        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
+            <span class="n">is_table</span><span class="o">=</span><span class="k">True</span>
+            <span class="n">is_2dimarray</span><span class="o">=</span><span class="k">True</span>
+
+        <span class="k">if</span> <span class="n">is_table</span><span class="o">==</span><span class="k">False</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;data has to be a 2dim array&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">is_table</span><span class="p">,</span><span class="n">is_2dimarray</span><span class="p">,</span><span class="n">is_recarray</span>
+
+
+
+
+
+
+
+    <span class="c">#Constructors</span>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TableBase.from_fits_file"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.data_table.html#asterism.core.machine_learning.data_sets.data_table.TableBase.from_fits_file">[docs]</a>    <span class="k">def</span> <span class="nf">from_fits_file</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span><span class="n">input_file</span><span class="p">,</span><span class="n">id_column_name</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">id_column_num</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">fits_ext</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pf</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span><span class="n">ext</span><span class="o">=</span><span class="n">fits_ext</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">id_column_name</span><span class="o">=</span><span class="n">id_column_name</span><span class="p">,</span><span class="n">id_column_num</span><span class="o">=</span><span class="n">id_column_num</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TableBase.from_ascii_file"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.data_table.html#asterism.core.machine_learning.data_sets.data_table.TableBase.from_ascii_file">[docs]</a>    <span class="k">def</span> <span class="nf">from_ascii_file</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="k">pass</span></div></div>
+
+
+
+<div class="viewcode-block" id="DatasetRegression"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.data_table.html#asterism.core.machine_learning.data_sets.data_table.DatasetRegression">[docs]</a><span class="k">class</span> <span class="nc">DatasetRegression</span><span class="p">(</span><span class="n">TableBase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DatasetRegression</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="DatasetClassification"><a class="viewcode-back" href="../../../../../api/asterism.core.machine_learning.data_sets.data_table.html#asterism.core.machine_learning.data_sets.data_table.DatasetClassification">[docs]</a><span class="k">class</span> <span class="nc">DatasetClassification</span><span class="p">(</span><span class="n">TableBase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DatasetClassification</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span></div>
+</pre></div>
+
+         </div>
+       </div>
+
+
+     </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, andrea tramacere.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

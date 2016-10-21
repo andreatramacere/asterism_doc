@@ -1,0 +1,19 @@
+
+package: asterism.analysis_tasks.source_detection.tools
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+
+
+Modules
+---------------
+.. toctree::
+   :maxdepth: 1
+
+
+   asterism.analysis_tasks.source_detection.tools.detection_tools 

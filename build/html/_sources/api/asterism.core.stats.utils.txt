@@ -1,0 +1,19 @@
+
+package: asterism.core.stats.utils
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+
+
+Modules
+---------------
+.. toctree::
+   :maxdepth: 1
+
+
+   asterism.core.stats.utils.array_stats 

@@ -1,0 +1,27 @@
+.. ASTErIsM documentation master file, created by
+
+=============================================
+
+:Author: `Andrea Tramacere <www.www.www>`_
+
+
+
+Content
+=========================
+
+
+.. toctree::
+   :maxdepth: 1
+
+   overview <overview/overview.rst>
+   user guide <user_guide/user_guide.rst>
+   tutorial <tutorial/tutorial.rst>
+   code documentation (API) <api/asterism.rst>
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

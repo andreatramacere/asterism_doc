@@ -1,0 +1,21 @@
+
+package: asterism.core.morphometry
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+
+   asterism.core.morphometry.non_parametric 
+
+Modules
+---------------
+.. toctree::
+   :maxdepth: 1
+
+
+   asterism.core.morphometry.features 
+   asterism.core.morphometry.galaxy_profile_fit 

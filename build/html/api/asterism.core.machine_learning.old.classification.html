@@ -1,0 +1,638 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Module: classification &#8212; asterism 1.0.a documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../index.html" />
+    <link rel="up" title="package: asterism.core.machine_learning.old" href="asterism.core.machine_learning.old.html" />
+    <link rel="prev" title="Module: learning_curves" href="asterism.core.machine_learning.old.model_evaluation.learning_curves.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<br><img src="../_static/logo.png" style=width:80%; " />  <br>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="asterism.core.machine_learning.old.model_evaluation.learning_curves.html" title="Module: learning_curves"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="asterism.html" >package: asterism</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="asterism.core.html" >package: asterism.core</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="asterism.core.machine_learning.html" >package: asterism.core.machine_learning</a> &#187;</li>
+          <li class="nav-item nav-item-4"><a href="asterism.core.machine_learning.old.html" accesskey="U">package: asterism.core.machine_learning.old</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="asterism.core.machine_learning.old.model_evaluation.learning_curves.html"
+                        title="previous chapter">Module: learning_curves</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/asterism.core.machine_learning.old.classification.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+     <div class="documentwrapper">
+       <div class="bodywrapper">
+        <div class="body">
+         <div class="align-left figure align-left">
+
+
+        </div>
+           
+  <div class="section" id="module-classification">
+<h1>Module: classification<a class="headerlink" href="#module-classification" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-asterism.core.machine_learning.old.classification"></span><p>Example Google style docstrings.</p>
+<p>This module demonstrates documentation as specified by the <a class="reference external" href="http://google.github.io/styleguide/pyguide.html">Google Python
+Style Guide</a>. Docstrings may extend over multiple lines. Sections are created
+with a section header and a colon followed by a block of indented text.</p>
+<dl class="docutils">
+<dt>Example:</dt>
+<dd><p class="first">Examples can be given using either the <code class="docutils literal"><span class="pre">Example</span></code> or <code class="docutils literal"><span class="pre">Examples</span></code>
+sections. Sections support any reStructuredText formatting, including
+literal blocks:</p>
+<div class="last highlight-default"><div class="highlight"><pre>$ python example_google.py
+</pre></div>
+</div>
+</dd>
+</dl>
+<p>Section breaks are created by resuming unindented text. Section breaks
+are also implicitly created anytime a new section starts.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><dl class="first last docutils">
+<dt>module_level_variable1 (int): Module level variables may be documented in</dt>
+<dd><p class="first">either the <code class="docutils literal"><span class="pre">Attributes</span></code> section of the module docstring, or in an
+inline docstring immediately following the variable.</p>
+<p class="last">Either form is acceptable, but the two should not be mixed. Choose
+one convention to document module level variables and be consistent
+with it.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="class">
+<dt id="asterism.core.machine_learning.old.classification.DataSet">
+<em class="property">class </em><code class="descname">DataSet</code><span class="sig-paren">(</span><em>name</em>, <em>data_sets_list=[]</em>, <em>class_labels_list=[]</em>, <em>ID_field_name=None</em>, <em>shuffle=True</em>, <em>classifier='rfc'</em>, <em>n_estimators=10</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.build" title="asterism.core.machine_learning.old.classification.DataSet.build"><code class="xref py py-obj docutils literal"><span class="pre">build</span></code></a>([data_sets_list,&nbsp;class_labels_list,&nbsp;...])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.check_is_list" title="asterism.core.machine_learning.old.classification.DataSet.check_is_list"><code class="xref py py-obj docutils literal"><span class="pre">check_is_list</span></code></a>(l)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.class_mapping" title="asterism.core.machine_learning.old.classification.DataSet.class_mapping"><code class="xref py py-obj docutils literal"><span class="pre">class_mapping</span></code></a>(class_map_dic)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.cv_predictions_errors" title="asterism.core.machine_learning.old.classification.DataSet.cv_predictions_errors"><code class="xref py py-obj docutils literal"><span class="pre">cv_predictions_errors</span></code></a>([label_class])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.decision_tree_pre_filter" title="asterism.core.machine_learning.old.classification.DataSet.decision_tree_pre_filter"><code class="xref py py-obj docutils literal"><span class="pre">decision_tree_pre_filter</span></code></a>([th])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.do_MC" title="asterism.core.machine_learning.old.classification.DataSet.do_MC"><code class="xref py py-obj docutils literal"><span class="pre">do_MC</span></code></a>(MC_repl,&nbsp;n_trees)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.do_cross_fold_validation" title="asterism.core.machine_learning.old.classification.DataSet.do_cross_fold_validation"><code class="xref py py-obj docutils literal"><span class="pre">do_cross_fold_validation</span></code></a>([n_folds,&nbsp;verbose])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.do_cv_confusion_matrix" title="asterism.core.machine_learning.old.classification.DataSet.do_cv_confusion_matrix"><code class="xref py py-obj docutils literal"><span class="pre">do_cv_confusion_matrix</span></code></a>([plot,&nbsp;save_plot,&nbsp;path])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.do_feat_std" title="asterism.core.machine_learning.old.classification.DataSet.do_feat_std"><code class="xref py py-obj docutils literal"><span class="pre">do_feat_std</span></code></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.do_features_importance_trend" title="asterism.core.machine_learning.old.classification.DataSet.do_features_importance_trend"><code class="xref py py-obj docutils literal"><span class="pre">do_features_importance_trend</span></code></a>(n_trees[,&nbsp;...])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.do_pca" title="asterism.core.machine_learning.old.classification.DataSet.do_pca"><code class="xref py py-obj docutils literal"><span class="pre">do_pca</span></code></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.entroy_pre_filter" title="asterism.core.machine_learning.old.classification.DataSet.entroy_pre_filter"><code class="xref py py-obj docutils literal"><span class="pre">entroy_pre_filter</span></code></a>([th])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.eval_features_importance" title="asterism.core.machine_learning.old.classification.DataSet.eval_features_importance"><code class="xref py py-obj docutils literal"><span class="pre">eval_features_importance</span></code></a>([sort,&nbsp;plot,&nbsp;...])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.filter_nan" title="asterism.core.machine_learning.old.classification.DataSet.filter_nan"><code class="xref py py-obj docutils literal"><span class="pre">filter_nan</span></code></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.find_best_tree_num" title="asterism.core.machine_learning.old.classification.DataSet.find_best_tree_num"><code class="xref py py-obj docutils literal"><span class="pre">find_best_tree_num</span></code></a>([plot,&nbsp;save_plot,&nbsp;path])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.find_most_corr_features" title="asterism.core.machine_learning.old.classification.DataSet.find_most_corr_features"><code class="xref py py-obj docutils literal"><span class="pre">find_most_corr_features</span></code></a>(feature_name)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.get_cross_validation_score" title="asterism.core.machine_learning.old.classification.DataSet.get_cross_validation_score"><code class="xref py py-obj docutils literal"><span class="pre">get_cross_validation_score</span></code></a>([cv])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.get_cv_feature" title="asterism.core.machine_learning.old.classification.DataSet.get_cv_feature"><code class="xref py py-obj docutils literal"><span class="pre">get_cv_feature</span></code></a>(feature_name[,&nbsp;range,&nbsp;...])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.get_feature" title="asterism.core.machine_learning.old.classification.DataSet.get_feature"><code class="xref py py-obj docutils literal"><span class="pre">get_feature</span></code></a>(feature_name[,&nbsp;label,&nbsp;range,&nbsp;...])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.get_feature_cut" title="asterism.core.machine_learning.old.classification.DataSet.get_feature_cut"><code class="xref py py-obj docutils literal"><span class="pre">get_feature_cut</span></code></a>(feature_name,&nbsp;feat_range)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.plot_contour_scatter_plot" title="asterism.core.machine_learning.old.classification.DataSet.plot_contour_scatter_plot"><code class="xref py py-obj docutils literal"><span class="pre">plot_contour_scatter_plot</span></code></a>(feature_name_x,&nbsp;...)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.plot_cv_feature_histogram" title="asterism.core.machine_learning.old.classification.DataSet.plot_cv_feature_histogram"><code class="xref py py-obj docutils literal"><span class="pre">plot_cv_feature_histogram</span></code></a>([feature_name,&nbsp;...])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.plot_feature_correlation_matrix" title="asterism.core.machine_learning.old.classification.DataSet.plot_feature_correlation_matrix"><code class="xref py py-obj docutils literal"><span class="pre">plot_feature_correlation_matrix</span></code></a>([plot,&nbsp;...])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.plot_feature_entropy" title="asterism.core.machine_learning.old.classification.DataSet.plot_feature_entropy"><code class="xref py py-obj docutils literal"><span class="pre">plot_feature_entropy</span></code></a>([feature_name,&nbsp;bins,&nbsp;...])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.plot_feature_histogram" title="asterism.core.machine_learning.old.classification.DataSet.plot_feature_histogram"><code class="xref py py-obj docutils literal"><span class="pre">plot_feature_histogram</span></code></a>([feature_name,&nbsp;bins,&nbsp;...])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.predict_test_set" title="asterism.core.machine_learning.old.classification.DataSet.predict_test_set"><code class="xref py py-obj docutils literal"><span class="pre">predict_test_set</span></code></a>(test_set)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.print_cv_predictions" title="asterism.core.machine_learning.old.classification.DataSet.print_cv_predictions"><code class="xref py py-obj docutils literal"><span class="pre">print_cv_predictions</span></code></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.recursive_features_elimination" title="asterism.core.machine_learning.old.classification.DataSet.recursive_features_elimination"><code class="xref py py-obj docutils literal"><span class="pre">recursive_features_elimination</span></code></a>([...])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.remove_correlated_features" title="asterism.core.machine_learning.old.classification.DataSet.remove_correlated_features"><code class="xref py py-obj docutils literal"><span class="pre">remove_correlated_features</span></code></a>(n_trees,&nbsp;max_corr)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.select_features_ids" title="asterism.core.machine_learning.old.classification.DataSet.select_features_ids"><code class="xref py py-obj docutils literal"><span class="pre">select_features_ids</span></code></a>(ids)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.set_classifier" title="asterism.core.machine_learning.old.classification.DataSet.set_classifier"><code class="xref py py-obj docutils literal"><span class="pre">set_classifier</span></code></a>([classifier_name])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.show_features" title="asterism.core.machine_learning.old.classification.DataSet.show_features"><code class="xref py py-obj docutils literal"><span class="pre">show_features</span></code></a>(image_id)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.shuffle_set" title="asterism.core.machine_learning.old.classification.DataSet.shuffle_set"><code class="xref py py-obj docutils literal"><span class="pre">shuffle_set</span></code></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.skip_classes" title="asterism.core.machine_learning.old.classification.DataSet.skip_classes"><code class="xref py py-obj docutils literal"><span class="pre">skip_classes</span></code></a>(skip_classes)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.skip_features" title="asterism.core.machine_learning.old.classification.DataSet.skip_features"><code class="xref py py-obj docutils literal"><span class="pre">skip_features</span></code></a>(del_names)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.skip_images_id" title="asterism.core.machine_learning.old.classification.DataSet.skip_images_id"><code class="xref py py-obj docutils literal"><span class="pre">skip_images_id</span></code></a>(ids)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.split_test_set" title="asterism.core.machine_learning.old.classification.DataSet.split_test_set"><code class="xref py py-obj docutils literal"><span class="pre">split_test_set</span></code></a>([test_fraction,&nbsp;image_ids])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.use_features" title="asterism.core.machine_learning.old.classification.DataSet.use_features"><code class="xref py py-obj docutils literal"><span class="pre">use_features</span></code></a>(use_names[,&nbsp;whole_name])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.old.classification.DataSet.write_weka_file" title="asterism.core.machine_learning.old.classification.DataSet.write_weka_file"><code class="xref py py-obj docutils literal"><span class="pre">write_weka_file</span></code></a>(file_name)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.build">
+<code class="descname">build</code><span class="sig-paren">(</span><em>data_sets_list=None</em>, <em>class_labels_list=None</em>, <em>shuffle=True</em>, <em>features_names=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.build" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.check_is_list">
+<code class="descname">check_is_list</code><span class="sig-paren">(</span><em>l</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.check_is_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.check_is_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.class_mapping">
+<code class="descname">class_mapping</code><span class="sig-paren">(</span><em>class_map_dic</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.class_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.class_mapping" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.cv_predictions_errors">
+<code class="descname">cv_predictions_errors</code><span class="sig-paren">(</span><em>label_class=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.cv_predictions_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.cv_predictions_errors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.decision_tree_pre_filter">
+<code class="descname">decision_tree_pre_filter</code><span class="sig-paren">(</span><em>th=0.75</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.decision_tree_pre_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.decision_tree_pre_filter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.do_MC">
+<code class="descname">do_MC</code><span class="sig-paren">(</span><em>MC_repl</em>, <em>n_trees</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.do_MC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.do_MC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.do_cross_fold_validation">
+<code class="descname">do_cross_fold_validation</code><span class="sig-paren">(</span><em>n_folds=10</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.do_cross_fold_validation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.do_cross_fold_validation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.do_cv_confusion_matrix">
+<code class="descname">do_cv_confusion_matrix</code><span class="sig-paren">(</span><em>plot=False</em>, <em>save_plot=False</em>, <em>path='./'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.do_cv_confusion_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.do_cv_confusion_matrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.do_feat_std">
+<code class="descname">do_feat_std</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.do_feat_std"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.do_feat_std" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.do_features_importance_trend">
+<code class="descname">do_features_importance_trend</code><span class="sig-paren">(</span><em>n_trees</em>, <em>order_increasing=True</em>, <em>plot=False</em>, <em>save_plot=False</em>, <em>path='./'</em>, <em>file_type='pdf'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.do_features_importance_trend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.do_features_importance_trend" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.do_pca">
+<code class="descname">do_pca</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.do_pca"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.do_pca" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.entroy_pre_filter">
+<code class="descname">entroy_pre_filter</code><span class="sig-paren">(</span><em>th=0.75</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.entroy_pre_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.entroy_pre_filter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.eval_features_importance">
+<code class="descname">eval_features_importance</code><span class="sig-paren">(</span><em>sort=True</em>, <em>plot=False</em>, <em>save_plot=False</em>, <em>path='./'</em>, <em>file_type='pdf'</em>, <em>file_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.eval_features_importance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.eval_features_importance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.filter_nan">
+<code class="descname">filter_nan</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.filter_nan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.filter_nan" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.find_best_tree_num">
+<code class="descname">find_best_tree_num</code><span class="sig-paren">(</span><em>plot=False</em>, <em>save_plot=False</em>, <em>path='./'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.find_best_tree_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.find_best_tree_num" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.find_most_corr_features">
+<code class="descname">find_most_corr_features</code><span class="sig-paren">(</span><em>feature_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.find_most_corr_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.find_most_corr_features" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.get_cross_validation_score">
+<code class="descname">get_cross_validation_score</code><span class="sig-paren">(</span><em>cv=10</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.get_cross_validation_score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.get_cross_validation_score" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.get_cv_feature">
+<code class="descname">get_cv_feature</code><span class="sig-paren">(</span><em>feature_name, range=[None, None], get_image_id=False, predicted=None, actual=None, cv_predictions=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.get_cv_feature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.get_cv_feature" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.get_feature">
+<code class="descname">get_feature</code><span class="sig-paren">(</span><em>feature_name, label=None, range=[None, None], get_image_id=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.get_feature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.get_feature" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.get_feature_cut">
+<code class="descname">get_feature_cut</code><span class="sig-paren">(</span><em>feature_name</em>, <em>feat_range</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.get_feature_cut"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.get_feature_cut" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.plot_contour_scatter_plot">
+<code class="descname">plot_contour_scatter_plot</code><span class="sig-paren">(</span><em>feature_name_x, feature_name_y, H_cmap='summer_r', n_levels=30, smoothing_scale=1, plot=False, labels=None, ax=None, exclude_outliers=None, plot_H=True, plot_contour=True, plot_scatter=True, x_range=[None, None], y_range=[None, None], point_size=1, color_list=None, c_map_list=None, lw=1, classes=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.plot_contour_scatter_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.plot_contour_scatter_plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.plot_cv_feature_histogram">
+<code class="descname">plot_cv_feature_histogram</code><span class="sig-paren">(</span><em>feature_name=None</em>, <em>bins=10</em>, <em>range=None</em>, <em>normed=False</em>, <em>cv_error=False</em>, <em>cv_predictions=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.plot_cv_feature_histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.plot_cv_feature_histogram" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.plot_feature_correlation_matrix">
+<code class="descname">plot_feature_correlation_matrix</code><span class="sig-paren">(</span><em>plot=False</em>, <em>save_plot=False</em>, <em>path='./'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.plot_feature_correlation_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.plot_feature_correlation_matrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.plot_feature_entropy">
+<code class="descname">plot_feature_entropy</code><span class="sig-paren">(</span><em>feature_name=None</em>, <em>bins=10</em>, <em>range=None</em>, <em>normed=False</em>, <em>plot=False</em>, <em>save_plot=False</em>, <em>path='./'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.plot_feature_entropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.plot_feature_entropy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.plot_feature_histogram">
+<code class="descname">plot_feature_histogram</code><span class="sig-paren">(</span><em>feature_name=None</em>, <em>bins=10</em>, <em>range=None</em>, <em>normed=False</em>, <em>KDE=False</em>, <em>plot=False</em>, <em>save_plot=False</em>, <em>path='./'</em>, <em>file_type='pdf'</em>, <em>ax=None</em>, <em>exclude_outliers=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.plot_feature_histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.plot_feature_histogram" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.predict_test_set">
+<code class="descname">predict_test_set</code><span class="sig-paren">(</span><em>test_set</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.predict_test_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.predict_test_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.print_cv_predictions">
+<code class="descname">print_cv_predictions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.print_cv_predictions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.print_cv_predictions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.recursive_features_elimination">
+<code class="descname">recursive_features_elimination</code><span class="sig-paren">(</span><em>percentile_th=5</em>, <em>feat_n_min=3</em>, <em>path='./'</em>, <em>plot=False</em>, <em>save_plot=False</em>, <em>file_type='pdf'</em>, <em>file_name='rec_feat_rem'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.recursive_features_elimination"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.recursive_features_elimination" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.remove_correlated_features">
+<code class="descname">remove_correlated_features</code><span class="sig-paren">(</span><em>n_trees</em>, <em>max_corr</em>, <em>order_increasing=False</em>, <em>plot=False</em>, <em>save_plot=False</em>, <em>path='./'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.remove_correlated_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.remove_correlated_features" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.select_features_ids">
+<code class="descname">select_features_ids</code><span class="sig-paren">(</span><em>ids</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.select_features_ids"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.select_features_ids" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.set_classifier">
+<code class="descname">set_classifier</code><span class="sig-paren">(</span><em>classifier_name=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.set_classifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.set_classifier" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.show_features">
+<code class="descname">show_features</code><span class="sig-paren">(</span><em>image_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.show_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.show_features" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.shuffle_set">
+<code class="descname">shuffle_set</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.shuffle_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.shuffle_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.skip_classes">
+<code class="descname">skip_classes</code><span class="sig-paren">(</span><em>skip_classes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.skip_classes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.skip_classes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.skip_features">
+<code class="descname">skip_features</code><span class="sig-paren">(</span><em>del_names</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.skip_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.skip_features" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.skip_images_id">
+<code class="descname">skip_images_id</code><span class="sig-paren">(</span><em>ids</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.skip_images_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.skip_images_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.split_test_set">
+<code class="descname">split_test_set</code><span class="sig-paren">(</span><em>test_fraction=None</em>, <em>image_ids=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.split_test_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.split_test_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.use_features">
+<code class="descname">use_features</code><span class="sig-paren">(</span><em>use_names</em>, <em>whole_name=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.use_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.use_features" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.old.classification.DataSet.write_weka_file">
+<code class="descname">write_weka_file</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#DataSet.write_weka_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.DataSet.write_weka_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.average_cv_stats">
+<code class="descname">average_cv_stats</code><span class="sig-paren">(</span><em>validation_results_obj_list</em>, <em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#average_cv_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.average_cv_stats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.contour_scatter_plot">
+<code class="descname">contour_scatter_plot</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>classes</em>, <em>classes_types</em>, <em>H_cmap='grey'</em>, <em>x_name='x'</em>, <em>y_name='y'</em>, <em>n_levels=20</em>, <em>smoothing_scale=3</em>, <em>plot=False</em>, <em>ax=None</em>, <em>exclude_outliers=None</em>, <em>plot_H=True</em>, <em>plot_contour=True</em>, <em>plot_scatter=True</em>, <em>point_size=1</em>, <em>color_list=None</em>, <em>c_map_list=None</em>, <em>lw=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#contour_scatter_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.contour_scatter_plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.do_MC">
+<code class="descname">do_MC</code><span class="sig-paren">(</span><em>features</em>, <em>labels</em>, <em>n_repl=10</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#do_MC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.do_MC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.do_confusion_matrix">
+<code class="descname">do_confusion_matrix</code><span class="sig-paren">(</span><em>predictions</em>, <em>plot=True</em>, <em>save_plot=False</em>, <em>file_name='conf_matrix'</em>, <em>file_type='pdf'</em>, <em>path='./'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#do_confusion_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.do_confusion_matrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.do_cross_fold_validation">
+<code class="descname">do_cross_fold_validation</code><span class="sig-paren">(</span><em>features</em>, <em>labels</em>, <em>labels_num</em>, <em>original_id</em>, <em>model</em>, <em>n_folds=10</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#do_cross_fold_validation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.do_cross_fold_validation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.do_plot">
+<code class="descname">do_plot</code><span class="sig-paren">(</span><em>model</em>, <em>X</em>, <em>Y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#do_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.do_plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.do_plot_feature_entropy">
+<code class="descname">do_plot_feature_entropy</code><span class="sig-paren">(</span><em>feature</em>, <em>feature_name</em>, <em>labels</em>, <em>bins=10</em>, <em>normed=False</em>, <em>range=None</em>, <em>file_name='feat_entropy'</em>, <em>plot=True</em>, <em>save_plot=False</em>, <em>path='./'</em>, <em>file_type='pdf'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#do_plot_feature_entropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.do_plot_feature_entropy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.do_prediction">
+<code class="descname">do_prediction</code><span class="sig-paren">(</span><em>model</em>, <em>train_set_features</em>, <em>train_set_labels</em>, <em>test_set_features</em>, <em>test_set_labels</em>, <em>test_set_original_id</em>, <em>labels_num</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#do_prediction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.do_prediction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.do_roc_test">
+<code class="descname">do_roc_test</code><span class="sig-paren">(</span><em>predictions</em>, <em>classes</em>, <em>label</em>, <em>plot=True</em>, <em>save_plot=False</em>, <em>file_name='roc_test'</em>, <em>file_type='pdf'</em>, <em>path='./'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#do_roc_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.do_roc_test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.eval_accuracy">
+<code class="descname">eval_accuracy</code><span class="sig-paren">(</span><em>prediction</em>, <em>actual_classes</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#eval_accuracy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.eval_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.eval_feature_entropy">
+<code class="descname">eval_feature_entropy</code><span class="sig-paren">(</span><em>feature</em>, <em>labels</em>, <em>bins=10</em>, <em>range=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#eval_feature_entropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.eval_feature_entropy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.eval_features_importance">
+<code class="descname">eval_features_importance</code><span class="sig-paren">(</span><em>model</em>, <em>features_names</em>, <em>sort=True</em>, <em>path='./'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#eval_features_importance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.eval_features_importance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.eval_score">
+<code class="descname">eval_score</code><span class="sig-paren">(</span><em>model</em>, <em>features</em>, <em>labels</em>, <em>cv=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#eval_score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.eval_score" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.features_importance_trend">
+<code class="descname">features_importance_trend</code><span class="sig-paren">(</span><em>model</em>, <em>features</em>, <em>features_names</em>, <em>labels</em>, <em>n_trees</em>, <em>order_increasing=True</em>, <em>plot=False</em>, <em>save_plot=True</em>, <em>file_type='pdf'</em>, <em>file_name='feat_imp_trend'</em>, <em>path='./'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#features_importance_trend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.features_importance_trend" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.find_best_tree_num">
+<code class="descname">find_best_tree_num</code><span class="sig-paren">(</span><em>model</em>, <em>features</em>, <em>labels</em>, <em>cv=True</em>, <em>plot=False</em>, <em>save_plot=False</em>, <em>file_name='best_tree_num'</em>, <em>file_type='pdf'</em>, <em>path='./'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#find_best_tree_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.find_best_tree_num" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.load_data">
+<code class="descname">load_data</code><span class="sig-paren">(</span><em>files_list</em>, <em>label_file=False</em>, <em>label_size=32</em>, <em>label_col_name='class'</em>, <em>ext=0</em>, <em>skip_ids=None</em>, <em>max_id=None</em>, <em>msk=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.load_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.main">
+<code class="descname">main</code><span class="sig-paren">(</span><em>argv=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.plot_feature_correlation_matrix">
+<code class="descname">plot_feature_correlation_matrix</code><span class="sig-paren">(</span><em>features_names</em>, <em>features</em>, <em>plot=True</em>, <em>save_plot=False</em>, <em>file_name='feat_corr_matrix'</em>, <em>file_type='pdf'</em>, <em>path='./'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#plot_feature_correlation_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.plot_feature_correlation_matrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.plot_feature_histogram">
+<code class="descname">plot_feature_histogram</code><span class="sig-paren">(</span><em>feature</em>, <em>feature_name</em>, <em>labels</em>, <em>bins=10</em>, <em>range=None</em>, <em>normed=False</em>, <em>KDE=False</em>, <em>gridsize=50</em>, <em>pred=None</em>, <em>plot=True</em>, <em>save_plot=False</em>, <em>file_name='feat_histogram'</em>, <em>file_type='pdf'</em>, <em>path='./'</em>, <em>exclude_outliers=None</em>, <em>ax=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#plot_feature_histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.plot_feature_histogram" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.plot_fetures_importance">
+<code class="descname">plot_fetures_importance</code><span class="sig-paren">(</span><em>features_importance</em>, <em>plot=True</em>, <em>save_plot=False</em>, <em>file_name='feat_imp'</em>, <em>file_type='pdf'</em>, <em>path='./'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#plot_fetures_importance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.plot_fetures_importance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.recursive_features_elimination">
+<code class="descname">recursive_features_elimination</code><span class="sig-paren">(</span><em>features_names</em>, <em>features</em>, <em>model</em>, <em>labels</em>, <em>percentile_th</em>, <em>feat_n_min</em>, <em>path='./'</em>, <em>plot=False</em>, <em>save_plot=False</em>, <em>file_type='pdf'</em>, <em>file_name='rec_feat_rem'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#recursive_features_elimination"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.recursive_features_elimination" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.remove_correlated_features">
+<code class="descname">remove_correlated_features</code><span class="sig-paren">(</span><em>model</em>, <em>features</em>, <em>features_names</em>, <em>labels</em>, <em>max_corr</em>, <em>plot=False</em>, <em>save_plot=False</em>, <em>path='./'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#remove_correlated_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.remove_correlated_features" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.remove_field_name">
+<code class="descname">remove_field_name</code><span class="sig-paren">(</span><em>data</em>, <em>skip_names</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#remove_field_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.remove_field_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.remove_most_corr_features">
+<code class="descname">remove_most_corr_features</code><span class="sig-paren">(</span><em>features</em>, <em>features_names</em>, <em>model</em>, <em>labels</em>, <em>max_corr</em>, <em>stage</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#remove_most_corr_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.remove_most_corr_features" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>training_set_data_list</em>, <em>training_set_labels_list</em>, <em>test_set_data_list=None</em>, <em>test_set_labels_list=None</em>, <em>test_set_split_fraction=None</em>, <em>test_set_split_ids=None</em>, <em>skip_attr=[]</em>, <em>use_attr=[]</em>, <em>skip_class=[]</em>, <em>skip_images_ids=None</em>, <em>classifier='RFC'</em>, <em>skip_nan_entries=True</em>, <em>n_estimators=100</em>, <em>do_pca=False</em>, <em>do_feat_std=False</em>, <em>eval_best_tree_num=False</em>, <em>eval_feature_importance=False</em>, <em>eval_feature_importance_trend=False</em>, <em>feature_correlation_matrix=False</em>, <em>cross_fold_N=None</em>, <em>MC_repl=None</em>, <em>max_par_corr=None</em>, <em>feature_name=None</em>, <em>feature_min=None</em>, <em>feature_max=None</em>, <em>verbose=False</em>, <em>test_th=None</em>, <em>entropy_th=None</em>, <em>class_mapping_dic=None</em>, <em>select_features_ids=None</em>, <em>plot=False</em>, <em>save_plot=False</em>, <em>roc_test_class=None</em>, <em>cv_conf_matrix=False</em>, <em>path='./'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.show_single_feature">
+<code class="descname">show_single_feature</code><span class="sig-paren">(</span><em>model</em>, <em>train_set</em>, <em>features_names</em>, <em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#show_single_feature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.show_single_feature" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.use_field_name">
+<code class="descname">use_field_name</code><span class="sig-paren">(</span><em>data</em>, <em>use_names</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#use_field_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.use_field_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="asterism.core.machine_learning.old.classification.validation_results">
+<em class="property">class </em><code class="descname">validation_results</code><span class="sig-paren">(</span><em>label</em>, <em>tp</em>, <em>tn</em>, <em>fp</em>, <em>fn</em>, <em>size</em>, <em>scorr_classif=None</em>, <em>wrong_classif=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#validation_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.validation_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.write_table">
+<code class="descname">write_table</code><span class="sig-paren">(</span><em>data</em>, <em>fp</em>, <em>class_col</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#write_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.write_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.old.classification.write_weka_file">
+<code class="descname">write_weka_file</code><span class="sig-paren">(</span><em>out_file</em>, <em>features</em>, <em>features_names</em>, <em>class_labels</em>, <em>relation='galaxy_shape'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/old/classification.html#write_weka_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.old.classification.write_weka_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+         </div>
+       </div>
+
+
+     </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="asterism.core.machine_learning.old.model_evaluation.learning_curves.html" title="Module: learning_curves"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="asterism.html" >package: asterism</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="asterism.core.html" >package: asterism.core</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="asterism.core.machine_learning.html" >package: asterism.core.machine_learning</a> &#187;</li>
+          <li class="nav-item nav-item-4"><a href="asterism.core.machine_learning.old.html" >package: asterism.core.machine_learning.old</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, andrea tramacere.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

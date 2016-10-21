@@ -1,0 +1,266 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Module: background_estimation &#8212; asterism 1.0.a documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../index.html" />
+    <link rel="up" title="package: asterism.analysis_tasks.source_detection.background_estimation" href="asterism.analysis_tasks.source_detection.background_estimation.html" />
+    <link rel="prev" title="package: asterism.analysis_tasks.source_detection.background_estimation" href="asterism.analysis_tasks.source_detection.background_estimation.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<br><img src="../_static/logo.png" style=width:80%; " />  <br>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="asterism.analysis_tasks.source_detection.background_estimation.html" title="package: asterism.analysis_tasks.source_detection.background_estimation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="asterism.html" >package: asterism</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="asterism.analysis_tasks.html" >package: asterism.analysis_tasks</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="asterism.analysis_tasks.source_detection.html" >package: asterism.analysis_tasks.source_detection</a> &#187;</li>
+          <li class="nav-item nav-item-4"><a href="asterism.analysis_tasks.source_detection.background_estimation.html" accesskey="U">package: asterism.analysis_tasks.source_detection.background_estimation</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Module: background_estimation</a><ul>
+<li><a class="reference internal" href="#id1">Module: background_estimation</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#classes-relations">Classes relations</a></li>
+<li><a class="reference internal" href="#classes-and-inheritance-structure">Classes and Inheritance Structure</a></li>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+<li><a class="reference internal" href="#module-api">Module API</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="asterism.analysis_tasks.source_detection.background_estimation.html"
+                        title="previous chapter">package: asterism.analysis_tasks.source_detection.background_estimation</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/asterism.analysis_tasks.source_detection.background_estimation.background_estimation.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+     <div class="documentwrapper">
+       <div class="bodywrapper">
+        <div class="body">
+         <div class="align-left figure align-left">
+
+
+        </div>
+           
+  <div class="section" id="module-background-estimation">
+<h1>Module: background_estimation<a class="headerlink" href="#module-background-estimation" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-asterism.analysis_tasks.source_detection.background_estimation.background_estimation"></span><div class="section" id="id1">
+<h2>Module: background_estimation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
+<p>This modules provides the implementation of the  Task class <a class="reference internal" href="#asterism.analysis_tasks.source_detection.background_estimation.background_estimation.DoSetBkgThreshTask" title="asterism.analysis_tasks.source_detection.background_estimation.background_estimation.DoSetBkgThreshTask"><code class="xref py py-class docutils literal"><span class="pre">DoSetBkgThreshTask</span></code></a>
+used to estimate the background level in images.
+The Task algorithm is implemented by the func <a class="reference internal" href="#asterism.analysis_tasks.source_detection.background_estimation.background_estimation.set_thresh" title="asterism.analysis_tasks.source_detection.background_estimation.background_estimation.set_thresh"><code class="xref py py-func docutils literal"><span class="pre">set_thresh()</span></code></a></p>
+</div>
+<div class="section" id="classes-relations">
+<h3>Classes relations<a class="headerlink" href="#classes-relations" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="classes-and-inheritance-structure">
+<h3>Classes and Inheritance Structure<a class="headerlink" href="#classes-and-inheritance-structure" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="summary">
+<h3>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.analysis_tasks.source_detection.background_estimation.background_estimation.set_thresh" title="asterism.analysis_tasks.source_detection.background_estimation.background_estimation.set_thresh"><code class="xref py py-obj docutils literal"><span class="pre">set_thresh</span></code></a>(image[,&nbsp;skewness_range,&nbsp;...])</td>
+<td>Function to estimate the backgorund level in a given image.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.analysis_tasks.source_detection.background_estimation.background_estimation.DoSetBkgThreshTask" title="asterism.analysis_tasks.source_detection.background_estimation.background_estimation.DoSetBkgThreshTask"><code class="xref py py-obj docutils literal"><span class="pre">DoSetBkgThreshTask</span></code></a>([name,&nbsp;func,&nbsp;parser])</td>
+<td><p class="rubric">Methods</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-api">
+<h3>Module API<a class="headerlink" href="#module-api" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="asterism.analysis_tasks.source_detection.background_estimation.background_estimation.DoSetBkgThreshTask">
+<em class="property">class </em><code class="descname">DoSetBkgThreshTask</code><span class="sig-paren">(</span><em>name='bkg_treshold'</em>, <em>func=&lt;function set_thresh&gt;</em>, <em>parser=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/analysis_tasks/source_detection/background_estimation/background_estimation.html#DoSetBkgThreshTask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.analysis_tasks.source_detection.background_estimation.background_estimation.DoSetBkgThreshTask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="asterism.pipeline_manager.analysis_tasks.html#asterism.pipeline_manager.analysis_tasks.AnalysisTask" title="asterism.pipeline_manager.analysis_tasks.AnalysisTask"><code class="xref py py-class docutils literal"><span class="pre">asterism.pipeline_manager.analysis_tasks.AnalysisTask</span></code></a></p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_par</span></code>(name,&nbsp;\*\*kwargs)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_par_value</span></code>(name)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">list_parameters</span></code>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">run</span></code>([extra_message])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_par</span></code>(name,&nbsp;\*\*kwargs)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_pars_from_parser</span></code>(args,&nbsp;argv,&nbsp;args_dict)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">start_message</span></code>([extra_message])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">stop_message</span></code>()</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="asterism.analysis_tasks.source_detection.background_estimation.background_estimation.set_thresh">
+<code class="descname">set_thresh</code><span class="sig-paren">(</span><em>image</em>, <em>skewness_range=None</em>, <em>n_std_th=2.0</em>, <em>min_size_ratio=0.1</em>, <em>sub_block_frac_size=None</em>, <em>plot=False</em>, <em>verbose=False</em>, <em>threshold=None</em>, <em>resampling_size=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/analysis_tasks/source_detection/background_estimation/background_estimation.html#set_thresh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.analysis_tasks.source_detection.background_estimation.background_estimation.set_thresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to estimate the backgorund level in a given image.</p>
+<blockquote>
+<div><ul class="simple">
+<li>If <cite>sub_block_frac_size</cite> is provided, the image is partitioned in N-blocks with size=sub_block_frac_size*image&gt;size,</li>
+</ul>
+<p>and the block with the lowest flux is used to estimate the bkg level. Otherwise, the full image is used.
+The first</p>
+<p>-If <cite>skewness_range</cite> is provided the skewness is minimized using the function <a href="#id2"><span class="problematic" id="id3">:function:`.minimize_skewness`</span></a>,
+i.e. the minimum   skewness in the range <a href="#id4"><span class="problematic" id="id5">|m-s1,m+s1|</span></a> is chosen, where m is the mean of the data, and s1=std(data)*`sigma_range`</p>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>image</strong> : <a class="reference internal" href="asterism.core.image_manager.image.html#asterism.core.image_manager.image.Image" title="asterism.core.image_manager.image.Image"><code class="xref py py-class docutils literal"><span class="pre">asterism.core.image_manager.image.Image</span></code></a></p>
+<blockquote>
+<div><p>the image used to estimate the bkg</p>
+</div></blockquote>
+<p><strong>threshold</strong> :  Optional[float]</p>
+<p><strong>r_th</strong> : Optional[float]</p>
+<p><strong>n_std_th</strong> : Optional[float]</p>
+<p><strong>min_size_ratio</strong> : Optional[float]</p>
+<p><strong>sub_block_frac_size</strong> : Optional[float]</p>
+<p><strong>resampling_size</strong> : Optional[int]</p>
+<p><strong>plot</strong> : Optional[bool]</p>
+<p><strong>verbose</strong> : Optional[bool]</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>bkg_th</strong> : float</p>
+<p><strong>bkg_mode</strong> : float</p>
+<p class="last"><strong>bkg_sig</strong> : float</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="asterism.analysis_tasks.source_detection.background_estimation.background_estimation.test_plot">
+<code class="descname">test_plot</code><span class="sig-paren">(</span><em>axarr</em>, <em>flux_bkg</em>, <em>bkg_lvl</em>, <em>bkg_sig=None</em>, <em>th=None</em>, <em>skew_1=None</em>, <em>skew_2=None</em>, <em>pre_skew_min_bkg_lvl=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/analysis_tasks/source_detection/background_estimation/background_estimation.html#test_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.analysis_tasks.source_detection.background_estimation.background_estimation.test_plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+</div>
+
+
+         </div>
+       </div>
+
+
+     </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="asterism.analysis_tasks.source_detection.background_estimation.html" title="package: asterism.analysis_tasks.source_detection.background_estimation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="asterism.html" >package: asterism</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="asterism.analysis_tasks.html" >package: asterism.analysis_tasks</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="asterism.analysis_tasks.source_detection.html" >package: asterism.analysis_tasks.source_detection</a> &#187;</li>
+          <li class="nav-item nav-item-4"><a href="asterism.analysis_tasks.source_detection.background_estimation.html" >package: asterism.analysis_tasks.source_detection.background_estimation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, andrea tramacere.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

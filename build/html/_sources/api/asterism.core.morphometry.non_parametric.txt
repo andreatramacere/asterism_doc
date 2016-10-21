@@ -1,0 +1,23 @@
+
+package: asterism.core.morphometry.non_parametric
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+
+
+Modules
+---------------
+.. toctree::
+   :maxdepth: 1
+
+
+   asterism.core.morphometry.non_parametric.Hu_moments 
+   asterism.core.morphometry.non_parametric.attractors_polar_distr 
+   asterism.core.morphometry.non_parametric.gabor_features 
+   asterism.core.morphometry.non_parametric.geometry_features 
+   asterism.core.morphometry.non_parametric.morphology 

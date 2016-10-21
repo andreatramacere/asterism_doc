@@ -1,0 +1,24 @@
+
+package: asterism
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+
+   asterism.analysis_pipelines 
+   asterism.analysis_processes 
+   asterism.analysis_tasks 
+   asterism.core 
+   asterism.pipeline_manager 
+   asterism.plotting 
+
+Modules
+---------------
+.. toctree::
+   :maxdepth: 1
+
+

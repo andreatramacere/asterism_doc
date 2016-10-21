@@ -1,0 +1,5 @@
+*****************************
+src_detection module user guide
+*****************************
+
+In this section we describe how to use the package  :mod:`.analysis.src_detection`

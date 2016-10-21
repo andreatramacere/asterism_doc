@@ -1,0 +1,21 @@
+
+package: asterism.core.machine_learning
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+
+   asterism.core.machine_learning.data_sets 
+   asterism.core.machine_learning.models 
+   asterism.core.machine_learning.old 
+
+Modules
+---------------
+.. toctree::
+   :maxdepth: 1
+
+

@@ -1,0 +1,21 @@
+
+package: asterism.analysis_tasks.source_detection.deblending
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+
+
+Modules
+---------------
+.. toctree::
+   :maxdepth: 1
+
+
+   asterism.analysis_tasks.source_detection.deblending.deblending_tools 
+   asterism.analysis_tasks.source_detection.deblending.denclue_deblending 
+   asterism.analysis_tasks.source_detection.deblending.gauss_laplace_deblending 

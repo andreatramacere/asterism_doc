@@ -1,0 +1,370 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>asterism.analysis_processes.morphometric_features_input_products &#8212; asterism 1.0.a documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0.a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<br><img src="../../../_static/logo.png" style=width:80%; " />  <br>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+     <div class="documentwrapper">
+       <div class="bodywrapper">
+        <div class="body">
+         <div class="align-left figure align-left">
+
+
+        </div>
+           
+  <h1>Source code for asterism.analysis_processes.morphometric_features_input_products</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module:</span>
+<span class="sd">========================</span>
+
+
+
+<span class="sd">Overview</span>
+<span class="sd">--------</span>
+
+<span class="sd">This modules provides the implementation of the :class:</span>
+
+
+
+<span class="sd">Classes relations</span>
+<span class="sd">---------------------------------------</span>
+<span class="sd">.. figure::</span>
+<span class="sd">   :align:   center</span>
+
+
+<span class="sd">Classes and Inheritance Structure</span>
+<span class="sd">----------------------------------------------</span>
+<span class="sd">.. inheritance-diagram::</span>
+
+
+
+
+<span class="sd">Summary</span>
+<span class="sd">---------</span>
+<span class="sd">.. autosummary::</span>
+
+<span class="sd">Module API</span>
+<span class="sd">-----------</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">..analysis_tasks.morphometry_features.extract_attractors</span> <span class="k">import</span> <span class="n">DoDENCLUEAttractorsTask</span>
+<span class="kn">from</span> <span class="nn">..analysis_tasks.morphometry_features.map_cluster_to_circle</span> <span class="k">import</span>  <span class="n">DoMapClusterToCircle</span>
+<span class="kn">from</span> <span class="nn">..analysis_tasks.morphometry_features.resize_cluster</span> <span class="k">import</span>  <span class="n">DoResizeCluster</span>
+<span class="kn">from</span> <span class="nn">..analysis_tasks.morphometry_features.gabor</span> <span class="k">import</span> <span class="n">DoGaborFilter</span>
+<span class="kn">from</span> <span class="nn">..analysis_tasks.morphometry_features.unsharp_cluster</span> <span class="k">import</span> <span class="n">DoUnsharpCluster</span>
+
+<span class="kn">from</span> <span class="nn">..pipeline_manager.analysis_processes</span> <span class="k">import</span> <span class="n">AnalysisProcess</span>
+<span class="kn">from</span> <span class="nn">asterism.core.photometry.surface_brightness_profile</span> <span class="k">import</span> <span class="n">ImageBrigthnessRadialProfile</span>
+<span class="kn">from</span> <span class="nn">asterism.pipeline_manager.analysis_products</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">..plotting.plot_tools</span> <span class="k">import</span>  <span class="n">analysis_plot</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;andrea tramacere&#39;</span>
+
+
+<div class="viewcode-block" id="test"><a class="viewcode-back" href="../../../api/asterism.analysis_processes.morphometric_features_input_products.html#asterism.analysis_processes.morphometric_features_input_products.test">[docs]</a><span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">surf_brigth_prof</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="MorphometryInputData"><a class="viewcode-back" href="../../../api/asterism.analysis_processes.morphometric_features_input_products.html#asterism.analysis_processes.morphometric_features_input_products.MorphometryInputData">[docs]</a><span class="k">class</span> <span class="nc">MorphometryInputData</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class to containing products to extract morphometric  features</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cluster</span><span class="p">,</span><span class="n">attractors_cluster_list</span><span class="p">,</span><span class="n">core_attractors_cluster</span><span class="p">,</span><span class="n">centroid</span><span class="o">=</span><span class="s">&#39;core&#39;</span><span class="p">,</span><span class="n">gabor_w1</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">gabor_w2</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+
+        <span class="n">__valid_centroid__</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;geom&#39;</span><span class="p">,</span><span class="s">&#39;peak&#39;</span><span class="p">,</span><span class="s">&#39;core&#39;</span><span class="p">]</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">gabor_w1</span><span class="o">=</span><span class="n">gabor_w1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gabor_w2</span><span class="o">=</span><span class="n">gabor_w2</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">centroid</span><span class="p">)</span><span class="o">==</span><span class="p">(</span><span class="mi">2</span><span class="p">,):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">x_c</span><span class="o">=</span><span class="n">centroid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_c</span><span class="o">=</span><span class="n">centroid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">centroid</span> <span class="ow">in</span> <span class="n">__valid_centroid__</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">centroid</span><span class="o">==</span><span class="s">&#39;geom&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">x_c</span><span class="o">=</span><span class="n">cluster</span><span class="o">.</span><span class="n">x_c</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y_c</span><span class="o">=</span><span class="n">cluster</span><span class="o">.</span><span class="n">y_c</span>
+
+            <span class="k">elif</span> <span class="n">centroid</span><span class="o">==</span><span class="s">&#39;peak&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">x_c</span><span class="o">=</span><span class="n">cluster</span><span class="o">.</span><span class="n">x_p</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y_c</span><span class="o">=</span><span class="n">cluster</span><span class="o">.</span><span class="n">y_p</span>
+
+            <span class="k">elif</span> <span class="n">centroid</span><span class="o">==</span><span class="s">&#39;core&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">core_attractors_cluster</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">x_c</span><span class="o">=</span><span class="n">core_attractors_cluster</span><span class="o">.</span><span class="n">x_c</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">y_c</span><span class="o">=</span><span class="n">core_attractors_cluster</span><span class="o">.</span><span class="n">y_c</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">x_c</span><span class="o">=</span><span class="n">cluster</span><span class="o">.</span><span class="n">x_c</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">y_c</span><span class="o">=</span><span class="n">cluster</span><span class="o">.</span><span class="n">y_c</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span>  <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;centroid param&quot;</span><span class="p">,</span><span class="n">centroid</span><span class="p">,</span> <span class="s">&quot; not valid either you provide a tuple (x,y) or you provide a valid method %s&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">__valid_centroid__</span><span class="p">))</span>
+
+
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cluster</span><span class="o">=</span><span class="n">cluster</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cluster</span><span class="o">.</span><span class="n">_add_polar_coords</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">x_c</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">y_c</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">core_attractors_cluster</span><span class="o">=</span><span class="n">core_attractors_cluster</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">attractors_cluster_list</span><span class="o">=</span><span class="n">attractors_cluster_list</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">x_c_image</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">y_c_image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_image</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">surf_brigth_prof</span><span class="o">=</span><span class="n">ImageBrigthnessRadialProfile</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surf_brigth_prof</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">x_c_image</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">y_c_image</span><span class="p">,</span><span class="n">N_bins</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cluster</span><span class="o">.</span><span class="n">r_max</span><span class="p">)</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span><span class="n">r_max</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cluster</span><span class="o">.</span><span class="n">r_max</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">oversampling_ratio</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">attractors_cluster_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">attr_cartesian</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">attr_polar</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_merge_clusters_geom_repr</span><span class="p">(</span><span class="n">attractors_cluster_list</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">attr_cartesian</span><span class="o">=</span><span class="k">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attr_polar</span><span class="o">=</span><span class="k">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attr_w</span><span class="o">=</span><span class="mi">1</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">core_attractors_cluster</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">non_core_attractors_cluster_list</span><span class="o">=</span><span class="p">[</span><span class="n">cl</span>  <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">attractors_cluster_list</span> <span class="k">if</span> <span class="n">cl</span> <span class="o">!=</span><span class="bp">self</span><span class="o">.</span><span class="n">core_attractors_cluster</span> <span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">non_core_attr_cartesian</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">non_core_attr_polar</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_merge_clusters_geom_repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">non_core_attractors_cluster_list</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">non_core_attr_w</span><span class="o">=</span><span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">non_core_attractors_cluster_list</span><span class="o">=</span><span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">non_core_attr_cartesian</span><span class="o">=</span><span class="k">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">non_core_attr_polar</span><span class="o">=</span><span class="k">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">non_core_attr_w</span><span class="o">=</span><span class="k">None</span>
+
+
+
+
+    <span class="k">def</span> <span class="nf">_get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cluster</span><span class="p">):</span>
+        <span class="n">cluster_image</span><span class="p">,</span><span class="n">off_set_x</span><span class="p">,</span><span class="n">off_set_y</span><span class="p">,</span><span class="n">masked_pixels</span><span class="o">=</span><span class="n">cluster</span><span class="o">.</span><span class="n">get_cluster_Image</span><span class="p">(</span><span class="n">bkg</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">border</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">x_c_image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">x_c</span><span class="o">-</span><span class="n">off_set_x</span>
+        <span class="n">y_c_image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_c</span><span class="o">-</span><span class="n">off_set_y</span>
+        <span class="k">return</span>  <span class="n">cluster_image</span><span class="o">.</span><span class="n">array</span><span class="p">,</span><span class="n">x_c_image</span><span class="p">,</span><span class="n">y_c_image</span>
+
+    <span class="k">def</span> <span class="nf">_merge_clusters_geom_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cluster_list</span><span class="p">):</span>
+        <span class="n">new_coords_cartesian</span><span class="o">=</span><span class="k">None</span>
+        <span class="n">new_coords_polar</span><span class="o">=</span><span class="k">None</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">ID</span><span class="p">,</span><span class="n">cl</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cluster_list</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">ID</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                <span class="n">new_coords_cartesian</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">cl</span><span class="o">.</span><span class="n">cartesian</span><span class="p">)</span>
+                <span class="c">#if cl.polar is None:</span>
+                <span class="c">#    cl._add_polar_coords(center=[self.x_c,self.y_c])</span>
+                <span class="c">#new_coords_polar=copy.deepcopy(cl.polar)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_coords_cartesian</span><span class="o">.</span><span class="n">_expand</span><span class="p">(</span><span class="n">cl</span><span class="o">.</span><span class="n">cartesian</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span>
+                <span class="c">#if cl.polar is None:</span>
+                <span class="c">#    cl._add_polar_coords(center=[self.x_c,self.y_c])</span>
+                <span class="c">#new_coords_polar._expand(cl.polar.coords)</span>
+
+        <span class="k">if</span> <span class="n">new_coords_cartesian</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="n">new_coords_polar</span><span class="o">=</span><span class="n">new_coords_cartesian</span><span class="o">.</span><span class="n">to_polar</span><span class="p">(</span><span class="n">x_c</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">x_c</span><span class="p">,</span><span class="n">y_c</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_c</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">new_coords_cartesian</span><span class="p">,</span><span class="n">new_coords_polar</span></div>
+
+
+<div class="viewcode-block" id="do_morphometric_input_products_process_func"><a class="viewcode-back" href="../../../api/asterism.analysis_processes.morphometric_features_input_products.html#asterism.analysis_processes.morphometric_features_input_products.do_morphometric_input_products_process_func">[docs]</a><span class="k">def</span> <span class="nf">do_morphometric_input_products_process_func</span><span class="p">(</span><span class="n">process</span><span class="p">,</span><span class="n">image</span><span class="p">,</span><span class="n">image_id</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">cluster</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">no_plot</span><span class="o">=</span><span class="k">False</span><span class="p">,</span><span class="n">bkg_image</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">image_bkg_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">cluster_th_level</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    process</span>
+<span class="sd">    image</span>
+<span class="sd">    image_id</span>
+<span class="sd">    cluster</span>
+<span class="sd">    no_plot</span>
+<span class="sd">    bkg_image</span>
+<span class="sd">    bkg_lvl</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+
+    <span class="k">if</span> <span class="n">cluster</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+        <span class="n">original_cluster_shape_input_prod</span><span class="o">=</span><span class="k">None</span>
+        <span class="n">deproj_cluster_shape_input_prod</span><span class="o">=</span><span class="k">None</span>
+        <span class="n">gabor_cluster_shape_input_prod</span><span class="o">=</span><span class="k">None</span>
+        <span class="n">unshapr_cluster_input_prod</span><span class="o">=</span><span class="k">None</span>
+    <span class="k">else</span><span class="p">:</span>
+
+
+        <span class="c">#Original cluster products</span>
+        <span class="n">original_cluster</span><span class="o">=</span><span class="n">process</span><span class="o">.</span><span class="n">resize_cluster</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cluster</span><span class="o">=</span><span class="n">cluster</span><span class="p">,</span><span class="n">image_bkg_value</span><span class="o">=</span><span class="n">image_bkg_value</span><span class="p">,</span><span class="n">cluster_th_level</span><span class="o">=</span><span class="n">cluster_th_level</span><span class="p">)</span>
+        <span class="n">original_cluster</span><span class="o">.</span><span class="n">_add_polar_coords</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">[</span><span class="n">cluster</span><span class="o">.</span><span class="n">x_c</span><span class="p">,</span><span class="n">cluster</span><span class="o">.</span><span class="n">y_c</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">process</span><span class="o">.</span><span class="n">do_unsharp_cluster</span><span class="o">.</span><span class="n">get_par_value</span><span class="p">(</span><span class="s">&#39;eval&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="k">True</span><span class="p">:</span>
+            <span class="n">unshapr_cluster</span><span class="o">=</span><span class="n">process</span><span class="o">.</span><span class="n">do_unsharp_cluster</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">original_cluster</span><span class="o">=</span><span class="n">original_cluster</span><span class="p">,</span><span class="n">image_bkg_value</span><span class="o">=</span><span class="n">image_bkg_value</span><span class="p">,</span><span class="n">cluster_th_level</span><span class="o">=</span><span class="n">cluster_th_level</span><span class="p">)</span>
+            <span class="n">unshapr_cluster_input_prod</span><span class="o">=</span><span class="n">MorphometryInputData</span><span class="p">(</span><span class="n">unshapr_cluster</span><span class="p">,</span><span class="k">None</span><span class="p">,</span><span class="k">None</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">unshapr_cluster_input_prod</span><span class="o">=</span><span class="k">None</span>
+            <span class="n">unshapr_cluster</span><span class="o">=</span><span class="k">None</span>
+
+        <span class="k">if</span> <span class="n">process</span><span class="o">.</span><span class="n">denclue_attractors</span><span class="o">.</span><span class="n">get_par_value</span><span class="p">(</span><span class="s">&#39;eval&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="k">True</span><span class="p">:</span>
+            <span class="n">oc_attr_cl_list</span><span class="p">,</span><span class="n">oc_attr_core_cl</span><span class="p">,</span><span class="n">oc_lm</span><span class="p">,</span><span class="n">oc_core_lm</span><span class="o">=</span><span class="n">process</span><span class="o">.</span><span class="n">denclue_attractors</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cluster</span><span class="o">=</span><span class="n">original_cluster</span><span class="p">,</span><span class="n">image_id</span><span class="o">=</span><span class="n">image_id</span><span class="p">,</span><span class="n">weight_cluster</span><span class="o">=</span><span class="n">unshapr_cluster</span><span class="p">)</span>
+            <span class="c">#oc_attr_cl_list,oc_attr_core_cl,oc_lm,oc_core_lm=process.denclue_attractors.run(cluster=original_cluster,image_id=image_id,weight_cluster=None)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">oc_attr_cl_list</span><span class="p">,</span><span class="n">oc_attr_core_cl</span><span class="p">,</span><span class="n">oc_lm</span><span class="p">,</span><span class="n">oc_core_lm</span><span class="o">=</span><span class="p">(</span><span class="k">None</span><span class="p">,</span><span class="k">None</span><span class="p">,</span><span class="k">None</span><span class="p">,</span><span class="k">None</span><span class="p">)</span>
+
+        <span class="n">original_cluster_shape_input_prod</span><span class="o">=</span><span class="n">MorphometryInputData</span><span class="p">(</span><span class="n">original_cluster</span><span class="p">,</span><span class="n">oc_attr_cl_list</span><span class="p">,</span><span class="n">oc_attr_core_cl</span><span class="p">)</span>
+        <span class="c">#unshapr_cluster</span>
+        <span class="c">#if process.denclue_attractors.get_par_value(&#39;eval&#39;) == True:</span>
+        <span class="c">#    us_attr_cl_list,us_attr_core_cl,us_lm,us_core_lm=process.denclue_attractors.run(cluster=unshapr_cluster,image_id=image_id,weight_cluster=unshapr_cluster)</span>
+        <span class="c">#else:</span>
+        <span class="c">#    us_attr_cl_list,us_attr_core_cl,us_lm,us_core_lm=(None,None,None,None)</span>
+
+        <span class="c">#unshapr_cluster_shape_input_prod=MorphometryInputData(unshapr_cluster,us_attr_cl_list,us_attr_core_cl)</span>
+
+        <span class="c">#Gabor</span>
+        <span class="k">if</span> <span class="n">process</span><span class="o">.</span><span class="n">do_gabor_filter</span><span class="o">.</span><span class="n">get_par_value</span><span class="p">(</span><span class="s">&#39;eval&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="k">True</span><span class="p">:</span>
+            <span class="n">gabor_cluster</span><span class="p">,</span><span class="n">g_w1</span><span class="p">,</span><span class="n">g_w2</span><span class="o">=</span><span class="n">process</span><span class="o">.</span><span class="n">do_gabor_filter</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cluster</span><span class="o">=</span><span class="n">original_cluster</span><span class="p">,</span><span class="n">image_bkg_value</span><span class="o">=</span><span class="n">image_bkg_value</span><span class="p">,</span><span class="n">cluster_th_level</span><span class="o">=</span><span class="n">cluster_th_level</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">gabor_cluster</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+                <span class="n">gabor_cluster</span><span class="o">.</span><span class="n">_add_polar_coords</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">process</span><span class="o">.</span><span class="n">denclue_attractors</span><span class="o">.</span><span class="n">get_par_value</span><span class="p">(</span><span class="s">&#39;eval&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="k">True</span><span class="p">:</span>
+                <span class="n">gabor_attr_cl_list</span><span class="p">,</span><span class="n">gabor_attr_core_cl</span><span class="p">,</span><span class="n">gabor_lm</span><span class="p">,</span><span class="n">gabor_core_lm</span><span class="o">=</span><span class="n">process</span><span class="o">.</span><span class="n">denclue_attractors</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cluster</span><span class="o">=</span><span class="n">gabor_cluster</span><span class="p">,</span><span class="n">image_id</span><span class="o">=</span><span class="n">image_id</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">gabor_attr_cl_list</span><span class="p">,</span><span class="n">gabor_attr_core_cl</span><span class="p">,</span><span class="n">gabor_lm</span><span class="p">,</span><span class="n">gabor_core_lm</span><span class="o">=</span><span class="p">(</span><span class="k">None</span><span class="p">,</span><span class="k">None</span><span class="p">,</span><span class="k">None</span><span class="p">,</span><span class="k">None</span><span class="p">)</span>
+            <span class="n">gabor_cluster_shape_input_prod</span><span class="o">=</span><span class="n">MorphometryInputData</span><span class="p">(</span><span class="n">gabor_cluster</span><span class="p">,</span><span class="n">gabor_attr_cl_list</span><span class="p">,</span><span class="n">gabor_attr_core_cl</span><span class="p">,</span><span class="n">gabor_w1</span><span class="o">=</span><span class="n">g_w1</span><span class="p">,</span><span class="n">gabor_w2</span><span class="o">=</span><span class="n">g_w2</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">gabor_cluster_shape_input_prod</span><span class="o">=</span><span class="k">None</span>
+
+        <span class="c">#Maps cluster to circle</span>
+        <span class="k">if</span> <span class="n">process</span><span class="o">.</span><span class="n">map_to_circle</span><span class="o">.</span><span class="n">get_par_value</span><span class="p">(</span><span class="s">&#39;eval&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="k">True</span><span class="p">:</span>
+            <span class="n">circular_transf_cluster</span><span class="o">=</span><span class="n">process</span><span class="o">.</span><span class="n">map_to_circle</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cluster</span><span class="o">=</span><span class="n">original_cluster</span><span class="p">,</span><span class="n">image_bkg_value</span><span class="o">=</span><span class="n">image_bkg_value</span><span class="p">,</span><span class="n">cluster_th_level</span><span class="o">=</span><span class="n">cluster_th_level</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">circular_transf_cluster</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+                <span class="n">circular_transf_cluster</span><span class="o">.</span><span class="n">_add_polar_coords</span><span class="p">()</span>
+
+
+            <span class="k">if</span> <span class="n">process</span><span class="o">.</span><span class="n">denclue_attractors</span><span class="o">.</span><span class="n">get_par_value</span><span class="p">(</span><span class="s">&#39;eval&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="k">True</span><span class="p">:</span>
+                <span class="c">#ct_attr_cl_list,ct_attr_core_cl,ct_lm,ct_core_lm=process.denclue_attractors.run(cluster=circular_transf_cluster,image_id=image_id)</span>
+                <span class="n">ct_attr_cl_list</span><span class="p">,</span><span class="n">ct_attr_core_cl</span><span class="p">,</span><span class="n">ct_lm</span><span class="p">,</span><span class="n">ct_core_lm</span><span class="o">=</span><span class="p">(</span><span class="k">None</span><span class="p">,</span><span class="k">None</span><span class="p">,</span><span class="k">None</span><span class="p">,</span><span class="k">None</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ct_attr_cl_list</span><span class="p">,</span><span class="n">ct_attr_core_cl</span><span class="p">,</span><span class="n">ct_lm</span><span class="p">,</span><span class="n">ct_core_lm</span><span class="o">=</span><span class="p">(</span><span class="k">None</span><span class="p">,</span><span class="k">None</span><span class="p">,</span><span class="k">None</span><span class="p">,</span><span class="k">None</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">circular_transf_cluster</span><span class="o">=</span><span class="k">None</span>
+
+        <span class="k">if</span> <span class="n">circular_transf_cluster</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+            <span class="n">deproj_cluster_shape_input_prod</span><span class="o">=</span><span class="n">MorphometryInputData</span><span class="p">(</span><span class="n">circular_transf_cluster</span><span class="p">,</span><span class="n">ct_attr_cl_list</span><span class="p">,</span><span class="n">ct_attr_core_cl</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">deproj_cluster_shape_input_prod</span><span class="o">=</span><span class="k">None</span>
+
+
+    <span class="k">return</span> <span class="n">original_cluster_shape_input_prod</span><span class="p">,</span><span class="n">deproj_cluster_shape_input_prod</span><span class="p">,</span><span class="n">gabor_cluster_shape_input_prod</span><span class="p">,</span><span class="n">unshapr_cluster_input_prod</span></div>
+
+
+
+
+
+
+
+<div class="viewcode-block" id="DoMorphometricInputProducts"><a class="viewcode-back" href="../../../api/asterism.analysis_processes.morphometric_features_input_products.html#asterism.analysis_processes.morphometric_features_input_products.DoMorphometricInputProducts">[docs]</a><span class="k">class</span> <span class="nc">DoMorphometricInputProducts</span><span class="p">(</span><span class="n">AnalysisProcess</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;do_gal_shape_extraction&#39;</span><span class="p">,</span><span class="n">func</span><span class="o">=</span><span class="n">do_morphometric_input_products_process_func</span><span class="p">,</span><span class="n">plot_func</span><span class="o">=</span><span class="n">analysis_plot</span><span class="p">,</span><span class="n">parser</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">add_plot_task</span><span class="o">=</span><span class="k">True</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DoMorphometricInputProducts</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">func</span><span class="p">,</span><span class="n">plot_func</span><span class="o">=</span><span class="n">plot_func</span><span class="p">,</span><span class="n">parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span><span class="n">add_plot_task</span><span class="o">=</span><span class="n">add_plot_task</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_analysis_task</span><span class="p">(</span><span class="n">DoDENCLUEAttractorsTask</span><span class="p">,</span><span class="s">&#39;denclue_attractors&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_analysis_task</span><span class="p">(</span><span class="n">DoMapClusterToCircle</span><span class="p">,</span><span class="s">&#39;map_to_circle&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_analysis_task</span><span class="p">(</span><span class="n">DoResizeCluster</span><span class="p">,</span><span class="s">&#39;resize_cluster&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_analysis_task</span><span class="p">(</span><span class="n">DoGaborFilter</span><span class="p">,</span> <span class="s">&#39;do_gabor_filter&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_analysis_task</span><span class="p">(</span><span class="n">DoUnsharpCluster</span><span class="p">,</span> <span class="s">&#39;do_unsharp_cluster&#39;</span><span class="p">)</span></div>
+</pre></div>
+
+         </div>
+       </div>
+
+
+     </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, andrea tramacere.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

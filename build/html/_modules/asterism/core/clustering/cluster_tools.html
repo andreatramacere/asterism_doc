@@ -1,0 +1,495 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>asterism.core.clustering.cluster_tools &#8212; asterism 1.0.a documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '1.0.a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<br><img src="../../../../_static/logo.png" style=width:80%; " />  <br>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+     <div class="documentwrapper">
+       <div class="bodywrapper">
+        <div class="body">
+         <div class="align-left figure align-left">
+
+
+        </div>
+           
+  <h1>Source code for asterism.core.clustering.cluster_tools</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">...core.geometry.distance</span> <span class="k">import</span> <span class="n">dist_eval</span>
+<span class="kn">from</span> <span class="nn">..image_manager.image</span> <span class="k">import</span> <span class="n">Image</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;andrea tramacere&#39;</span>
+
+
+
+
+
+<div class="viewcode-block" id="cluster_border"><a class="viewcode-back" href="../../../../api/asterism.core.clustering.cluster_tools.html#asterism.core.clustering.cluster_tools.cluster_border">[docs]</a><span class="k">def</span> <span class="nf">cluster_border</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">img_buffer</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">x_min</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="n">y_min</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="n">x_max</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">y_max</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">x_size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">x_max</span><span class="o">-</span><span class="n">x_min</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">img_buffer</span>
+    <span class="n">y_size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">y_max</span><span class="o">-</span><span class="n">y_min</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">img_buffer</span>
+
+    <span class="n">image</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">y_size</span><span class="p">,</span><span class="n">x_size</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">ph_id</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+
+            <span class="n">x_id</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">ph_id</span><span class="p">]</span><span class="o">-</span><span class="n">x_min</span><span class="p">)</span>
+            <span class="n">y_id</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">ph_id</span><span class="p">]</span><span class="o">-</span><span class="n">y_max</span><span class="p">)</span>
+
+
+            <span class="n">image</span><span class="p">[</span><span class="n">y_id</span><span class="p">,</span><span class="n">x_id</span><span class="p">]</span><span class="o">=</span><span class="mi">100</span>
+
+    <span class="n">contours</span><span class="p">,</span> <span class="n">hierarchy</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">RETR_EXTERNAL</span><span class="p">,</span><span class="n">method</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">CHAIN_APPROX_NONE</span><span class="p">)</span>
+
+
+    <span class="k">if</span> <span class="n">contours</span><span class="o">!=</span><span class="p">[]:</span>
+
+        <span class="n">cont_array</span><span class="o">=</span><span class="n">contours</span><span class="p">[</span><span class="mi">0</span><span class="p">][:,</span><span class="mi">0</span><span class="p">]</span>
+
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">contours</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">contour</span> <span class="ow">in</span> <span class="n">contours</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+                <span class="n">cont_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">((</span><span class="n">cont_array</span><span class="p">,</span><span class="n">contour</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]))</span>
+
+
+
+        <span class="n">cont_array</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">cont_array</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">y_min</span><span class="o">-</span><span class="n">img_buffer</span>
+
+        <span class="n">cont_array</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">cont_array</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">x_min</span><span class="o">-</span><span class="n">img_buffer</span>
+
+        <span class="n">cont_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">(</span><span class="n">cont_array</span><span class="p">)</span>
+
+
+
+        <span class="k">return</span> <span class="n">cont_array</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">None</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="check_is_in_cluster"><a class="viewcode-back" href="../../../../api/asterism.core.clustering.cluster_tools.html#asterism.core.clustering.cluster_tools.check_is_in_cluster">[docs]</a><span class="k">def</span> <span class="nf">check_is_in_cluster</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span><span class="n">y_test</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x_test</span>
+<span class="sd">    y_test</span>
+<span class="sd">    x</span>
+<span class="sd">    y</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c1</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">c2</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">c1</span><span class="o">*</span><span class="n">c2</span></div>
+
+
+<div class="viewcode-block" id="check_is_within_r_from_center"><a class="viewcode-back" href="../../../../api/asterism.core.clustering.cluster_tools.html#asterism.core.clustering.cluster_tools.check_is_within_r_from_center">[docs]</a><span class="k">def</span> <span class="nf">check_is_within_r_from_center</span><span class="p">(</span><span class="n">x_c</span><span class="p">,</span><span class="n">y_c</span><span class="p">,</span><span class="n">R</span><span class="p">,</span><span class="n">x_test</span><span class="p">,</span><span class="n">y_test</span><span class="p">,</span><span class="n">metric</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x_c</span>
+<span class="sd">    y_c</span>
+<span class="sd">    R</span>
+<span class="sd">    x_test</span>
+<span class="sd">    y_test</span>
+<span class="sd">    metric</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">xy</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">x_test</span><span class="p">,</span><span class="n">y_test</span><span class="p">))</span>
+
+
+    <span class="n">dist</span><span class="o">=</span><span class="n">dist_eval</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span><span class="n">x_c</span><span class="o">=</span><span class="n">x_c</span><span class="p">,</span><span class="n">y_c</span><span class="o">=</span><span class="n">y_c</span><span class="p">,</span><span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">)</span>
+
+
+    <span class="k">return</span> <span class="n">dist</span><span class="o">&lt;</span><span class="n">R</span></div>
+
+
+
+<div class="viewcode-block" id="get_clusters_within_circle"><a class="viewcode-back" href="../../../../api/asterism.core.clustering.cluster_tools.html#asterism.core.clustering.cluster_tools.get_clusters_within_circle">[docs]</a><span class="k">def</span> <span class="nf">get_clusters_within_circle</span><span class="p">(</span><span class="n">clusters_list</span><span class="p">,</span><span class="n">R</span><span class="p">,</span><span class="n">centre</span><span class="p">,</span><span class="n">metric</span><span class="o">=</span><span class="s">&#39;euclidean&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    clusters_list</span>
+<span class="sd">    R</span>
+<span class="sd">    centre</span>
+<span class="sd">    metric</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dist_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">clusters_list</span><span class="p">)),</span><span class="n">dtype</span><span class="o">=</span><span class="p">([(</span><span class="s">&#39;cl_id&#39;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">),(</span><span class="s">&#39;dist_min&#39;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">),(</span><span class="s">&#39;all_in&#39;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">bool</span><span class="p">)]))</span>
+    <span class="c">#print(&quot;R&quot;,R,&quot; centre&quot;,centre)</span>
+
+    <span class="k">for</span> <span class="n">ID</span><span class="p">,</span><span class="n">cl</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">clusters_list</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cl</span><span class="p">,</span><span class="s">&#39;cartesian&#39;</span><span class="p">):</span>
+            <span class="n">coords</span><span class="o">=</span><span class="n">cl</span><span class="o">.</span><span class="n">cartesian</span><span class="o">.</span><span class="n">coords</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cl</span><span class="p">,</span><span class="s">&#39;coords&#39;</span><span class="p">):</span>
+            <span class="n">coords</span><span class="o">=</span><span class="n">cl</span><span class="o">.</span><span class="n">coords</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;cluser has neither cartesian nor coords attribute&#39;</span><span class="p">)</span>
+
+
+
+        <span class="n">d</span><span class="o">=</span><span class="n">dist_eval</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span><span class="n">x_c</span><span class="o">=</span><span class="n">centre</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">y_c</span><span class="o">=</span><span class="n">centre</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">&lt;</span><span class="n">R</span><span class="p">:</span>
+            <span class="n">all_in</span><span class="o">=</span><span class="k">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">all_in</span><span class="o">=</span><span class="k">False</span>
+
+        <span class="n">dist_array</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">ID</span><span class="p">,</span><span class="n">d</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span><span class="n">all_in</span><span class="p">)</span>
+
+    <span class="n">within_dist_array</span><span class="o">=</span><span class="n">dist_array</span><span class="p">[</span><span class="n">dist_array</span><span class="p">[</span><span class="s">&#39;all_in&#39;</span><span class="p">]</span><span class="o">==</span><span class="k">True</span><span class="p">]</span>
+    <span class="n">selected</span><span class="o">=</span><span class="p">[</span><span class="n">clusters_list</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span> <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span>  <span class="n">within_dist_array</span><span class="p">[</span><span class="s">&#39;cl_id&#39;</span><span class="p">]]</span>
+    <span class="k">return</span>  <span class="n">selected</span><span class="p">,</span><span class="n">within_dist_array</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="get_closest_cluster"><a class="viewcode-back" href="../../../../api/asterism.core.clustering.cluster_tools.html#asterism.core.clustering.cluster_tools.get_closest_cluster">[docs]</a><span class="k">def</span> <span class="nf">get_closest_cluster</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span><span class="n">clusters_list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cluster</span>
+<span class="sd">    clusters_list</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">center_pos_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">clusters_list</span><span class="p">),</span><span class="mi">2</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">ID</span><span class="p">,</span><span class="n">cl</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">clusters_list</span><span class="p">):</span>
+        <span class="n">center_pos_array</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">cl</span><span class="o">.</span><span class="n">x_c</span><span class="p">,</span><span class="n">cl</span><span class="o">.</span><span class="n">y_c</span><span class="p">)</span>
+
+
+    <span class="n">d</span><span class="o">=</span><span class="n">dist_eval</span><span class="p">(</span><span class="n">center_pos_array</span><span class="p">,</span><span class="n">x_c</span><span class="o">=</span><span class="n">cluster</span><span class="o">.</span><span class="n">x_c</span><span class="p">,</span><span class="n">y_c</span><span class="o">=</span><span class="n">cluster</span><span class="o">.</span><span class="n">y_c</span><span class="p">,</span><span class="n">metric</span><span class="o">=</span><span class="n">cluster</span><span class="o">.</span><span class="n">_metric</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">size</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">min_dist_id</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">argmin</span><span class="p">()</span>
+        <span class="n">cl</span><span class="o">=</span><span class="n">clusters_list</span><span class="p">[</span><span class="n">min_dist_id</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">min_dist_id</span><span class="o">=</span><span class="k">None</span>
+        <span class="n">cl</span><span class="o">=</span><span class="k">None</span>
+    <span class="k">return</span> <span class="n">cl</span></div>
+
+
+<div class="viewcode-block" id="get_cluster_closest_to_position"><a class="viewcode-back" href="../../../../api/asterism.core.clustering.cluster_tools.html#asterism.core.clustering.cluster_tools.get_cluster_closest_to_position">[docs]</a><span class="k">def</span> <span class="nf">get_cluster_closest_to_position</span><span class="p">(</span><span class="n">cluster_list</span><span class="p">,</span><span class="n">x_c</span><span class="p">,</span><span class="n">y_c</span><span class="p">,</span><span class="n">metric</span><span class="o">=</span><span class="s">&#39;euclidean&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cluster_list</span>
+<span class="sd">    x_c</span>
+<span class="sd">    y_c</span>
+<span class="sd">    metric</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">dist</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cluster_list</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ID</span><span class="p">,</span><span class="n">cl</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cluster_list</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cl</span><span class="p">,</span><span class="s">&#39;cartesian&#39;</span><span class="p">):</span>
+            <span class="n">coords</span><span class="o">=</span><span class="n">cl</span><span class="o">.</span><span class="n">cartesian</span><span class="o">.</span><span class="n">coords</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cl</span><span class="p">,</span><span class="s">&#39;coords&#39;</span><span class="p">):</span>
+            <span class="n">coords</span><span class="o">=</span><span class="n">cl</span><span class="o">.</span><span class="n">coords</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;cluser has neither cartesian nor coords attribute&#39;</span><span class="p">)</span>
+
+
+        <span class="n">dist</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span><span class="o">=</span><span class="n">dist_eval</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span><span class="n">x_c</span><span class="o">=</span><span class="n">x_c</span><span class="p">,</span><span class="n">y_c</span><span class="o">=</span><span class="n">y_c</span><span class="p">,</span><span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+
+
+    <span class="k">if</span> <span class="n">dist</span><span class="o">.</span><span class="n">size</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">min_dist_id</span><span class="o">=</span><span class="n">dist</span><span class="o">.</span><span class="n">argmin</span><span class="p">()</span>
+        <span class="n">cl</span><span class="o">=</span><span class="n">cluster_list</span><span class="p">[</span><span class="n">min_dist_id</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">min_dist_id</span><span class="o">=</span><span class="k">None</span>
+        <span class="n">cl</span><span class="o">=</span><span class="k">None</span>
+    <span class="k">return</span> <span class="n">cl</span></div>
+
+
+
+
+<div class="viewcode-block" id="get_cluster_Image"><a class="viewcode-back" href="../../../../api/asterism.core.clustering.cluster_tools.html#asterism.core.clustering.cluster_tools.get_cluster_Image">[docs]</a><span class="k">def</span> <span class="nf">get_cluster_Image</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span><span class="n">border</span><span class="p">,</span><span class="n">pixel_values</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">bkg</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    xy</span>
+<span class="sd">    border</span>
+<span class="sd">    pixel_values</span>
+<span class="sd">    bkg</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">image</span><span class="p">,</span><span class="n">off_set_x</span><span class="p">,</span><span class="n">off_set_y</span><span class="p">,</span><span class="n">masked_pixels</span><span class="o">=</span><span class="n">get_cluster_image_array</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span>\
+                                                              <span class="n">border</span><span class="p">,</span>\
+                                                              <span class="n">pixel_values</span><span class="o">=</span><span class="n">pixel_values</span><span class="p">,</span>
+                                                              <span class="n">bkg</span><span class="o">=</span><span class="n">bkg</span><span class="p">)</span>
+
+
+    <span class="k">return</span> <span class="n">Image</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">image</span><span class="p">),</span><span class="n">off_set_x</span><span class="p">,</span><span class="n">off_set_y</span><span class="p">,</span><span class="n">masked_pixels</span></div>
+
+
+<div class="viewcode-block" id="get_cluster_image_array"><a class="viewcode-back" href="../../../../api/asterism.core.clustering.cluster_tools.html#asterism.core.clustering.cluster_tools.get_cluster_image_array">[docs]</a><span class="k">def</span> <span class="nf">get_cluster_image_array</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span><span class="n">border</span><span class="p">,</span><span class="n">pixel_values</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">bkg</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to build an image from a cluster. The pixels values are provided by the parameter `pixel_values`.</span>
+<span class="sd">        - If `pixel_values` is not provided each pixel with at least one point will have a value of 1, 0 or bkg</span>
+<span class="sd">            if bkg = None or !=None, respectively</span>
+<span class="sd">        - If `pixel_values` is  provided, and bkg is None, then the bkg is fixed to 0.1 the min of `pixel_values`</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    xy</span>
+<span class="sd">    border</span>
+<span class="sd">    pixel_values</span>
+<span class="sd">    bkg</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    image :</span>
+<span class="sd">    off_set_x :</span>
+<span class="sd">    off_set_y :</span>
+<span class="sd">    masked_pixels :</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">image_rows</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">xy</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">xy</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">border</span>
+    <span class="n">image_cols</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">xy</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">xy</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">border</span>
+
+
+    <span class="k">if</span> <span class="n">pixel_values</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+        <span class="n">pixel_values</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">xy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">bkg</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+            <span class="n">bkg</span><span class="o">=</span><span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">bkg</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+            <span class="n">bkg</span><span class="o">=</span><span class="n">pixel_values</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="n">pixel_values</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">*</span><span class="mf">0.1</span>
+
+
+    <span class="n">off_set_x</span><span class="o">=</span><span class="n">xy</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">-</span><span class="n">border</span>
+    <span class="n">off_set_y</span><span class="o">=</span><span class="n">xy</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">-</span><span class="n">border</span>
+
+    <span class="n">image</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">image_rows</span><span class="p">,</span><span class="n">image_cols</span><span class="p">))</span><span class="o">*</span><span class="n">bkg</span>
+    <span class="n">masked_pixels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">xy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+
+        <span class="n">image</span><span class="p">[</span><span class="n">xy</span><span class="p">[</span><span class="n">ID</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">off_set_y</span><span class="p">,</span><span class="n">xy</span><span class="p">[</span><span class="n">ID</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">off_set_x</span><span class="p">]</span><span class="o">=</span><span class="n">pixel_values</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span>
+
+        <span class="n">masked_pixels</span><span class="p">[</span><span class="n">xy</span><span class="p">[</span><span class="n">ID</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">off_set_y</span><span class="p">,</span><span class="n">xy</span><span class="p">[</span><span class="n">ID</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">off_set_x</span><span class="p">]</span><span class="o">=</span><span class="k">False</span>
+
+    <span class="k">return</span> <span class="n">image</span><span class="p">,</span><span class="n">off_set_x</span><span class="p">,</span><span class="n">off_set_y</span><span class="p">,</span><span class="n">masked_pixels</span></div>
+
+
+
+<div class="viewcode-block" id="eval_cluster_bary"><a class="viewcode-back" href="../../../../api/asterism.core.clustering.cluster_tools.html#asterism.core.clustering.cluster_tools.eval_cluster_bary">[docs]</a><span class="k">def</span> <span class="nf">eval_cluster_bary</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span><span class="n">metric</span><span class="p">,</span><span class="n">weight</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    xy</span>
+<span class="sd">    metric</span>
+<span class="sd">    weight</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">xy</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">xy</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">xy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">x_c</span> <span class="o">=</span><span class="n">xy</span><span class="p">[:,</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">y_c</span> <span class="o">=</span><span class="n">xy</span><span class="p">[:,</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">sig_x</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">sig_y</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">r_cluster</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">semi_major_angle</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">pos_err</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">r_max</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">r_mean</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">x_c</span><span class="p">,</span><span class="n">y_c</span><span class="p">,</span><span class="n">sig_x</span><span class="p">,</span><span class="n">sig_y</span><span class="p">,</span><span class="n">r_cluster</span><span class="p">,</span><span class="n">semi_major_angle</span><span class="p">,</span><span class="n">pos_err</span><span class="p">,</span><span class="n">r_max</span> <span class="p">,</span><span class="n">r_mean</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">y_c_ave</span><span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">x_c_ave</span><span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+        <span class="n">cdist</span><span class="o">=</span> <span class="n">dist_eval</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span><span class="n">x_c</span><span class="o">=</span><span class="n">x_c_ave</span><span class="p">,</span><span class="n">y_c</span><span class="o">=</span><span class="n">y_c_ave</span><span class="p">,</span><span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">)</span>
+
+        <span class="n">cdist</span><span class="p">[</span><span class="n">cdist</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+
+        <span class="n">wdist_pos</span><span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="n">cdist</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">weight</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+
+
+            <span class="n">wdist_pos</span><span class="o">=</span><span class="n">wdist_pos</span><span class="o">*</span> <span class="n">weight</span>
+
+            <span class="c">#wdist_pos=weight</span>
+
+        <span class="n">y_c_w</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span> <span class="n">y</span><span class="p">,</span><span class="n">weights</span><span class="o">=</span><span class="n">wdist_pos</span><span class="p">)</span>
+        <span class="n">x_c_w</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span> <span class="n">x</span><span class="p">,</span><span class="n">weights</span><span class="o">=</span><span class="n">wdist_pos</span><span class="p">)</span>
+
+        <span class="n">pos_err</span><span class="o">=</span><span class="mf">1.0</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">wdist_pos</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+
+
+
+
+
+
+        <span class="n">cova</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span><span class="n">rowvar</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">eigvec</span><span class="p">,</span> <span class="n">eigval</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">cova</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
+
+
+        <span class="n">ind</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">eigval</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">eigval</span><span class="o">=</span><span class="n">eigval</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+        <span class="n">eigvec</span><span class="o">=</span><span class="n">eigvec</span><span class="p">[:,</span><span class="n">ind</span><span class="p">]</span>
+
+
+        <span class="n">sd</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">eigval</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">eigval</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+
+        <span class="n">semi_major_angle</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">eigvec</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">eigvec</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+
+
+
+
+
+        <span class="n">sig_x</span><span class="o">=</span> <span class="n">sd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">sig_y</span><span class="o">=</span> <span class="n">sd</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">r_cluster</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sig_x</span><span class="o">*</span><span class="n">sig_x</span><span class="o">+</span><span class="n">sig_y</span><span class="o">*</span><span class="n">sig_y</span><span class="p">)</span>
+
+        <span class="n">x_c</span><span class="o">=</span><span class="n">x_c_w</span>
+        <span class="n">y_c</span><span class="o">=</span><span class="n">y_c_w</span>
+        <span class="n">r_max</span><span class="o">=</span><span class="n">cdist</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">r_mean</span><span class="o">=</span><span class="n">cdist</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+
+
+
+    <span class="k">return</span> <span class="n">x_c</span><span class="p">,</span><span class="n">y_c</span><span class="p">,</span><span class="n">sig_x</span><span class="p">,</span><span class="n">sig_y</span><span class="p">,</span><span class="n">r_cluster</span><span class="p">,</span><span class="n">semi_major_angle</span><span class="p">,</span><span class="n">pos_err</span><span class="p">,</span><span class="n">r_max</span> <span class="p">,</span><span class="n">r_mean</span></div>
+
+
+
+
+
+</pre></div>
+
+         </div>
+       </div>
+
+
+     </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, andrea tramacere.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

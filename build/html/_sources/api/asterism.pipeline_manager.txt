@@ -1,0 +1,24 @@
+
+package: asterism.pipeline_manager
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+
+
+Modules
+---------------
+.. toctree::
+   :maxdepth: 1
+
+
+   asterism.pipeline_manager.analysis_parameters 
+   asterism.pipeline_manager.analysis_pipeline 
+   asterism.pipeline_manager.analysis_processes 
+   asterism.pipeline_manager.analysis_products 
+   asterism.pipeline_manager.analysis_tasks 
+   asterism.pipeline_manager.processing_tools 

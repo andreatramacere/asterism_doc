@@ -1,0 +1,638 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>asterism.core.morphometry.non_parametric.morphology &#8212; asterism 1.0.a documentation</title>
+    
+    <link rel="stylesheet" href="../../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '1.0.a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../../index.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<br><img src="../../../../../_static/logo.png" style=width:80%; " />  <br>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+     <div class="documentwrapper">
+       <div class="bodywrapper">
+        <div class="body">
+         <div class="align-left figure align-left">
+
+
+        </div>
+           
+  <h1>Source code for asterism.core.morphometry.non_parametric.morphology</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module: morphology</span>
+<span class="sd">========================</span>
+
+
+
+<span class="sd">Overview</span>
+<span class="sd">--------</span>
+
+<span class="sd">This modules provides the implementation of the functions for the extraction of</span>
+<span class="sd">morphometric features, related to Hu_moments</span>
+
+
+
+
+<span class="sd">Classes relations</span>
+<span class="sd">---------------------------------------</span>
+<span class="sd">.. figure::</span>
+<span class="sd">   :align:   center</span>
+
+
+<span class="sd">Classes and Inheritance Structure</span>
+<span class="sd">----------------------------------------------</span>
+<span class="sd">.. inheritance-diagram::</span>
+
+
+
+
+<span class="sd">Summary</span>
+<span class="sd">---------</span>
+<span class="sd">.. autosummary::</span>
+<span class="sd">   do_morphometric_features_extraction_process_func</span>
+<span class="sd">   FeaturesArray</span>
+<span class="sd">   DoMorphometricFeaturesExtraction</span>
+
+
+<span class="sd">Module API</span>
+<span class="sd">-----------</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">asterism.core.image_processing.filters</span> <span class="k">import</span> <span class="n">GaussianFilter</span>
+<span class="kn">from</span> <span class="nn">asterism.core.image_processing.geometry_transformation</span> <span class="k">import</span> <span class="n">FlipImageX</span><span class="p">,</span><span class="n">FlipImageY</span><span class="p">,</span><span class="n">RotateImage</span>
+<span class="kn">from</span> <span class="nn">asterism.core.morphometry.features</span> <span class="k">import</span>  <span class="n">MorphometricFeatures</span>
+<span class="kn">from</span> <span class="nn">asterism.core.stats.histogram.radial_distributions</span> <span class="k">import</span> <span class="n">radial_profile_image</span>
+<span class="kn">import</span>  <span class="nn">traceback</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span>  <span class="n">spearmanr</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;andrea tramacere&#39;</span>
+
+
+
+<div class="viewcode-block" id="eval_r_Petrosian"><a class="viewcode-back" href="../../../../../api/asterism.core.morphometry.non_parametric.morphology.html#asterism.core.morphometry.non_parametric.morphology.eval_r_Petrosian">[docs]</a><span class="k">def</span> <span class="nf">eval_r_Petrosian</span><span class="p">(</span><span class="n">I</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">image_array</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">plot</span><span class="o">=</span><span class="k">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r_coords</span>
+<span class="sd">    r_max</span>
+<span class="sd">    flux_array</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+
+
+    <span class="n">I_a</span><span class="o">=</span><span class="p">(</span><span class="n">I</span><span class="o">*</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span><span class="o">/</span><span class="n">s</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+    <span class="n">L_ratio</span><span class="o">=</span><span class="p">(</span><span class="n">I</span><span class="o">*</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span><span class="o">/</span><span class="p">(</span><span class="n">I</span><span class="o">*</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="n">p_ratio</span><span class="o">=</span><span class="n">I_a</span><span class="o">/</span><span class="n">I</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s">&#39;check&#39;</span><span class="p">,</span><span class="n">image_array</span><span class="o">.</span><span class="n">sum</span><span class="p">(),(</span><span class="n">I</span><span class="o">*</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+
+
+
+
+    <span class="n">r_20</span><span class="o">=</span><span class="n">r</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">L_ratio</span><span class="o">&gt;=</span><span class="mf">0.2</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">r_20</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">r_20</span><span class="o">=</span><span class="n">r_20</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+
+    <span class="n">r_80</span><span class="o">=</span><span class="n">r</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">L_ratio</span><span class="o">&gt;=</span><span class="mf">0.8</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">r_80</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">r_80</span><span class="o">=</span><span class="n">r_80</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+
+
+    <span class="n">r_90</span><span class="o">=</span><span class="n">r</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">L_ratio</span><span class="o">&gt;=</span><span class="mf">0.9</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">r_90</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">r_90</span><span class="o">=</span><span class="n">r_90</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+
+    <span class="n">r_50</span><span class="o">=</span><span class="n">r</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">L_ratio</span><span class="o">&gt;=</span><span class="mf">0.5</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">r_50</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">r_50</span><span class="o">=</span><span class="n">r_50</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+
+    <span class="n">r_petrosian</span><span class="o">=</span><span class="n">r</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">p_ratio</span><span class="o">&gt;=</span><span class="mf">5.0</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">r_petrosian</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">r_petrosian</span><span class="o">=</span><span class="n">r_petrosian</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">r_petrosian</span><span class="o">=</span><span class="n">r_80</span>
+
+
+
+    <span class="k">if</span> <span class="n">plot</span><span class="o">==</span><span class="k">True</span><span class="p">:</span>
+        <span class="kn">import</span>  <span class="nn">pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+        <span class="n">fig</span><span class="p">,(</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">)</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span><span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;nearest&#39;</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">I</span><span class="p">,</span><span class="s">&#39;-o&#39;</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">L_ratio</span><span class="p">,</span><span class="s">&#39;-x&#39;</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">I_a</span><span class="p">,</span><span class="s">&#39;-*&#39;</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">I_a</span><span class="o">/</span><span class="n">I</span><span class="p">,</span><span class="s">&#39;-&#39;</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">r_20</span><span class="p">,</span><span class="n">r_20</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">])</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">r_50</span><span class="p">,</span><span class="n">r_50</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">])</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">r_80</span><span class="p">,</span><span class="n">r_80</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">])</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">r_90</span><span class="p">,</span><span class="n">r_90</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">])</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">r_petrosian</span><span class="p">,</span><span class="n">r_petrosian</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">])</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="n">I</span><span class="o">.</span><span class="n">max</span><span class="p">()])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">r_20</span><span class="p">,</span><span class="n">r_80</span><span class="p">,</span><span class="n">r_50</span><span class="p">,</span><span class="n">r_90</span><span class="p">,</span><span class="n">r_petrosian</span></div>
+
+
+<div class="viewcode-block" id="eval_clumpiness"><a class="viewcode-back" href="../../../../../api/asterism.core.morphometry.non_parametric.morphology.html#asterism.core.morphometry.non_parametric.morphology.eval_clumpiness">[docs]</a><span class="k">def</span> <span class="nf">eval_clumpiness</span><span class="p">(</span><span class="n">cluster_image</span><span class="p">,</span><span class="n">cluster_blurred_image</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cluster_image</span>
+<span class="sd">    cluster_blurred_image</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+    <span class="n">diff</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="n">cluster_image</span><span class="o">-</span><span class="n">cluster_blurred_image</span><span class="p">)</span>
+    <span class="n">msk</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="n">cluster_image</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span>
+
+    <span class="c">#import  pylab as plt</span>
+    <span class="c">#fig,(ax1,ax2,ax3)=plt.subplots(1,3)</span>
+    <span class="c">#ax1.imshow(cluster_image,interpolation=&#39;nearest&#39;)</span>
+    <span class="c">#ax2.imshow(cluster_blurred_image,interpolation=&#39;nearest&#39;)</span>
+    <span class="c">#ax3.imshow(cluster_blurred_image-cluster_image,interpolation=&#39;nearest&#39;)</span>
+    <span class="c">#plt.show()</span>
+
+    <span class="n">c1</span><span class="o">=</span><span class="mf">10.0</span><span class="o">*</span><span class="n">diff</span><span class="p">[</span><span class="n">msk</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="n">cluster_image</span><span class="p">[</span><span class="n">msk</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="c">#c2=1.0-np.fabs(spearmanr(cluster_blurred_image.flatten(),cluster_image.flatten())[0])</span>
+
+    <span class="k">return</span> <span class="n">c1</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="eval_asymmetry"><a class="viewcode-back" href="../../../../../api/asterism.core.morphometry.non_parametric.morphology.html#asterism.core.morphometry.non_parametric.morphology.eval_asymmetry">[docs]</a><span class="k">def</span> <span class="nf">eval_asymmetry</span><span class="p">(</span><span class="n">cluster_image</span><span class="p">,</span><span class="n">x_c</span><span class="p">,</span><span class="n">y_c</span><span class="p">,</span><span class="n">r_petrosian</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cluster_image</span>
+<span class="sd">    x_c</span>
+<span class="sd">    N</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c">#import pylab as plt</span>
+
+
+    <span class="c">#f2=np.fabs(cluster_image).sum()</span>
+    <span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">c</span><span class="p">)</span><span class="o">=</span><span class="n">cluster_image</span><span class="o">.</span><span class="n">shape</span>
+
+
+    <span class="n">image_x_c</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">(</span><span class="n">c</span><span class="o">*</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">image_y_c</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">(</span><span class="n">r</span><span class="o">*</span><span class="mf">0.5</span><span class="p">)</span>
+
+
+    <span class="n">n_grid_x_min</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">x_c</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">n_grid_x_max</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">c</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="n">x_c</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="n">n_grid_y_min</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">y_c</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">n_grid_y_max</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">r</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="n">y_c</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span>
+
+
+
+    <span class="n">grid_x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span> <span class="n">n_grid_x_min</span><span class="p">,</span><span class="n">n_grid_x_max</span><span class="p">,</span><span class="o">.</span><span class="mi">2</span><span class="p">)</span>
+    <span class="c">#asymm_index_arr_x=np.ones(grid_x.size)*-1</span>
+
+    <span class="n">grid_y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span> <span class="n">n_grid_y_min</span><span class="p">,</span><span class="n">n_grid_y_max</span><span class="p">,</span><span class="o">.</span><span class="mi">2</span><span class="p">)</span>
+    <span class="c">#asymm_index_arr_y=np.ones(grid_y.size)*-1</span>
+
+    <span class="c">#import pylab as plt</span>
+    <span class="n">rot</span><span class="o">=</span><span class="n">RotateImage</span><span class="p">(</span><span class="n">angle</span><span class="o">=</span><span class="mf">180.0</span><span class="p">,</span><span class="n">resize</span><span class="o">=</span><span class="k">False</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ID_X</span><span class="p">,</span><span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">grid_x</span><span class="p">):</span>
+
+        <span class="c">#flip_imagex=FlipImageX(x_c=x)</span>
+        <span class="c">#flip_imagey=FlipImageY(y_c=y_c)</span>
+        <span class="c">#cluster_image_180_x=cluster_image.geom_transformation(flip_imagex,inplace=False)</span>
+        <span class="c">#cluster_image_180_x=flip_imagey.apply(cluster_image_180_x)</span>
+
+
+        <span class="c">#f1=np.fabs(cluster_image_180_x-cluster_image.array).sum()</span>
+        <span class="c">##print(x,y_c,f1/f2)</span>
+        <span class="c">#if ID_X==0:</span>
+        <span class="c">#    asymm_index=f1/f2</span>
+        <span class="c">#else:</span>
+        <span class="c">#    if f1/f2&lt;asymm_index:</span>
+        <span class="c">#        asymm_index=f1/f2</span>
+
+        <span class="c">#fig,(ax1,ax2,ax3)=plt.subplots(1,3)</span>
+        <span class="c">#ax1.imshow(cluster_image.array,interpolation=&#39;nearest&#39;)</span>
+        <span class="c">#ax2.imshow(cluster_image_180_x,interpolation=&#39;nearest&#39;)</span>
+        <span class="c">#ax3.imshow(cluster_image_180_x-cluster_image.array,interpolation=&#39;nearest&#39;)</span>
+        <span class="c">#plt.show()</span>
+        <span class="k">for</span> <span class="n">ID_Y</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">grid_y</span><span class="p">):</span>
+            <span class="c">#print(x,y)</span>
+            <span class="c">#flip_imagex=FlipImageX(x_c=x)</span>
+            <span class="c">#flip_imagey=FlipImageY(y_c=y)</span>
+            <span class="c">#cluster_image_180_y=flip_imagex.apply(cluster_image)</span>
+            <span class="c">#cluster_image_180_y=flip_imagey.apply(cluster_image_180_y)</span>
+
+            <span class="n">dx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">image_x_c</span><span class="p">)</span>
+            <span class="n">dy</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">image_y_c</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">dx</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                <span class="n">dxp</span><span class="o">=</span><span class="n">c</span>
+                <span class="n">dxm</span><span class="o">=</span><span class="n">dx</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dxp</span><span class="o">=</span><span class="n">c</span><span class="o">-</span><span class="n">dx</span>
+                <span class="n">dxm</span><span class="o">=</span><span class="mi">0</span>
+            <span class="k">if</span> <span class="n">dy</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                <span class="n">dyp</span><span class="o">=</span><span class="n">r</span>
+                <span class="n">dym</span><span class="o">=</span><span class="n">dy</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dyp</span><span class="o">=</span><span class="n">r</span><span class="o">-</span><span class="n">dy</span>
+                <span class="n">dym</span><span class="o">=</span><span class="mi">0</span>
+
+            <span class="n">i_crop</span><span class="o">=</span><span class="n">cluster_image</span><span class="p">[</span><span class="n">dym</span><span class="p">:</span><span class="n">dyp</span><span class="p">,</span><span class="n">dxm</span><span class="p">:</span><span class="n">dxp</span><span class="p">]</span>
+            <span class="c">#print (dx,dy,dxp,dxm,dyp,dym,i_crop.shape)</span>
+            <span class="n">i_rot</span><span class="o">=</span><span class="n">rot</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">i_crop</span><span class="p">,</span><span class="n">center</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="n">dx</span><span class="p">),</span><span class="n">y</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="n">dy</span><span class="p">)])</span>
+            <span class="c">#print(&#39;check rot/crop asysmm&#39;,i_crop.sum(),i_rot.sum())</span>
+
+            <span class="n">m</span><span class="o">=</span><span class="n">i_crop</span><span class="o">&gt;</span><span class="mi">0</span>
+            <span class="n">f1</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="n">i_rot</span><span class="p">[</span><span class="n">m</span><span class="p">]</span><span class="o">-</span><span class="n">i_crop</span><span class="p">[</span><span class="n">m</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+            <span class="n">f2</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="n">i_crop</span><span class="p">[</span><span class="n">m</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+            <span class="c">#f3=1.0-np.fabs(spearmanr(i_rot[m].flatten(),i_crop[m].flatten()))[0]</span>
+            <span class="c">#plt.imshow(rot.apply(cluster_image,center=[x,y]),interpolation=&#39;nearest&#39;)</span>
+            <span class="c">#print (rot.apply(cluster_image,center=[x,y]).shape,cluster_image.shape)</span>
+            <span class="c">#plt.show()</span>
+
+            <span class="k">if</span> <span class="n">ID_X</span><span class="o">==</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">ID_Y</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                <span class="c">#print(&#39;check rot/crop asysmm&#39;,ID_X,ID_Y,i_crop.sum(),i_rot.sum(),f1/f2,f3)</span>
+                <span class="n">asymm_index_1</span><span class="o">=</span><span class="n">f1</span><span class="o">/</span><span class="n">f2</span>
+                <span class="c">#asymm_index_2=f3</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">f1</span><span class="o">/</span><span class="n">f2</span><span class="o">&lt;</span><span class="n">asymm_index_1</span><span class="p">:</span>
+                    <span class="c">#print(&#39;asymm&#39;,f1/f2,asymm_index)</span>
+                    <span class="n">asymm_index_1</span><span class="o">=</span><span class="n">f1</span><span class="o">/</span><span class="n">f2</span>
+                    <span class="c">#print(&#39;check rot/crop asysmm&#39;,i_crop.sum(),i_rot.sum(),i_crop.shape,i_rot.shape,f1/f2,asymm_index_1)</span>
+                    <span class="c">#fig,(ax1,ax2,ax3)=plt.subplots(1,3)</span>
+                    <span class="c">#ax1.imshow(i_crop,interpolation=&#39;nearest&#39;)</span>
+                    <span class="c">#ax2.imshow(i_rot,interpolation=&#39;nearest&#39;)</span>
+                    <span class="c">#ax3.imshow(i_rot-i_crop,interpolation=&#39;nearest&#39;)</span>
+                    <span class="c">#plt.show()</span>
+
+                <span class="c">#if f3&lt;asymm_index_2:</span>
+                <span class="c">#    #print(&#39;check rot/crop asysmm&#39;,i_crop.sum(),i_rot.sum(),f1/f2,f3)</span>
+                <span class="c">#    asymm_index_2=f3</span>
+
+    <span class="c">#print (&#39;assym final&#39;,asymm_index_1,asymm_index_2)</span>
+    <span class="c">#grid_x=grid_x[asymm_index_arr_x&gt;=0]</span>
+    <span class="c">#asymm_index_arr_x=asymm_index_arr_x[asymm_index_arr_x&gt;=0]</span>
+    <span class="c">#x_min=grid_x[np.argmin(asymm_index_arr_x)]</span>
+
+    <span class="c">#print(grid_x,asymm_index_arr_x,x_min)</span>
+    <span class="c">#print(&quot;min x&quot;,x_min,[asymm_index_arr_x.min()])</span>
+
+    <span class="c">#for ID,y in enumerate(grid_y):</span>
+    <span class="c">#    flip_imagex=FlipImageX(x_c=x_min)</span>
+    <span class="c">#    flip_imagey=FlipImageY(y_c=y)</span>
+    <span class="c">#    cluster_image_180_y=cluster_image.geom_transformation(flip_imagex,inplace=False)</span>
+    <span class="c">#    cluster_image_180_y=flip_imagey.apply(cluster_image_180_y)</span>
+
+
+    <span class="c">#    f1=np.fabs(cluster_image_180_y-cluster_image.array).sum()</span>
+    <span class="c">#    #print(x_min,y,f1/f2)</span>
+    <span class="c">#    asymm_index_arr_y[ID]=f1/f2</span>
+
+    <span class="c">#    fig,(ax1,ax2,ax3)=plt.subplots(1,3)</span>
+    <span class="c">#    ax1.imshow(cluster_image.array,interpolation=&#39;nearest&#39;)</span>
+    <span class="c">#    ax2.imshow(cluster_image_180_y,interpolation=&#39;nearest&#39;)</span>
+    <span class="c">#    ax3.imshow(cluster_image_180_y-cluster_image.array,interpolation=&#39;nearest&#39;)</span>
+    <span class="c">#    plt.show()</span>
+
+    <span class="c">#grid_y=grid_y[asymm_index_arr_y&gt;=0]</span>
+    <span class="c">#asymm_index_arr_y=asymm_index_arr_y[asymm_index_arr_y&gt;=0]</span>
+    <span class="c">#y=grid_y[np.argmin(asymm_index_arr_y)]</span>
+
+
+    <span class="c">#print(&quot;min y&quot;,y,[asymm_index_arr_y.min()])</span>
+
+    <span class="c">#if np.size(asymm_index_arr_y)&gt;0:</span>
+
+    <span class="c">#    asymm_index=min(asymm_index_arr_y.min(),asymm_index_arr_x.min())</span>
+    <span class="c">#else:</span>
+    <span class="c">#    asymm_index=-1.0</span>
+
+    <span class="c">#cluster_image_mirrored=flip_image(cluster_image,grid[min_ID])</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span><span class="n">asymm_index_1</span><span class="p">)</span>
+    <span class="k">return</span>  <span class="n">asymm_index_1</span></div>
+
+
+
+<div class="viewcode-block" id="eval_Gini"><a class="viewcode-back" href="../../../../../api/asterism.core.morphometry.non_parametric.morphology.html#asterism.core.morphometry.non_parametric.morphology.eval_Gini">[docs]</a><span class="k">def</span> <span class="nf">eval_Gini</span><span class="p">(</span><span class="n">flux_array</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Gini factor :cite:`Lotz:2004` indicates the distribution of the light among pixels. A value of Gini equal to 1</span>
+<span class="sd">    would indicate that  all the light is concentrated in one pixel, on the contrary, a lower value would indicates that</span>
+<span class="sd">    the light is distributed more evenly amongst the pixels, with Gini factor equal to 0, if all the pixels have the s</span>
+<span class="sd">    ame flux value.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    flux_array : 1dim numpy array,</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Gini factor : float</span>
+
+
+<span class="sd">    .. bibliography:: references.bib</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">flux_sorted_ids</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">flux_array</span><span class="p">)</span>
+    <span class="n">n</span><span class="o">=</span><span class="n">flux_sorted_ids</span><span class="o">.</span><span class="n">size</span>
+    <span class="k">if</span> <span class="n">n</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">ID</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">ID</span><span class="o">=</span><span class="n">ID</span><span class="o">+</span><span class="mi">1</span>
+        <span class="n">flux_sorted</span><span class="o">=</span><span class="n">flux_array</span><span class="p">[</span><span class="n">flux_sorted_ids</span><span class="p">]</span>
+        <span class="n">g_down</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="n">flux_sorted</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="o">*</span><span class="n">n</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">g_up</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">ID</span> <span class="o">-</span><span class="n">n</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="n">flux_sorted</span><span class="p">)</span>
+
+        <span class="n">g</span><span class="o">=</span><span class="n">g_up</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">g_down</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">g</span><span class="o">=</span><span class="mf">1.0</span>
+
+    <span class="k">return</span> <span class="n">g</span></div>
+
+
+<div class="viewcode-block" id="eval_M20"><a class="viewcode-back" href="../../../../../api/asterism.core.morphometry.non_parametric.morphology.html#asterism.core.morphometry.non_parametric.morphology.eval_M20">[docs]</a><span class="k">def</span> <span class="nf">eval_M20</span><span class="p">(</span><span class="n">flux_array</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">x_c</span><span class="p">,</span><span class="n">y_c</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    flux_array</span>
+<span class="sd">    x</span>
+<span class="sd">    y</span>
+<span class="sd">    x_c</span>
+<span class="sd">    y_c</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">flux_sorted_ids</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">flux_array</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">flux_sorted</span><span class="o">=</span><span class="n">flux_array</span><span class="p">[</span><span class="n">flux_sorted_ids</span><span class="p">]</span>
+    <span class="n">f_tot</span><span class="o">=</span><span class="n">flux_sorted</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="n">ID_max</span><span class="o">=</span><span class="n">flux_sorted</span><span class="o">.</span><span class="n">size</span>
+    <span class="n">ID</span><span class="o">=</span><span class="mi">1</span>
+    <span class="k">while</span> <span class="n">flux_sorted</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">ID</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">f_tot</span><span class="o">&lt;</span><span class="mf">0.2</span> <span class="ow">and</span> <span class="n">ID</span><span class="o">&lt;</span><span class="n">ID_max</span><span class="p">:</span>
+        <span class="n">ID</span><span class="o">+=</span><span class="mi">1</span>
+
+    <span class="n">ID_20</span><span class="o">=</span><span class="n">ID</span><span class="o">-</span><span class="mi">1</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">flux_sorted_ids</span><span class="p">]</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">[</span><span class="n">flux_sorted_ids</span><span class="p">]</span>
+    <span class="n">dist</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">x_c</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">y_c</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">m_tot</span><span class="o">=</span><span class="p">(</span><span class="n">flux_sorted</span><span class="o">*</span><span class="n">dist</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">m_20</span><span class="o">=</span><span class="p">(</span><span class="n">flux_sorted</span><span class="o">*</span><span class="n">dist</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="n">ID_20</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">m_tot</span>
+
+
+    <span class="k">if</span> <span class="n">m_20</span><span class="o">&lt;=</span><span class="mf">0.0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">100</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">m_20</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="eval_Concentration"><a class="viewcode-back" href="../../../../../api/asterism.core.morphometry.non_parametric.morphology.html#asterism.core.morphometry.non_parametric.morphology.eval_Concentration">[docs]</a><span class="k">def</span> <span class="nf">eval_Concentration</span><span class="p">(</span><span class="n">r_20</span><span class="p">,</span><span class="n">r_80</span><span class="p">,</span><span class="n">r_50</span><span class="p">,</span><span class="n">r_90</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Evaluates the concentration parameter:</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        C=5log(r_{80}/r_{20})</span>
+
+
+<span class="sd">    where :math:`r_{80}` and :math:`r_{20}` are the radii of the circular discs containing respectively 80\% and 20\% of the total cluster image flux.</span>
+
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r_20 : Optional</span>
+<span class="sd">    r_80 : Optional</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Concentration parameter float</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">r_20</span><span class="o">&gt;</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">r_80</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+
+
+        <span class="n">c1</span><span class="o">=</span> <span class="mf">1.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">r_80</span><span class="o">/</span><span class="n">r_20</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+
+        <span class="n">c1</span><span class="o">=</span> <span class="mi">0</span>
+
+
+    <span class="k">if</span> <span class="n">r_50</span><span class="o">&gt;</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">r_90</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+
+
+        <span class="n">c2</span><span class="o">=</span> <span class="mf">1.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">r_90</span><span class="o">/</span><span class="n">r_50</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+
+        <span class="n">c2</span><span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">return</span> <span class="n">c1</span><span class="p">,</span><span class="n">c2</span></div>
+
+<div class="viewcode-block" id="get_cluster_morphology_morphometric_features"><a class="viewcode-back" href="../../../../../api/asterism.core.morphometry.non_parametric.morphology.html#asterism.core.morphometry.non_parametric.morphology.get_cluster_morphology_morphometric_features">[docs]</a><span class="k">def</span> <span class="nf">get_cluster_morphology_morphometric_features</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span>
+                                                 <span class="n">cluster_image</span><span class="p">,</span>
+                                                 <span class="n">image_centroid</span><span class="p">,</span>
+                                                 <span class="n">surf_bright_profile</span><span class="p">,</span>
+                                                 <span class="n">group_name</span><span class="o">=</span><span class="s">&#39;morph&#39;</span><span class="p">,</span>
+                                                 <span class="n">name_flag</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+                                                 <span class="n">blurring_scale</span><span class="o">=</span><span class="mf">0.25</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to extract galaxy morphometric features for :.... . The try/except statement allows to return</span>
+<span class="sd">    np.nan features</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cluster : :class:`asterism.core.clustering.source_cluster.SourceCluster2Dim&#39;</span>
+<span class="sd">        cluster object from whicht to extract the features</span>
+
+<span class="sd">    cluster_image : 2d array</span>
+<span class="sd">        image used to evaluate the asymmetry and the clumpiness</span>
+
+
+<span class="sd">    image_centroid : tuppolar_coords.theta,theta_pdf,theta_pdf_xle (x,y)</span>
+<span class="sd">        tuple storing the source centroid coordinate for the cluster_image,</span>
+
+<span class="sd">    surf_bright_profile : :class: `asterism.core.photometry.surface_brightness_profile.ImageBrigthnessRadialProfile`</span>
+<span class="sd">        instance object for the surface brightness profile</span>
+
+<span class="sd">    group_name : str</span>
+<span class="sd">        the group name for the features (see :class:`.MorphometricFeatures`)</span>
+
+
+<span class="sd">    name_flag : str</span>
+<span class="sd">        the flag name for the features (see :class:`.MorphometricFeatures`)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    MorphometricFeatures :   :class:`.MorphometricFeatures`</span>
+<span class="sd">        The class storing the features with their names and dtypes</span>
+
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+    <span class="n">feat_names</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;Gini&#39;</span><span class="p">,</span><span class="s">&#39;M20&#39;</span><span class="p">,</span><span class="s">&#39;conc_1&#39;</span><span class="p">,</span><span class="s">&#39;conc_2&#39;</span><span class="p">,</span><span class="s">&#39;clumpiness&#39;</span><span class="p">,</span><span class="s">&#39;r_Petrosian_to_r_max&#39;</span><span class="p">,</span><span class="s">&#39;asymm&#39;</span><span class="p">,</span><span class="s">&#39;r_20_to_r_max&#39;</span><span class="p">,</span><span class="s">&#39;r_80_to_r_max&#39;</span><span class="p">,</span><span class="s">&#39;r_Petrosian&#39;</span><span class="p">]</span>
+    <span class="n">feat_dt</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">feat_names</span><span class="p">)</span>
+
+
+    <span class="n">m_feat</span><span class="o">=</span> <span class="n">MorphometricFeatures</span><span class="o">.</span><span class="n">feature_factory</span><span class="p">(</span><span class="n">feat_names</span><span class="p">,</span>
+                                                <span class="n">feat_dt</span><span class="p">,</span>
+                                                <span class="n">group_name</span><span class="p">,</span>
+                                                <span class="n">name_flag</span><span class="o">=</span><span class="n">name_flag</span><span class="p">,</span>
+                                                <span class="n">null_value</span><span class="o">=-</span><span class="mf">99.</span><span class="p">,</span>
+                                                <span class="n">failed_value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+
+
+    <span class="k">if</span> <span class="n">cluster</span> <span class="ow">is</span> <span class="k">None</span> <span class="ow">and</span> <span class="n">cluster_image</span> <span class="ow">is</span> <span class="k">None</span> <span class="ow">and</span> <span class="n">surf_bright_profile</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+        <span class="n">m_feat</span><span class="o">.</span><span class="n">fill_null</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">feature_values</span><span class="o">=</span><span class="p">[]</span>
+
+            <span class="n">r_20</span><span class="p">,</span><span class="n">r_80</span><span class="p">,</span><span class="n">r_50</span><span class="p">,</span><span class="n">r_90</span><span class="p">,</span><span class="n">r_Petrosian</span><span class="o">=</span><span class="n">eval_r_Petrosian</span><span class="p">(</span><span class="n">surf_bright_profile</span><span class="o">.</span><span class="n">I</span><span class="p">,</span><span class="n">surf_bright_profile</span><span class="o">.</span><span class="n">r</span><span class="p">,</span><span class="n">surf_bright_profile</span><span class="o">.</span><span class="n">s</span><span class="p">,</span><span class="n">image_array</span><span class="o">=</span><span class="n">cluster_image</span><span class="p">,</span><span class="n">plot</span><span class="o">=</span><span class="k">False</span><span class="p">)</span>
+
+
+            <span class="n">feature_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eval_Gini</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">flux</span><span class="p">))</span>
+
+            <span class="n">feature_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eval_M20</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">flux</span><span class="p">,</span><span class="n">cluster</span><span class="o">.</span><span class="n">cartesian</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="n">cluster</span><span class="o">.</span><span class="n">cartesian</span><span class="o">.</span><span class="n">y</span><span class="p">,</span><span class="n">cluster</span><span class="o">.</span><span class="n">x_c</span><span class="p">,</span><span class="n">cluster</span><span class="o">.</span><span class="n">y_c</span><span class="p">))</span>
+
+
+            <span class="n">feature_values</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">eval_Concentration</span><span class="p">(</span><span class="n">r_20</span><span class="p">,</span><span class="n">r_80</span><span class="p">,</span><span class="n">r_50</span><span class="p">,</span><span class="n">r_90</span><span class="p">))</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="n">r_20</span><span class="p">,</span><span class="n">r_80</span><span class="p">,</span><span class="n">r_50</span><span class="p">,</span><span class="n">r_90</span><span class="p">,</span><span class="n">r_Petrosian</span><span class="p">)</span>
+            <span class="n">cluster_image_blurred</span><span class="o">=</span><span class="n">GaussianFilter</span><span class="p">(</span><span class="n">sigma</span><span class="o">=</span><span class="n">r_Petrosian</span><span class="o">*</span><span class="n">blurring_scale</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">cluster_image</span><span class="p">)</span>
+
+            <span class="n">feature_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eval_clumpiness</span><span class="p">(</span><span class="n">cluster_image</span><span class="p">,</span><span class="n">cluster_image_blurred</span><span class="p">))</span>
+
+            <span class="n">feature_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r_Petrosian</span><span class="o">/</span><span class="n">cluster</span><span class="o">.</span><span class="n">r_max</span><span class="p">)</span>
+
+            <span class="n">feature_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eval_asymmetry</span><span class="p">(</span><span class="n">cluster_image</span><span class="p">,</span><span class="n">image_centroid</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">image_centroid</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">r_Petrosian</span><span class="p">))</span>
+
+            <span class="n">feature_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r_20</span><span class="o">/</span><span class="n">cluster</span><span class="o">.</span><span class="n">r_max</span><span class="p">)</span>
+
+            <span class="n">feature_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r_80</span><span class="o">/</span><span class="n">cluster</span><span class="o">.</span><span class="n">r_max</span><span class="p">)</span>
+
+            <span class="n">feature_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r_Petrosian</span><span class="p">)</span>
+            <span class="c">#print (feature_values)</span>
+            <span class="n">m_feat</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">feature_values</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span><span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+            <span class="k">raise</span> <span class="ne">Warning</span><span class="p">(</span><span class="s">&quot;!Warning cluster_geometric_morphometric_features failed &quot;</span><span class="p">,</span><span class="n">e</span><span class="p">)</span>
+            <span class="n">m_feat</span><span class="o">.</span><span class="n">fill_failed</span><span class="p">()</span>
+
+
+    <span class="k">return</span> <span class="n">m_feat</span></div>
+
+
+</pre></div>
+
+         </div>
+       </div>
+
+
+     </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, andrea tramacere.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

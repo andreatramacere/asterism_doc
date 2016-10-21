@@ -1,0 +1,394 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation &#8212; asterism 1.0.a documentation</title>
+    
+    <link rel="stylesheet" href="../../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '1.0.a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../../index.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<br><img src="../../../../../_static/logo.png" style=width:80%; " />  <br>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+     <div class="documentwrapper">
+       <div class="bodywrapper">
+        <div class="body">
+         <div class="align-left figure align-left">
+
+
+        </div>
+           
+  <h1>Source code for asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module: dbascan_segmentation</span>
+<span class="sd">========================</span>
+
+
+
+<span class="sd">Overview</span>
+<span class="sd">--------</span>
+
+<span class="sd">This module provides the implementation of the :class:`.DoDBSCANImageSegmentationTask` class</span>
+<span class="sd">used to perform the image segmentation Task</span>
+<span class="sd">The algorithm in of the task is implemented by the :func:`.do_image_segmentation`</span>
+
+<span class="sd">Classes relations</span>
+<span class="sd">---------------------------------------</span>
+<span class="sd">.. figure::</span>
+<span class="sd">   :align:   center</span>
+
+
+<span class="sd">Classes and Inheritance Structure</span>
+<span class="sd">----------------------------------------------</span>
+<span class="sd">.. inheritance-diagram::</span>
+
+
+<span class="sd">Summary</span>
+<span class="sd">---------</span>
+<span class="sd">.. autosummary::</span>
+
+
+<span class="sd">Module API</span>
+<span class="sd">-----------</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span>
+<span class="kn">import</span>  <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">....core.clustering.density_based.dbscan_binned</span> <span class="k">import</span>  <span class="n">DBSCANBinned</span>
+<span class="kn">from</span> <span class="nn">....core.clustering.density_based.dbscan_unbinned</span> <span class="k">import</span> <span class="n">DBSCANUnbinned</span>
+<span class="kn">from</span> <span class="nn">....core.clustering.connectivity_based.connected_components</span> <span class="k">import</span>  <span class="n">ConnectedComponents</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">sqrt</span>
+<span class="kn">from</span> <span class="nn">....core.tables.events_table</span> <span class="k">import</span> <span class="n">EventTable</span>
+<span class="kn">from</span> <span class="nn">....pipeline_manager.analysis_tasks</span> <span class="k">import</span> <span class="n">AnalysisTask</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;andrea tramacere&#39;</span>
+
+
+
+
+
+
+<div class="viewcode-block" id="DetectionInputProducts"><a class="viewcode-back" href="../../../../../api/asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation.html#asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation.DetectionInputProducts">[docs]</a><span class="k">class</span> <span class="nc">DetectionInputProducts</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">image_array</span><span class="p">,</span><span class="n">masked</span><span class="p">,</span><span class="n">offset_x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">offset_y</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_array</span><span class="o">=</span><span class="n">image_array</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">masked</span><span class="o">=</span><span class="n">masked</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">offset_x</span><span class="o">=</span><span class="n">offset_x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">offset_y</span><span class="o">=</span><span class="n">offset_y</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="build_source_clusters"><a class="viewcode-back" href="../../../../../api/asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation.html#asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation.build_source_clusters">[docs]</a><span class="k">def</span> <span class="nf">build_source_clusters</span><span class="p">(</span><span class="n">ID</span><span class="p">,</span><span class="n">dbscan_clusters_list</span><span class="p">,</span><span class="n">offset_x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">offset_y</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">sources_cluster_list</span><span class="o">=</span><span class="p">[]</span>
+
+
+    <span class="k">for</span> <span class="n">ID1</span><span class="p">,</span><span class="n">cl</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dbscan_clusters_list</span><span class="p">):</span>
+        <span class="n">sources_cluster_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cl</span><span class="o">.</span><span class="n">SourceCluster_factory</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">ID1</span><span class="o">+</span><span class="n">ID</span><span class="p">,</span><span class="n">x_off_set</span><span class="o">=</span><span class="n">offset_x</span><span class="p">,</span><span class="n">y_off_set</span><span class="o">=</span><span class="n">offset_y</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">sources_cluster_list</span></div>
+
+
+<div class="viewcode-block" id="connected_components_segmentation"><a class="viewcode-back" href="../../../../../api/asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation.html#asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation.connected_components_segmentation">[docs]</a><span class="k">def</span> <span class="nf">connected_components_segmentation</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">bkg_th</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">masked</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="k">False</span><span class="p">):</span>
+    <span class="n">conn</span><span class="o">=</span><span class="n">ConnectedComponents</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">masked</span><span class="o">=</span><span class="n">masked</span><span class="p">)</span>
+    <span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">~</span><span class="n">masked</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">conn</span><span class="o">.</span><span class="n">clusters_list</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="dbscan_unbinned_segmentation"><a class="viewcode-back" href="../../../../../api/asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation.html#asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation.dbscan_unbinned_segmentation">[docs]</a><span class="k">def</span> <span class="nf">dbscan_unbinned_segmentation</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">Eps</span><span class="p">,</span><span class="n">bkg_th</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">K_pix</span><span class="o">=</span><span class="k">False</span><span class="p">,</span><span class="n">masked</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="k">False</span><span class="p">):</span>
+
+    <span class="n">table</span><span class="o">=</span><span class="n">EventTable</span><span class="o">.</span><span class="n">from_image_array</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span><span class="n">masked</span><span class="o">=</span><span class="n">masked</span><span class="p">)</span>
+    <span class="n">db</span><span class="o">=</span><span class="n">DBSCANUnbinned</span><span class="p">(</span><span class="n">Eps</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">buffer_size</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">K_pix</span><span class="o">=</span><span class="n">K_pix</span><span class="p">)</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">cartesian</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span><span class="n">weight_array</span><span class="o">=</span><span class="n">table</span><span class="o">.</span><span class="n">flux</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">db</span><span class="o">.</span><span class="n">clusters_list</span><span class="p">,</span><span class="n">table</span><span class="o">.</span><span class="n">cartesian</span><span class="o">.</span><span class="n">coords</span></div>
+
+
+
+<div class="viewcode-block" id="dbscan_binned_segmentation"><a class="viewcode-back" href="../../../../../api/asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation.html#asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation.dbscan_binned_segmentation">[docs]</a><span class="k">def</span> <span class="nf">dbscan_binned_segmentation</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">Eps</span><span class="p">,</span><span class="n">bkg_th</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">K_pix</span><span class="o">=</span><span class="k">False</span><span class="p">,</span><span class="n">masked</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="k">False</span><span class="p">):</span>
+
+    <span class="n">db</span><span class="o">=</span><span class="n">DBSCANBinned</span><span class="p">(</span><span class="n">Eps</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span><span class="n">K_pix</span><span class="o">=</span><span class="n">K_pix</span><span class="p">)</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span><span class="n">masked</span><span class="o">=</span><span class="n">masked</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+    <span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">~</span><span class="n">masked</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">db</span><span class="o">.</span><span class="n">clusters_list</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="build_detection_input_prod_list"><a class="viewcode-back" href="../../../../../api/asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation.html#asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation.build_detection_input_prod_list">[docs]</a><span class="k">def</span> <span class="nf">build_detection_input_prod_list</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">bkg_th</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">max_image_size</span><span class="o">=</span><span class="k">None</span><span class="p">,</span><span class="n">min_sub_stamp_size</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span><span class="n">use_only_central_sub_stamp</span><span class="o">=</span><span class="k">False</span><span class="p">):</span>
+    <span class="n">detection_input_prod_list</span><span class="o">=</span><span class="p">[]</span>
+
+    <span class="c">#No bkg Full stamp will be used</span>
+    <span class="k">if</span> <span class="n">bkg_th</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
+        <span class="n">masked</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">masked</span>
+        <span class="n">detection_input_prod_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DetectionInputProducts</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">array</span><span class="p">,</span><span class="n">masked</span><span class="p">))</span>
+
+    <span class="c">#bkg is used to get sub stamps if image.size&gt;max_image_size</span>
+    <span class="k">elif</span> <span class="n">max_image_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span> <span class="ow">and</span> <span class="n">bkg_th</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">image</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">size</span><span class="o">&gt;</span><span class="n">max_image_size</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s">&quot;|Building image sub stamps&quot;</span><span class="p">)</span>
+
+            <span class="n">image</span><span class="o">.</span><span class="n">_make_connected_sub_stamps</span><span class="p">(</span><span class="n">bkg_th</span><span class="p">,</span><span class="n">min_sub_stamp_size</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">_N_connected_sub_stamps</span><span class="p">):</span>
+                <span class="n">dist</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="n">image</span><span class="o">.</span><span class="n">_N_connected_sub_stamps</span><span class="p">)</span>
+                <span class="n">image_array</span><span class="p">,</span><span class="n">masked</span><span class="p">,</span><span class="n">x_offset</span><span class="p">,</span><span class="n">y_offset</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">_get_connected_stamp_and_mask</span><span class="p">(</span><span class="n">ID</span><span class="p">,</span><span class="n">min_size</span><span class="o">=</span><span class="n">min_sub_stamp_size</span><span class="p">)</span>
+                <span class="p">(</span><span class="n">x_c</span><span class="p">,</span><span class="n">y_c</span><span class="p">)</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span>
+                <span class="n">dx</span><span class="o">=</span> <span class="n">x_c</span><span class="o">*</span><span class="mf">0.5</span> <span class="o">-</span> <span class="n">image</span><span class="o">.</span><span class="n">_center_x</span>
+                <span class="n">dy</span><span class="o">=</span> <span class="n">y_c</span><span class="o">*</span><span class="mf">0.5</span> <span class="o">-</span> <span class="n">image</span><span class="o">.</span><span class="n">_center_y</span>
+
+                <span class="n">dist</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span><span class="o">=</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dx</span><span class="o">*</span><span class="n">dx</span><span class="o">+</span><span class="n">dy</span><span class="o">*</span><span class="n">dy</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">image_array</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+                    <span class="n">masked_bg</span><span class="o">=</span><span class="n">image_array</span><span class="o">&lt;</span><span class="n">bkg_th</span>
+                    <span class="n">masked</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">masked_bg</span><span class="p">,</span><span class="n">masked</span><span class="p">)</span>
+                    <span class="n">detection_input_prod_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DetectionInputProducts</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span><span class="n">masked</span><span class="p">,</span><span class="n">x_offset</span><span class="p">,</span><span class="n">y_offset</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">masked_bg</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">array</span><span class="o">&lt;</span><span class="n">bkg_th</span>
+            <span class="n">masked</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">masked_bg</span><span class="p">,</span><span class="n">image</span><span class="o">.</span><span class="n">masked</span><span class="p">)</span>
+            <span class="n">detection_input_prod_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DetectionInputProducts</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">array</span><span class="p">,</span><span class="n">masked</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">masked_bg</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">array</span><span class="o">&lt;</span><span class="n">bkg_th</span>
+        <span class="n">masked</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">masked_bg</span><span class="p">,</span><span class="n">image</span><span class="o">.</span><span class="n">masked</span><span class="p">)</span>
+        <span class="n">detection_input_prod_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DetectionInputProducts</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">array</span><span class="p">,</span><span class="n">masked</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">detection_input_prod_list</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">use_only_central_sub_stamp</span><span class="o">==</span><span class="k">True</span><span class="p">:</span>
+        <span class="n">id_c</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+        <span class="n">detection_input_prod_list</span><span class="o">=</span><span class="p">[</span><span class="n">detection_input_prod_list</span><span class="p">[</span><span class="n">id_c</span><span class="p">]]</span>
+
+    <span class="k">return</span>  <span class="n">detection_input_prod_list</span></div>
+
+
+<div class="viewcode-block" id="from_image_detection"><a class="viewcode-back" href="../../../../../api/asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation.html#asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation.from_image_detection">[docs]</a><span class="k">def</span> <span class="nf">from_image_detection</span><span class="p">(</span><span class="n">allowed_list</span><span class="p">,</span><span class="n">method</span><span class="p">,</span><span class="n">bkg_threshold</span><span class="p">,</span><span class="n">image</span><span class="p">,</span><span class="n">max_image_size</span><span class="p">,</span><span class="n">min_sub_stamp_size</span><span class="p">,</span><span class="n">dbscan_eps</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">K_pix</span><span class="p">,</span><span class="n">verbose</span><span class="p">,</span><span class="n">plot_dbscan</span><span class="p">,</span><span class="n">use_only_central_sub_stamp</span><span class="o">=</span><span class="k">False</span><span class="p">):</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s">&quot;|method&quot;</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+    <span class="n">K</span><span class="o">=</span><span class="n">K</span><span class="o">*</span><span class="n">bkg_threshold</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s">&quot;|K,&quot;</span><span class="p">,</span><span class="n">K</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s">&quot;|bkg th&quot;</span><span class="p">,</span><span class="n">bkg_threshold</span><span class="p">)</span>
+
+
+
+
+    <span class="n">detection_input_prod_list</span><span class="o">=</span><span class="n">build_detection_input_prod_list</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">bkg_threshold</span><span class="p">,</span><span class="n">max_image_size</span><span class="o">=</span><span class="n">max_image_size</span><span class="p">,</span><span class="n">min_sub_stamp_size</span><span class="o">=</span><span class="n">min_sub_stamp_size</span><span class="p">,</span><span class="n">use_only_central_sub_stamp</span><span class="o">=</span><span class="n">use_only_central_sub_stamp</span><span class="p">)</span>
+    <span class="n">final_src_cl_list</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">final_selected_coords</span><span class="o">=</span><span class="k">None</span>
+    <span class="k">for</span> <span class="n">ID</span><span class="p">,</span><span class="n">prod</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">detection_input_prod_list</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">method</span><span class="o">==</span><span class="s">&#39;dbscan&#39;</span><span class="p">:</span>
+            <span class="n">cl_list</span><span class="p">,</span><span class="n">selected_coords</span><span class="o">=</span><span class="n">dbscan_unbinned_segmentation</span><span class="p">(</span><span class="n">prod</span><span class="o">.</span><span class="n">image_array</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">dbscan_eps</span><span class="p">,</span><span class="n">bkg_th</span><span class="o">=</span><span class="n">bkg_threshold</span><span class="p">,</span><span class="n">K_pix</span><span class="o">=</span><span class="n">K_pix</span><span class="p">,</span><span class="n">masked</span><span class="o">=</span><span class="n">prod</span><span class="o">.</span><span class="n">masked</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">method</span><span class="o">==</span><span class="s">&#39;dbscan_binned&#39;</span><span class="p">:</span>
+            <span class="n">cl_list</span><span class="p">,</span><span class="n">selected_coords</span><span class="o">=</span><span class="n">dbscan_binned_segmentation</span><span class="p">(</span><span class="n">prod</span><span class="o">.</span><span class="n">image_array</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">dbscan_eps</span><span class="p">,</span><span class="n">bkg_th</span><span class="o">=</span><span class="n">bkg_threshold</span><span class="p">,</span><span class="n">K_pix</span><span class="o">=</span><span class="n">K_pix</span><span class="p">,</span><span class="n">masked</span><span class="o">=</span><span class="n">prod</span><span class="o">.</span><span class="n">masked</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">method</span><span class="o">==</span><span class="s">&#39;connected&#39;</span><span class="p">:</span>
+            <span class="n">cl_list</span><span class="p">,</span><span class="n">selected_coords</span><span class="o">=</span><span class="n">connected_components_segmentation</span><span class="p">(</span><span class="n">prod</span><span class="o">.</span><span class="n">image_array</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">bkg_th</span><span class="o">=</span><span class="n">bkg_threshold</span><span class="p">,</span><span class="n">masked</span><span class="o">=</span><span class="n">prod</span><span class="o">.</span><span class="n">masked</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;&quot;&quot;method=&#39;%s&#39;  is not in the allowed list%s&quot;&quot;&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">method</span><span class="p">,</span><span class="n">allowed_list</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">ID</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">final_selected_coords</span><span class="o">=</span><span class="n">selected_coords</span><span class="o">+</span><span class="p">[</span><span class="n">prod</span><span class="o">.</span><span class="n">offset_x</span><span class="p">,</span><span class="n">prod</span><span class="o">.</span><span class="n">offset_y</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">selected_coords</span><span class="o">=</span><span class="n">selected_coords</span><span class="o">+</span><span class="p">[</span><span class="n">prod</span><span class="o">.</span><span class="n">offset_x</span><span class="p">,</span><span class="n">prod</span><span class="o">.</span><span class="n">offset_y</span><span class="p">]</span>
+            <span class="n">final_selected_coords</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">((</span><span class="n">final_selected_coords</span><span class="p">,</span><span class="n">selected_coords</span><span class="p">))</span>
+
+
+
+
+
+
+        <span class="n">src_cl_list</span><span class="o">=</span><span class="n">build_source_clusters</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">final_src_cl_list</span><span class="p">),</span><span class="n">cl_list</span><span class="p">,</span><span class="n">offset_x</span><span class="o">=</span><span class="n">prod</span><span class="o">.</span><span class="n">offset_x</span><span class="p">,</span><span class="n">offset_y</span><span class="o">=</span><span class="n">prod</span><span class="o">.</span><span class="n">offset_y</span><span class="p">)</span>
+
+        <span class="c">#print(&quot;stamp&quot;,ID,&quot;size&quot;,prod.image_array.size,&quot;time&quot;,time.time()-start,&quot;N srcs&quot;,len(src_cl_list),len(cl_list))</span>
+        <span class="n">final_src_cl_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">src_cl_list</span><span class="p">)</span>
+
+
+    <span class="k">return</span> <span class="n">final_src_cl_list</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">final_selected_coords</span></div>
+
+<div class="viewcode-block" id="do_from_seg_map"><a class="viewcode-back" href="../../../../../api/asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation.html#asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation.do_from_seg_map">[docs]</a><span class="k">def</span> <span class="nf">do_from_seg_map</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span>
+                <span class="n">seg_map</span><span class="p">,</span>
+                <span class="n">seg_map_bkg_val</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+
+
+    <span class="nb">print</span><span class="p">(</span><span class="s">&quot;|method: from seg map&quot;</span><span class="p">)</span>
+
+
+
+    <span class="n">conn</span><span class="o">=</span><span class="n">ConnectedComponents</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span><span class="n">seg_map_bkg_val</span><span class="p">,</span><span class="n">seg_map</span><span class="o">=</span><span class="n">seg_map</span><span class="p">,</span><span class="n">seg_map_bkg</span><span class="o">=</span><span class="n">seg_map_bkg_val</span><span class="p">)</span>
+
+    <span class="n">final_src_cl_list</span><span class="o">=</span><span class="n">build_source_clusters</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">conn</span><span class="o">.</span><span class="n">clusters_list</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">final_src_cl_list</span></div>
+
+<div class="viewcode-block" id="do_image_segmentation"><a class="viewcode-back" href="../../../../../api/asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation.html#asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation.do_image_segmentation">[docs]</a><span class="k">def</span> <span class="nf">do_image_segmentation</span><span class="p">(</span><span class="n">image</span><span class="p">,</span>
+                          <span class="n">method</span><span class="p">,</span>
+                          <span class="n">bkg_threshold</span><span class="p">,</span>
+                          <span class="n">dbscan_eps</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                          <span class="n">K</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+                          <span class="n">K_pix</span><span class="o">=</span><span class="k">False</span><span class="p">,</span>
+                          <span class="n">dbscan_buffer_size</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+                          <span class="n">max_image_size</span><span class="o">=</span><span class="mi">1</span><span class="n">E6</span><span class="p">,</span>
+                          <span class="n">min_sub_stamp_size</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
+                          <span class="n">S_to_N_th</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                          <span class="n">bkg_mode</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+                          <span class="n">verbose</span><span class="o">=</span><span class="k">False</span><span class="p">,</span>
+                          <span class="n">out_catalog</span><span class="o">=</span><span class="k">False</span><span class="p">,</span>
+                          <span class="n">plot_dbscan</span><span class="o">=</span><span class="k">False</span><span class="p">,</span>
+                          <span class="n">input_seg_map</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+                          <span class="n">seg_map_bkg_val</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                          <span class="n">image_id</span><span class="o">=</span><span class="k">None</span><span class="p">,</span>
+                          <span class="n">use_only_central_sub_stamp</span><span class="o">=</span><span class="k">False</span><span class="p">):</span>
+
+
+    <span class="n">allowed_list</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;dbscan&#39;</span><span class="p">,</span><span class="s">&#39;dbscan_binned&#39;</span><span class="p">,</span><span class="s">&#39;connected&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">input_seg_map</span> <span class="ow">is</span> <span class="k">None</span> <span class="ow">and</span> <span class="n">method</span><span class="o">!=</span><span class="s">&#39;from_seg_map&#39;</span><span class="p">:</span>
+
+        <span class="n">src_cl_list</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">selected_coords</span><span class="o">=</span><span class="n">from_image_detection</span><span class="p">(</span><span class="n">allowed_list</span><span class="p">,</span><span class="n">method</span><span class="p">,</span><span class="n">bkg_threshold</span><span class="p">,</span><span class="n">image</span><span class="p">,</span><span class="n">max_image_size</span><span class="p">,</span><span class="n">min_sub_stamp_size</span><span class="p">,</span><span class="n">dbscan_eps</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">K_pix</span><span class="p">,</span><span class="n">verbose</span><span class="p">,</span><span class="n">plot_dbscan</span><span class="p">,</span><span class="n">use_only_central_sub_stamp</span><span class="o">=</span><span class="n">use_only_central_sub_stamp</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">input_seg_map</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span> <span class="ow">and</span> <span class="n">method</span><span class="o">==</span><span class="s">&#39;from_seg_map&#39;</span><span class="p">:</span>
+
+        <span class="n">src_cl_list</span><span class="o">=</span><span class="n">do_from_seg_map</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">array</span><span class="p">,</span><span class="n">input_seg_map</span><span class="p">,</span><span class="n">seg_map_bkg_val</span><span class="o">=</span><span class="n">seg_map_bkg_val</span><span class="p">)</span>
+        <span class="n">K</span><span class="o">=</span><span class="k">None</span>
+        <span class="n">selected_coords</span><span class="o">=</span><span class="k">None</span>
+
+    <span class="k">else</span><span class="p">:</span>
+
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;either you provide a seg_map file and you set method to &#39;from_seg_map&#39;, or yuo choose one of the following %s&quot;</span><span class="o">%</span><span class="n">allowed_list</span><span class="p">)</span>
+
+
+
+    <span class="k">if</span> <span class="n">plot_dbscan</span> <span class="ow">is</span> <span class="k">True</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">asterism.plotting.plot_tools</span> <span class="k">import</span> <span class="n">show_image</span><span class="p">,</span><span class="n">plot_contour</span>
+        <span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+        <span class="n">im</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">show_image</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">array</span><span class="p">,</span><span class="n">clim</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">))</span>
+
+
+        <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">src_cl_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cl</span><span class="p">,</span><span class="s">&#39;contour_shape&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">cl</span><span class="o">.</span><span class="n">contour_shape</span> <span class="ow">is</span> <span class="ow">not</span> <span class="k">None</span><span class="p">:</span>
+                    <span class="n">plot_contour</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">cl</span><span class="o">.</span><span class="n">contour_shape</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">cl</span><span class="o">.</span><span class="n">contour_shape</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+
+            <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">cl</span><span class="o">.</span><span class="n">x_c</span><span class="p">,</span><span class="n">cl</span><span class="o">.</span><span class="n">y_c</span><span class="p">,</span><span class="s">&#39;%s&#39;</span><span class="o">%</span><span class="n">cl</span><span class="o">.</span><span class="n">ID</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">cl</span><span class="o">.</span><span class="n">x_c</span><span class="p">,</span><span class="n">cl</span><span class="o">.</span><span class="n">y_c</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s">&#39;s&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="s">&#39;0&#39;</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s">&#39;white&#39;</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+
+
+    <span class="k">return</span> <span class="n">src_cl_list</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">selected_coords</span></div>
+
+
+
+
+<div class="viewcode-block" id="DoDBSCANImageSegmentationTask"><a class="viewcode-back" href="../../../../../api/asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation.html#asterism.analysis_tasks.source_detection.image_segmentation.dbscan_segmentation.DoDBSCANImageSegmentationTask">[docs]</a><span class="k">class</span> <span class="nc">DoDBSCANImageSegmentationTask</span><span class="p">(</span><span class="n">AnalysisTask</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;image_segmentation&#39;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">do_image_segmentation</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="k">None</span><span class="p">,</span> <span class="n">process</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
+
+
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">DoDBSCANImageSegmentationTask</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span><span class="n">func</span><span class="o">=</span><span class="n">func</span><span class="p">,</span><span class="n">parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span><span class="n">process</span><span class="o">=</span><span class="n">process</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters_list</span><span class="o">.</span><span class="n">add_par</span><span class="p">(</span><span class="s">&#39;-dbscan_buffer_size&#39;</span><span class="p">,</span>    <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;size of the dbscan buffer&#39;</span><span class="p">,</span><span class="n">default</span><span class="o">=</span><span class="k">None</span> <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters_list</span><span class="o">.</span><span class="n">add_par</span><span class="p">(</span><span class="s">&#39;-dbscan_eps&#39;</span><span class="p">,</span>  <span class="nb">type</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span> <span class="p">,</span><span class="n">help</span><span class="o">=</span><span class="s">&#39;eps dbscan par&#39;</span><span class="p">,</span><span class="n">default</span><span class="o">=</span><span class="mf">1.5</span> <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters_list</span><span class="o">.</span><span class="n">add_par</span><span class="p">(</span><span class="s">&#39;-method&#39;</span><span class="p">,</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;method: dbscan or dbscan_binned, from_seg_map&#39;</span><span class="p">,</span><span class="n">default</span><span class="o">=</span><span class="s">&#39;dbscan_binned&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters_list</span><span class="o">.</span><span class="n">add_par</span><span class="p">(</span><span class="s">&#39;-verbose&#39;</span><span class="p">,</span><span class="n">help</span><span class="o">=</span><span class="s">&#39;set  verbosity on&#39;</span><span class="p">,</span><span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters_list</span><span class="o">.</span><span class="n">add_par</span><span class="p">(</span><span class="s">&#39;-out_catalog&#39;</span><span class="p">,</span><span class="n">help</span><span class="o">=</span><span class="s">&#39;output catalog to file&#39;</span><span class="p">,</span><span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters_list</span><span class="o">.</span><span class="n">add_par</span><span class="p">(</span><span class="s">&#39;-plot_dbscan&#39;</span><span class="p">,</span><span class="n">help</span><span class="o">=</span><span class="s">&#39;plot dbscan&#39;</span><span class="p">,</span><span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters_list</span><span class="o">.</span><span class="n">add_par</span><span class="p">(</span><span class="s">&#39;-max_image_size&#39;</span><span class="p">,</span><span class="nb">type</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span> <span class="p">,</span><span class="n">help</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span><span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="n">E6</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters_list</span><span class="o">.</span><span class="n">add_par</span><span class="p">(</span><span class="s">&#39;-use_only_central_sub_stamp&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters_list</span><span class="o">.</span><span class="n">add_par</span><span class="p">(</span><span class="s">&#39;-min_sub_stamp_size&#39;</span><span class="p">,</span><span class="nb">type</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span> <span class="p">,</span><span class="n">help</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span><span class="n">default</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters_list</span><span class="o">.</span><span class="n">add_par</span><span class="p">(</span><span class="s">&#39;-K&#39;</span><span class="p">,</span>  <span class="nb">type</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span> <span class="p">,</span><span class="n">help</span><span class="o">=</span><span class="s">&#39;density th for dbscan &#39;</span><span class="p">,</span><span class="n">default</span><span class="o">=</span><span class="k">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters_list</span><span class="o">.</span><span class="n">add_par</span><span class="p">(</span><span class="s">&#39;-K_pix&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;density th per pixel for dbscan&#39;</span><span class="p">,</span><span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">)</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters_list</span><span class="o">.</span><span class="n">add_par</span><span class="p">(</span><span class="s">&#39;-seg_map_bkg_val&#39;</span><span class="p">,</span>  <span class="nb">type</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span> <span class="p">,</span><span class="n">help</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="o">=</span><span class="n">func</span></div>
+
+</pre></div>
+
+         </div>
+       </div>
+
+
+     </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, andrea tramacere.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,372 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Module: features &#8212; asterism 1.0.a documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../index.html" />
+    <link rel="up" title="package: asterism.core.machine_learning.data_sets" href="asterism.core.machine_learning.data_sets.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<br><img src="../_static/logo.png" style=width:80%; " />  <br>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="asterism.html" >package: asterism</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="asterism.core.html" >package: asterism.core</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="asterism.core.machine_learning.html" >package: asterism.core.machine_learning</a> &#187;</li>
+          <li class="nav-item nav-item-4"><a href="asterism.core.machine_learning.data_sets.html" accesskey="U">package: asterism.core.machine_learning.data_sets</a> &#187;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Module: features</a><ul>
+<li><a class="reference internal" href="#id1">Module: features</a><ul>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+<li><a class="reference internal" href="#module-api">Module API</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/asterism.core.machine_learning.data_sets.features.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+     <div class="documentwrapper">
+       <div class="bodywrapper">
+        <div class="body">
+         <div class="align-left figure align-left">
+
+
+        </div>
+           
+  <div class="section" id="module-features">
+<h1>Module: features<a class="headerlink" href="#module-features" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-asterism.core.machine_learning.data_sets.features"></span><div class="section" id="id1">
+<h2>Module: features<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="summary">
+<h3>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase"><code class="xref py py-obj docutils literal"><span class="pre">FeaturesSetBase</span></code></a>(features_array[,&nbsp;...])</td>
+<td><p class="rubric">Attributes</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-api">
+<h3>Module API<a class="headerlink" href="#module-api" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase">
+<em class="property">class </em><code class="descname">FeaturesSetBase</code><span class="sig-paren">(</span><em>features_array</em>, <em>features_names=None</em>, <em>target_array=None</em>, <em>weight_array=None</em>, <em>features_original_entry_ID=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/data_sets/features.html#FeaturesSetBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.features" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.features"><code class="xref py py-obj docutils literal"><span class="pre">features</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.features_N_cols" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.features_N_cols"><code class="xref py py-obj docutils literal"><span class="pre">features_N_cols</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.features_N_rows" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.features_N_rows"><code class="xref py py-obj docutils literal"><span class="pre">features_N_rows</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.features_names" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.features_names"><code class="xref py py-obj docutils literal"><span class="pre">features_names</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.features_original_entry_ID" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.features_original_entry_ID"><code class="xref py py-obj docutils literal"><span class="pre">features_original_entry_ID</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.target" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.target"><code class="xref py py-obj docutils literal"><span class="pre">target</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.target_array" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.target_array"><code class="xref py py-obj docutils literal"><span class="pre">target_array</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.weight_array" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.weight_array"><code class="xref py py-obj docutils literal"><span class="pre">weight_array</span></code></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.add_feature" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.add_feature"><code class="xref py py-obj docutils literal"><span class="pre">add_feature</span></code></a>(feature,&nbsp;feature_name)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.clean_features_bad_value" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.clean_features_bad_value"><code class="xref py py-obj docutils literal"><span class="pre">clean_features_bad_value</span></code></a>(bad_value)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.clean_features_nan_inf" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.clean_features_nan_inf"><code class="xref py py-obj docutils literal"><span class="pre">clean_features_nan_inf</span></code></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.filter_features_rows" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.filter_features_rows"><code class="xref py py-obj docutils literal"><span class="pre">filter_features_rows</span></code></a>(selected)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.get_feature_by_name" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.get_feature_by_name"><code class="xref py py-obj docutils literal"><span class="pre">get_feature_by_name</span></code></a>(feature_name)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.merge" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.merge"><code class="xref py py-obj docutils literal"><span class="pre">merge</span></code></a>(feature)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.new_from_rows" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.new_from_rows"><code class="xref py py-obj docutils literal"><span class="pre">new_from_rows</span></code></a>(selected)</td>
+<td>Creates a new FeaturesSet object from a slice of an existing FeaturesSet object</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.new_from_table" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.new_from_table"><code class="xref py py-obj docutils literal"><span class="pre">new_from_table</span></code></a>(table[,&nbsp;target_array,&nbsp;...])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.plot_contour_scatter_plot" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.plot_contour_scatter_plot"><code class="xref py py-obj docutils literal"><span class="pre">plot_contour_scatter_plot</span></code></a>(name_1,&nbsp;name_2[,&nbsp;...])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.plot_feature_histogram" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.plot_feature_histogram"><code class="xref py py-obj docutils literal"><span class="pre">plot_feature_histogram</span></code></a>(names[,&nbsp;bins,&nbsp;...])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.remove_feature" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.remove_feature"><code class="xref py py-obj docutils literal"><span class="pre">remove_feature</span></code></a>(removing_feature_names_list)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.select_columns_by_ID" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.select_columns_by_ID"><code class="xref py py-obj docutils literal"><span class="pre">select_columns_by_ID</span></code></a>(use_IDs_list)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.sort_columns" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.sort_columns"><code class="xref py py-obj docutils literal"><span class="pre">sort_columns</span></code></a>(id_array)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.split_train_test" title="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.split_train_test"><code class="xref py py-obj docutils literal"><span class="pre">split_train_test</span></code></a>(train_test_split_ratio[,&nbsp;...])</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.add_feature">
+<code class="descname">add_feature</code><span class="sig-paren">(</span><em>feature</em>, <em>feature_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/data_sets/features.html#FeaturesSetBase.add_feature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.add_feature" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.clean_features_bad_value">
+<code class="descname">clean_features_bad_value</code><span class="sig-paren">(</span><em>bad_value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/data_sets/features.html#FeaturesSetBase.clean_features_bad_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.clean_features_bad_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.clean_features_nan_inf">
+<code class="descname">clean_features_nan_inf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/data_sets/features.html#FeaturesSetBase.clean_features_nan_inf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.clean_features_nan_inf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.features">
+<code class="descname">features</code><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.features" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.features_N_cols">
+<code class="descname">features_N_cols</code><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.features_N_cols" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.features_N_rows">
+<code class="descname">features_N_rows</code><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.features_N_rows" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.features_names">
+<code class="descname">features_names</code><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.features_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.features_original_entry_ID">
+<code class="descname">features_original_entry_ID</code><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.features_original_entry_ID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.filter_features_rows">
+<code class="descname">filter_features_rows</code><span class="sig-paren">(</span><em>selected</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/data_sets/features.html#FeaturesSetBase.filter_features_rows"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.filter_features_rows" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.get_feature_by_name">
+<code class="descname">get_feature_by_name</code><span class="sig-paren">(</span><em>feature_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/data_sets/features.html#FeaturesSetBase.get_feature_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.get_feature_by_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.merge">
+<code class="descname">merge</code><span class="sig-paren">(</span><em>feature</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/data_sets/features.html#FeaturesSetBase.merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.merge" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.new_from_rows">
+<code class="descname">new_from_rows</code><span class="sig-paren">(</span><em>selected</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/data_sets/features.html#FeaturesSetBase.new_from_rows"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.new_from_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new FeaturesSet object from a slice of an existing FeaturesSet object
+Args:</p>
+<blockquote>
+<div>feature_obj:
+selected: either bool array or IDs array</div></blockquote>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.new_from_table">
+<em class="property">classmethod </em><code class="descname">new_from_table</code><span class="sig-paren">(</span><em>table</em>, <em>target_array=None</em>, <em>weight_array=None</em>, <em>target_col_name=None</em>, <em>target_col_num=None</em>, <em>original_entry_ID_col_name=None</em>, <em>use_col_names_list=[]</em>, <em>skip_col_names_list=[]</em>, <em>use_col_num_list=[]</em>, <em>skip_col_num_list=[]</em>, <em>regex=True</em>, <em>rows_IDs_use_list=[]</em>, <em>rows_IDs_skip_list=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/data_sets/features.html#FeaturesSetBase.new_from_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.new_from_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.plot_contour_scatter_plot">
+<code class="descname">plot_contour_scatter_plot</code><span class="sig-paren">(</span><em>name_1</em>, <em>name_2</em>, <em>n_levels=20</em>, <em>ax=None</em>, <em>exclude_outliers=False</em>, <em>show_plot=False</em>, <em>plot_contour=True</em>, <em>plot_scatter=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/data_sets/features.html#FeaturesSetBase.plot_contour_scatter_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.plot_contour_scatter_plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.plot_feature_histogram">
+<code class="descname">plot_feature_histogram</code><span class="sig-paren">(</span><em>names</em>, <em>bins=20</em>, <em>normed=False</em>, <em>KDE=False</em>, <em>gridsize=100</em>, <em>bw='scott'</em>, <em>ax=None</em>, <em>plot=False</em>, <em>exclude_outliers=None</em>, <em>save_plot=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/data_sets/features.html#FeaturesSetBase.plot_feature_histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.plot_feature_histogram" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.remove_feature">
+<code class="descname">remove_feature</code><span class="sig-paren">(</span><em>removing_feature_names_list</em>, <em>regex=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/data_sets/features.html#FeaturesSetBase.remove_feature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.remove_feature" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.select_columns_by_ID">
+<code class="descname">select_columns_by_ID</code><span class="sig-paren">(</span><em>use_IDs_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/data_sets/features.html#FeaturesSetBase.select_columns_by_ID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.select_columns_by_ID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.sort_columns">
+<code class="descname">sort_columns</code><span class="sig-paren">(</span><em>id_array</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/data_sets/features.html#FeaturesSetBase.sort_columns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.sort_columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.split_train_test">
+<code class="descname">split_train_test</code><span class="sig-paren">(</span><em>train_test_split_ratio</em>, <em>sampling_array=None</em>, <em>stratified=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/data_sets/features.html#FeaturesSetBase.split_train_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.split_train_test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.target">
+<code class="descname">target</code><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.target" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.target_array">
+<code class="descname">target_array</code><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.target_array" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asterism.core.machine_learning.data_sets.features.FeaturesSetBase.weight_array">
+<code class="descname">weight_array</code><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.FeaturesSetBase.weight_array" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.data_sets.features.write_table">
+<code class="descname">write_table</code><span class="sig-paren">(</span><em>data</em>, <em>fp</em>, <em>target</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/data_sets/features.html#write_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.write_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="asterism.core.machine_learning.data_sets.features.write_weka_file">
+<code class="descname">write_weka_file</code><span class="sig-paren">(</span><em>out_file</em>, <em>features</em>, <em>features_names</em>, <em>class_ids=None</em>, <em>class_labels=None</em>, <em>relation='None'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/asterism/core/machine_learning/data_sets/features.html#write_weka_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#asterism.core.machine_learning.data_sets.features.write_weka_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+</div>
+
+
+         </div>
+       </div>
+
+
+     </div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">asterism 1.0.a documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="asterism.html" >package: asterism</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="asterism.core.html" >package: asterism.core</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="asterism.core.machine_learning.html" >package: asterism.core.machine_learning</a> &#187;</li>
+          <li class="nav-item nav-item-4"><a href="asterism.core.machine_learning.data_sets.html" >package: asterism.core.machine_learning.data_sets</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, andrea tramacere.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

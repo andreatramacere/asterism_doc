@@ -1,0 +1,19 @@
+
+package: asterism.core.tables
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+
+
+Modules
+---------------
+.. toctree::
+   :maxdepth: 1
+
+
+   asterism.core.tables.events_table 
