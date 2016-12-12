@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    
+    <title>Accessing through the Task class &mdash; asterism 1.0.a documentation</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    
+
+<link rel="stylesheet" href="../../../_static/css/basicstrap-base.css" type="text/css" />
+<link rel="stylesheet" id="current-theme" href="../../../_static/css/bootstrap3/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" id="current-adjust-theme" type="text/css" />
+
+<link rel="stylesheet" href="../../../_static/css/font-awesome.min.css">
+
+<style type="text/css">
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+</style>
+
+<link rel="stylesheet" href="../../../_static/css/basicstrap.css" type="text/css" />
+<link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:    '../../../',
+            VERSION:     '1.0.a',
+            COLLAPSE_INDEX: false,
+            FILE_SUFFIX: '.html',
+            HAS_SOURCE:  true
+  };
+</script>
+    <script type="text/javascript" src="../../../_static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/js/bootstrap3.min.js"></script>
+<script type="text/javascript" src="../../../_static/js/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="../../../_static/js/basicstrap.js"></script>
+<script type="text/javascript">
+</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../../../index.html" />
+    <link rel="up" title="DoDENCLUEDeblending" href="denclue_deblending.html" />
+    <link rel="next" title="DoDENCLUEWatershedDeblending" href="denclue_watershed_deblending.html" />
+    <link rel="prev" title="DoDENCLUEDeblending" href="denclue_deblending.html" /> 
+  </head>
+  <body role="document">
+    <div id="navbar-top" class="navbar navbar-fixed-top navbar-default" role="navigation" aria-label="top navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../index.html">asterism 1.0.a documentation</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown visible-xs">
+                <a role="button" id="localToc" data-toggle="dropdown" data-target="#" href="#">Table Of Contents <b class="caret"></b></a>
+                <ul class="dropdown-menu localtoc sp-localtoc" role="menu" aria-labelledby="localToc">
+                <ul>
+<li><a class="reference internal" href="#">Accessing through the Task class</a><ul>
+<li><a class="reference internal" href="#loading-image">loading image</a></li>
+<li><a class="reference internal" href="#bkg-estimation">bkg estimation</a></li>
+<li><a class="reference internal" href="#image-segmenetation">image segmenetation</a></li>
+<li><a class="reference internal" href="#denclue-deblending">denclue deblending</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#accessing-directly-the-do-denclue-deblending">Accessing directly the do_denclue_deblending()</a><ul>
+<li><a class="reference internal" href="#denclue-deblendings">denclue deblendings</a></li>
+</ul>
+</li>
+</ul>
+
+                </ul>
+              </li>
+
+            
+              <li><a href="denclue_deblending.html" title="DoDENCLUEDeblending" accesskey="P">previous </a></li>
+              <li><a href="denclue_watershed_deblending.html" title="DoDENCLUEWatershedDeblending" accesskey="N">next </a></li>
+              <li><a href="../../../genindex.html" title="General Index" accesskey="I">index </a></li>
+              <li><a href="../../user_documentation.html" >ASTErIsM User Documentation</a></li>
+              <li><a href="../index.html" >ASTErIsM analysis tasks</a></li>
+              <li><a href="denclue_deblending.html" accesskey="U">DoDENCLUEDeblending</a></li>
+            
+            <li class="visible-xs"><a href="../../../_sources/user_documentation/analysis_tasks/source_detection/denclue_deblending_example.txt" rel="nofollow">Show Source</a></li>
+
+            <li class="visible-xs">
+                <form class="search form-search form-inline navbar-form navbar-right sp-searchbox" action="../../../search.html" method="get">
+                  <div class="input-append input-group">
+                    <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+                    <span class="input-group-btn">
+                    <input type="submit" class="btn" value="Go" />
+                    </span>
+                  </div>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </li>
+
+            
+
+          </ul>
+
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- container -->
+    <div class="container">
+
+      <!-- row -->
+      <div class="row">
+        
+        
+
+        <div class="col-md-9" id="content-wrapper">
+          <div class="document" role="main">
+            <div class="documentwrapper">
+              <div class="bodywrapper">
+                <div class="body">
+                  
+  <div class="section" id="accessing-through-the-task-class">
+<h1>Accessing through the Task class<a class="headerlink" href="#accessing-through-the-task-class" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="loading-image">
+<h2>loading image<a class="headerlink" href="#loading-image" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-default"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+
+<span class="kn">from</span> <span class="nn">asterism</span> <span class="k">import</span> <span class="n">data_dir</span>
+<span class="kn">from</span> <span class="nn">asterism.core.image_manager.image</span> <span class="k">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">asterism.analysis_tasks.source_detection.background_estimation.background_estimation</span> <span class="k">import</span> <span class="n">DoSetBkgThreshTask</span>
+<span class="kn">from</span> <span class="nn">asterism.analysis_tasks.source_detection.image_segmentation.image_segmentation</span> <span class="k">import</span> <span class="n">DoImageSegmentationTask</span>
+<span class="kn">from</span> <span class="nn">asterism.analysis_tasks.source_detection.deblending.denclue_deblending</span> <span class="k">import</span> <span class="n">DoDENCLUEDeblendingTask</span>
+<span class="kn">import</span>  <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">image</span><span class="o">=</span><span class="n">Image</span><span class="o">.</span><span class="n">from_fits_file</span><span class="p">(</span><span class="n">data_dir</span><span class="o">+</span><span class="s">&#39;/deblending_img1.fits&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bkg-estimation">
+<h2>bkg estimation<a class="headerlink" href="#bkg-estimation" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-default"><div class="highlight"><pre><span class="n">bkg_task</span><span class="o">=</span><span class="n">DoSetBkgThreshTask</span><span class="p">()</span>
+<span class="n">bkg_task</span><span class="o">.</span><span class="n">list_parameters</span><span class="p">()</span>
+<span class="n">bkg_task</span><span class="o">.</span><span class="n">set_par</span><span class="p">(</span><span class="s">&#39;plot&#39;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="k">False</span><span class="p">)</span>
+<span class="n">bkg_task</span><span class="o">.</span><span class="n">set_par</span><span class="p">(</span><span class="s">&#39;skewness_range&#39;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">bkg_task</span><span class="o">.</span><span class="n">set_par</span><span class="p">(</span><span class="s">&#39;sub_block_frac_size&#39;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">|-------------------------------------------------------</span>
+<span class="o">|</span><span class="n">task</span><span class="p">:</span> <span class="n">bkg_treshold</span>
+<span class="o">|</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">sub_block_frac_size</span>   <span class="n">value</span><span class="o">=</span> <span class="mf">0.1</span>   <span class="n">doc</span><span class="o">=</span>  <span class="k">if</span> <span class="n">provided</span><span class="p">,</span> <span class="n">the</span> <span class="n">bkg</span> <span class="n">pixels</span> <span class="n">are</span> <span class="n">extracted</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">sub</span><span class="o">-</span><span class="n">block</span> <span class="k">with</span> <span class="n">lowest</span> <span class="n">integrated</span> <span class="n">flux</span><span class="p">,</span> <span class="n">having</span> <span class="n">a</span> <span class="n">size</span> <span class="n">equal</span>
+                                          <span class="n">to</span> <span class="n">sub_block_frac_size</span> <span class="n">time</span> <span class="n">the</span> <span class="n">image</span> <span class="n">size</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">min_size_ratio</span>   <span class="n">value</span><span class="o">=</span> <span class="mf">0.1</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">provides</span> <span class="n">the</span> <span class="n">minimum</span> <span class="n">size</span> <span class="n">to</span> <span class="n">stop</span> <span class="n">the</span> <span class="n">clipping</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">skewness</span> <span class="n">minimization</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">n_std_th</span>   <span class="n">value</span><span class="o">=</span> <span class="mf">3.0</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">number</span> <span class="n">of</span> <span class="n">bakground</span> <span class="n">deviation</span> <span class="n">to</span> <span class="nb">set</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">th</span><span class="o">=</span><span class="n">bkg_level</span><span class="o">+</span><span class="n">n_std_th</span><span class="o">*</span><span class="n">bkg_sig</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">resampling_size</span>   <span class="n">value</span><span class="o">=</span> <span class="mi">1000000</span>   <span class="n">doc</span><span class="o">=</span>  <span class="k">if</span> <span class="n">the</span> <span class="n">image</span> <span class="n">pixels</span> <span class="n">number</span><span class="o">&gt;</span><span class="n">resampling_size</span><span class="p">,</span>
+                                            <span class="n">then</span> <span class="n">a</span> <span class="n">random</span> <span class="n">resampling</span> <span class="n">of</span> <span class="n">pixels</span> <span class="ow">is</span> <span class="n">performed</span><span class="p">,</span> <span class="k">with</span> <span class="n">a</span> <span class="n">final</span> <span class="n">number</span><span class="o">=</span> <span class="n">resampling_size</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">skewness_range</span>   <span class="n">value</span><span class="o">=</span> <span class="mf">0.1</span>   <span class="n">doc</span><span class="o">=</span>  <span class="k">if</span> <span class="ow">not</span> <span class="k">None</span><span class="p">,</span> <span class="o">|</span><span class="n">skewness</span><span class="o">|</span> <span class="ow">is</span> <span class="n">minimized</span> <span class="ow">in</span> <span class="n">the</span> <span class="nb">range</span> <span class="o">|</span><span class="n">bkg_lvl</span><span class="p">,</span><span class="n">bgk_lvl</span><span class="o">+</span><span class="n">skewness_range</span><span class="o">*</span><span class="n">bkg_std</span><span class="o">|</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">plot</span>   <span class="n">value</span><span class="o">=</span> <span class="k">False</span>   <span class="n">doc</span><span class="o">=</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">verbose</span>   <span class="n">value</span><span class="o">=</span> <span class="k">False</span>   <span class="n">doc</span><span class="o">=</span>  <span class="nb">set</span>  <span class="n">verbosity</span> <span class="n">on</span>
+<span class="o">|-------------------------------------------------------</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span class="n">bkg_threshold</span><span class="p">,</span><span class="n">bkg_mode</span><span class="p">,</span><span class="n">bkg_sig</span><span class="o">=</span><span class="n">bkg_task</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">|------------------------------</span>
+<span class="o">|</span> <span class="n">Task</span><span class="p">:</span> <span class="n">bkg_treshold</span> <span class="n">Start</span>
+<span class="o">|------------------------------</span>
+<span class="o">|</span><span class="n">setting</span> <span class="n">threshold</span>
+<span class="o">|</span><span class="n">image</span> <span class="n">flux</span> <span class="nb">min</span> <span class="mf">0.0</span> <span class="n">image</span> <span class="n">flux</span> <span class="nb">max</span> <span class="mf">9.71633911133</span>
+<span class="o">|</span><span class="n">using</span> <span class="n">sub</span> <span class="n">blocks</span>
+<span class="o">|</span><span class="n">sub</span> <span class="n">blocks</span> <span class="n">grid</span> <span class="n">built</span>
+<span class="o">|</span><span class="n">sub</span> <span class="n">block</span> <span class="n">side</span> <span class="mi">31</span>
+<span class="o">|</span><span class="n">sub</span> <span class="n">blocks</span> <span class="n">Num</span> <span class="mi">9</span>
+<span class="o">|-</span>
+<span class="o">|</span><span class="n">skewness</span> <span class="n">minimization</span> <span class="mi">961</span>
+<span class="o">|</span><span class="n">flux</span> <span class="n">bkg</span> <span class="n">array</span>  <span class="nb">min</span><span class="p">,</span><span class="nb">max</span> <span class="mf">0.0886840820312</span> <span class="mf">0.458374023438</span>
+<span class="o">|</span><span class="n">minimization</span> <span class="n">of</span> <span class="o">|</span><span class="n">skewness</span><span class="o">|</span>
+<span class="o">|</span><span class="n">initial</span> <span class="n">skewness</span> <span class="mf">0.160161054539</span>
+<span class="o">|</span><span class="n">initial</span> <span class="n">mean</span> <span class="mf">0.250037394255</span>
+<span class="o">|</span><span class="n">initial</span> <span class="n">std</span> <span class="mf">0.0593948364258</span>
+<span class="o">|</span><span class="nb">range</span> <span class="n">of</span> <span class="n">threshold</span> <span class="k">for</span> <span class="n">skewness</span> <span class="n">minimization</span> <span class="n">th_skew</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.244098</span><span class="p">,</span><span class="mf">0.255977</span><span class="p">]</span>
+<span class="o">|</span><span class="n">start</span> <span class="n">size</span><span class="p">:</span>  <span class="mi">961</span> <span class="mf">0.250037394255</span> <span class="mf">0.0593948364258</span> <span class="mf">0.160161054539</span> <span class="mi">961</span>
+<span class="o">|</span><span class="nb">min</span> <span class="n">skewness</span><span class="o">=</span><span class="mf">0.000577</span> <span class="k">for</span> <span class="n">th_skew</span><span class="o">=</span><span class="mf">0.062649</span>
+<span class="o">|</span><span class="n">size</span> <span class="n">ratio</span><span class="o">=</span><span class="mf">0.706556</span><span class="p">,</span> <span class="n">min_size</span> <span class="n">ratio</span><span class="o">=</span><span class="mf">0.100000</span>
+<span class="o">|-</span>
+<span class="o">|</span><span class="n">bkg_lvl</span> <span class="mf">0.248482923269</span>
+<span class="o">|</span><span class="n">bkg_std</span> <span class="mf">0.0411071777344</span>
+<span class="o">|</span><span class="n">bkg_th</span> <span class="mf">0.371804456472</span>
+<span class="mf">0.371804456472</span> <span class="mf">0.248482923269</span> <span class="mf">0.0411071777344</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="image-segmenetation">
+<h2>image segmenetation<a class="headerlink" href="#image-segmenetation" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-default"><div class="highlight"><pre><span class="n">image_seg_task</span><span class="o">=</span><span class="n">DoImageSegmentationTask</span><span class="p">()</span>
+<span class="n">image_seg_task</span><span class="o">.</span><span class="n">list_parameters</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">|-------------------------------------------------------</span>
+<span class="o">|</span><span class="n">task</span><span class="p">:</span> <span class="n">image_segmentation</span>
+<span class="o">|</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">dbscan_buffer_size</span>   <span class="n">value</span><span class="o">=</span> <span class="k">None</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">size</span> <span class="n">of</span> <span class="n">the</span> <span class="n">dbscan</span> <span class="n">buffer</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">dbscan_eps</span>   <span class="n">value</span><span class="o">=</span> <span class="mf">1.5</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">eps</span> <span class="n">dbscan</span> <span class="n">par</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">method</span>   <span class="n">value</span><span class="o">=</span> <span class="n">dbscan_binned</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">method</span><span class="p">:</span> <span class="n">dbscan</span> <span class="ow">or</span> <span class="n">dbscan_binned</span><span class="p">,</span> <span class="n">from_seg_map</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">verbose</span>   <span class="n">value</span><span class="o">=</span> <span class="k">False</span>   <span class="n">doc</span><span class="o">=</span>  <span class="nb">set</span>  <span class="n">verbosity</span> <span class="n">on</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">plot_dbscan</span>   <span class="n">value</span><span class="o">=</span> <span class="k">False</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">plot</span> <span class="n">dbscan</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">max_image_size</span>   <span class="n">value</span><span class="o">=</span> <span class="mi">1000000</span>   <span class="n">doc</span><span class="o">=</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">use_only_central_sub_stamp</span>   <span class="n">value</span><span class="o">=</span> <span class="k">False</span>   <span class="n">doc</span><span class="o">=</span>  <span class="k">None</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">min_sub_stamp_size</span>   <span class="n">value</span><span class="o">=</span> <span class="mi">25</span>   <span class="n">doc</span><span class="o">=</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">bkg_threshold</span>   <span class="n">value</span><span class="o">=</span> <span class="k">None</span>   <span class="n">doc</span><span class="o">=</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">K</span>   <span class="n">value</span><span class="o">=</span> <span class="k">None</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">density</span> <span class="n">th</span> <span class="k">for</span> <span class="n">dbscan</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">K_pix</span>   <span class="n">value</span><span class="o">=</span> <span class="k">False</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">density</span> <span class="n">th</span> <span class="n">per</span> <span class="n">pixel</span> <span class="k">for</span> <span class="n">dbscan</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">seg_map_bkg_val</span>   <span class="n">value</span><span class="o">=</span> <span class="mf">0.0</span>   <span class="n">doc</span><span class="o">=</span>
+<span class="o">|-------------------------------------------------------</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span class="n">image_seg_task</span><span class="o">.</span><span class="n">set_par</span><span class="p">(</span><span class="s">&#39;bkg_threshold&#39;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">bkg_threshold</span><span class="p">))</span>
+<span class="n">image_seg_task</span><span class="o">.</span><span class="n">set_par</span><span class="p">(</span><span class="s">&#39;K&#39;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">image_seg_task</span><span class="o">.</span><span class="n">set_par</span><span class="p">(</span><span class="s">&#39;K_pix&#39;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
+<span class="n">image_seg_task</span><span class="o">.</span><span class="n">set_par</span><span class="p">(</span><span class="s">&#39;plot_dbscan&#39;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span class="n">image_seg_task</span><span class="o">.</span><span class="n">list_parameters</span><span class="p">()</span>
+
+<span class="n">clusters_list</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">selected_coords</span><span class="o">=</span><span class="n">image_seg_task</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">|-------------------------------------------------------</span>
+<span class="o">|</span><span class="n">task</span><span class="p">:</span> <span class="n">image_segmentation</span>
+<span class="o">|</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">dbscan_buffer_size</span>   <span class="n">value</span><span class="o">=</span> <span class="k">None</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">size</span> <span class="n">of</span> <span class="n">the</span> <span class="n">dbscan</span> <span class="n">buffer</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">dbscan_eps</span>   <span class="n">value</span><span class="o">=</span> <span class="mf">1.5</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">eps</span> <span class="n">dbscan</span> <span class="n">par</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">method</span>   <span class="n">value</span><span class="o">=</span> <span class="n">dbscan_binned</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">method</span><span class="p">:</span> <span class="n">dbscan</span> <span class="ow">or</span> <span class="n">dbscan_binned</span><span class="p">,</span> <span class="n">from_seg_map</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">verbose</span>   <span class="n">value</span><span class="o">=</span> <span class="k">False</span>   <span class="n">doc</span><span class="o">=</span>  <span class="nb">set</span>  <span class="n">verbosity</span> <span class="n">on</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">plot_dbscan</span>   <span class="n">value</span><span class="o">=</span> <span class="k">True</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">plot</span> <span class="n">dbscan</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">max_image_size</span>   <span class="n">value</span><span class="o">=</span> <span class="mi">1000000</span>   <span class="n">doc</span><span class="o">=</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">use_only_central_sub_stamp</span>   <span class="n">value</span><span class="o">=</span> <span class="k">False</span>   <span class="n">doc</span><span class="o">=</span>  <span class="k">None</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">min_sub_stamp_size</span>   <span class="n">value</span><span class="o">=</span> <span class="mi">25</span>   <span class="n">doc</span><span class="o">=</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">bkg_threshold</span>   <span class="n">value</span><span class="o">=</span> <span class="mf">0.371804456472</span>   <span class="n">doc</span><span class="o">=</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">K</span>   <span class="n">value</span><span class="o">=</span> <span class="mf">1.5</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">density</span> <span class="n">th</span> <span class="k">for</span> <span class="n">dbscan</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">K_pix</span>   <span class="n">value</span><span class="o">=</span> <span class="k">True</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">density</span> <span class="n">th</span> <span class="n">per</span> <span class="n">pixel</span> <span class="k">for</span> <span class="n">dbscan</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">seg_map_bkg_val</span>   <span class="n">value</span><span class="o">=</span> <span class="mf">0.0</span>   <span class="n">doc</span><span class="o">=</span>
+<span class="o">|-------------------------------------------------------</span>
+<span class="o">|------------------------------</span>
+<span class="o">|</span> <span class="n">Task</span><span class="p">:</span> <span class="n">image_segmentation</span> <span class="n">Start</span>
+<span class="o">|------------------------------</span>
+<span class="o">|</span><span class="n">method</span> <span class="n">dbscan_binned</span>
+<span class="o">|</span><span class="n">K</span><span class="p">,</span> <span class="mf">0.557706684708</span>
+<span class="o">|</span><span class="n">bkg</span> <span class="n">th</span> <span class="mf">0.371804456472</span>
+</pre></div>
+</div>
+<img alt="../../../_images/denclue_deblending_example_9_1.png" src="../../../_images/denclue_deblending_example_9_1.png" />
+</div>
+<div class="section" id="denclue-deblending">
+<h2>denclue deblending<a class="headerlink" href="#denclue-deblending" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-default"><div class="highlight"><pre><span class="n">deblendig</span><span class="o">=</span><span class="n">DoDENCLUEDeblendingTask</span><span class="p">()</span>
+<span class="n">deblendig</span><span class="o">.</span><span class="n">list_parameters</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">|-------------------------------------------------------</span>
+<span class="o">|</span><span class="n">task</span><span class="p">:</span> <span class="n">denclue_deblending</span>
+<span class="o">|</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">do_denclue_deblending</span>   <span class="n">value</span><span class="o">=</span> <span class="k">False</span>   <span class="n">doc</span><span class="o">=</span>  <span class="k">if</span> <span class="k">True</span><span class="p">,</span> <span class="n">the</span> <span class="n">denclue</span> <span class="n">deblending</span> <span class="ow">is</span> <span class="n">performed</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">gl_downsampling</span>   <span class="n">value</span><span class="o">=</span> <span class="k">False</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">plot</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">eps</span>   <span class="n">value</span><span class="o">=</span> <span class="mf">0.01</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">eps</span> <span class="n">dbscan</span> <span class="n">par</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">digitize_attractors</span>   <span class="n">value</span><span class="o">=</span> <span class="k">False</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">digitize</span> <span class="n">attarctors</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">kernel</span>   <span class="n">value</span><span class="o">=</span> <span class="n">gauss</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">smoothing</span>  <span class="n">kernel</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">k_table_size</span>   <span class="n">value</span><span class="o">=</span> <span class="k">None</span>   <span class="n">doc</span><span class="o">=</span>  <span class="k">if</span><span class="o">&gt;</span><span class="mi">0</span> <span class="n">a</span> <span class="n">lookup</span> <span class="n">table</span> <span class="n">of</span> <span class="n">the</span> <span class="n">kernel</span> <span class="ow">is</span> <span class="n">used</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">h_frac</span>   <span class="n">value</span><span class="o">=</span> <span class="mf">0.2</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">kernel</span> <span class="n">width</span> <span class="k">as</span> <span class="n">a</span> <span class="n">fraction</span> <span class="n">of</span> <span class="n">parent</span> <span class="n">cluster</span> <span class="n">radius</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">h_min</span>   <span class="n">value</span><span class="o">=</span> <span class="mf">1.0</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">minim</span> <span class="n">width</span> <span class="n">of</span> <span class="n">the</span> <span class="n">kernel</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">mask_unchanged</span>   <span class="n">value</span><span class="o">=</span> <span class="k">None</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">th</span> <span class="n">value</span> <span class="n">to</span> <span class="n">flag</span> <span class="ow">and</span> <span class="n">attractor</span> <span class="k">as</span> <span class="n">unchanged</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">min_size</span>   <span class="n">value</span><span class="o">=</span> <span class="mi">9</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">minimum</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">pixels</span><span class="p">,</span>  <span class="n">of</span> <span class="n">cluster</span> <span class="n">to</span> <span class="n">deblend</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">attr_dbs_eps</span>   <span class="n">value</span><span class="o">=</span> <span class="mf">1.0</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">eps</span> <span class="k">for</span> <span class="n">dbscan</span> <span class="n">of</span> <span class="n">attractors</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">attr_dbs_K</span>   <span class="n">value</span><span class="o">=</span> <span class="mf">4.0</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">K</span> <span class="k">for</span> <span class="n">dbscan</span> <span class="n">of</span> <span class="n">attractors</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">validate_children</span>   <span class="n">value</span><span class="o">=</span> <span class="k">False</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">plot</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">children_min_frac_integ_flux</span>   <span class="n">value</span><span class="o">=</span> <span class="mf">0.1</span>   <span class="n">doc</span><span class="o">=</span>  <span class="nb">min</span><span class="o">.</span> <span class="n">ratio</span> <span class="n">of</span> <span class="n">children</span> <span class="n">ot</span> <span class="n">parent</span> <span class="n">integ</span><span class="o">.</span> <span class="n">flux</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">children_min_frac_peak_flux</span>   <span class="n">value</span><span class="o">=</span> <span class="mf">0.1</span>   <span class="n">doc</span><span class="o">=</span>  <span class="nb">min</span><span class="o">.</span> <span class="n">ratio</span> <span class="n">of</span> <span class="n">children</span> <span class="n">ot</span> <span class="n">parent</span> <span class="n">peak</span> <span class="n">flux</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">children_compact_frac_size</span>   <span class="n">value</span><span class="o">=</span> <span class="mf">0.1</span>   <span class="n">doc</span><span class="o">=</span>  <span class="nb">min</span><span class="o">.</span> <span class="n">ratio</span> <span class="k">for</span> <span class="n">compact</span> <span class="n">children</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">children_ext_frac_size</span>   <span class="n">value</span><span class="o">=</span> <span class="mf">0.1</span>   <span class="n">doc</span><span class="o">=</span>  <span class="nb">min</span><span class="o">.</span> <span class="n">ratio</span> <span class="k">for</span> <span class="n">extended</span> <span class="n">children</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">verbose</span>   <span class="n">value</span><span class="o">=</span> <span class="k">False</span>   <span class="n">doc</span><span class="o">=</span>  <span class="nb">set</span>  <span class="n">verbosity</span> <span class="n">on</span>
+<span class="o">|</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">plot</span>   <span class="n">value</span><span class="o">=</span> <span class="k">False</span>   <span class="n">doc</span><span class="o">=</span>  <span class="n">plot</span>
+<span class="o">+--</span><span class="n">mex</span> <span class="n">group</span><span class="p">:</span> <span class="n">R_max_method</span>
+   <span class="n">x</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">R_max_frac</span>   <span class="n">value</span><span class="o">=</span> <span class="k">None</span>   <span class="n">doc</span><span class="o">=</span>  <span class="nb">max</span> <span class="n">kernel</span> <span class="n">influence</span> <span class="n">radius</span> <span class="k">as</span> <span class="n">fraction</span> <span class="n">of</span> <span class="n">parent</span> <span class="n">cluster</span> <span class="n">r_max</span>
+   <span class="n">x</span> <span class="n">par_name</span><span class="o">=</span> <span class="n">R_max_kern_th</span>   <span class="n">value</span><span class="o">=</span> <span class="k">None</span>   <span class="n">doc</span><span class="o">=</span>  <span class="nb">max</span> <span class="n">kernel</span> <span class="n">influence</span> <span class="n">radius</span> <span class="n">when</span> <span class="n">kernel</span><span class="o">&lt;=</span><span class="n">th</span> <span class="k">with</span> <span class="n">th</span> <span class="n">relative</span> <span class="n">to</span> <span class="n">kenerl</span> <span class="nb">max</span> <span class="n">value</span>
+<span class="o">|-------------------------------------------------------</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span class="n">deblendig</span><span class="o">.</span><span class="n">set_par</span><span class="p">(</span><span class="s">&#39;do_denclue_deblending&#39;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
+<span class="n">deblendig</span><span class="o">.</span><span class="n">set_par</span><span class="p">(</span><span class="s">&#39;gl_downsampling&#39;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="k">False</span><span class="p">)</span>
+<span class="n">deblendig</span><span class="o">.</span><span class="n">set_par</span><span class="p">(</span><span class="s">&#39;h_frac&#39;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">deblendig</span><span class="o">.</span><span class="n">set_par</span><span class="p">(</span><span class="s">&#39;plot&#39;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
+<span class="n">deblendig</span><span class="o">.</span><span class="n">set_par</span><span class="p">(</span><span class="s">&#39;verbose&#39;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span class="n">deblendig</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">clusters_list</span><span class="o">=</span><span class="n">clusters_list</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">|------------------------------</span>
+<span class="o">|</span> <span class="n">Task</span><span class="p">:</span> <span class="n">denclue_deblending</span> <span class="n">Start</span>
+<span class="o">|------------------------------</span>
+<span class="o">|-</span>
+<span class="o">|</span><span class="n">debelnding</span> <span class="k">for</span> <span class="n">cluster</span> <span class="mi">0</span> <span class="n">r_cluter</span> <span class="mf">9.10082669322</span> <span class="n">r_max</span> <span class="mf">16.8050178165</span>
+<span class="o">|</span><span class="n">eps</span> <span class="mf">0.01</span>
+<span class="o">|</span><span class="n">h</span> <span class="mf">1.91110876276</span>
+<span class="o">|</span><span class="n">denclue</span>
+<span class="o">|</span><span class="n">R_max</span> <span class="p">[</span> <span class="mf">9.19206967</span><span class="p">]</span>
+<span class="o">|</span><span class="n">running</span> <span class="n">denclue</span> <span class="k">with</span>
+<span class="o">|</span><span class="n">kernel</span>  <span class="n">gauss</span>
+<span class="o">|</span><span class="n">h</span>  <span class="mf">1.91110876276</span>
+<span class="o">|</span><span class="n">eps</span> <span class="mf">0.01</span>
+<span class="o">|</span><span class="n">R_max</span> <span class="nb">set</span> <span class="n">to</span> <span class="p">[</span> <span class="mf">9.19206967</span><span class="p">]</span>
+<span class="o">|</span> <span class="n">find</span> <span class="n">attractors</span>
+<span class="o">|</span><span class="n">position</span> <span class="n">array</span> <span class="n">size</span>  <span class="mi">470</span>
+<span class="o">|</span><span class="n">target</span> <span class="n">position</span> <span class="n">array</span> <span class="n">size</span>  <span class="mi">470</span>
+<span class="o">|</span><span class="n">comp</span><span class="o">.</span> <span class="n">time</span> <span class="mf">0.351810216904</span>
+<span class="o">|</span><span class="n">denclue</span> <span class="n">done</span>
+<span class="o">|</span><span class="n">dbs</span> <span class="n">cl</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">x_c</span><span class="o">=</span><span class="mf">16.478850</span><span class="p">,</span> <span class="n">y_c</span><span class="o">=</span><span class="mf">13.835445</span>
+<span class="o">|</span><span class="n">dbs</span> <span class="n">cl</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">x_c</span><span class="o">=</span><span class="mf">6.880669</span><span class="p">,</span> <span class="n">y_c</span><span class="o">=</span><span class="mf">21.850691</span>
+</pre></div>
+</div>
+<img alt="../../../_images/denclue_deblending_example_13_1.png" src="../../../_images/denclue_deblending_example_13_1.png" />
+<div class="highlight-default"><div class="highlight"><pre><span class="o">|</span> <span class="n">analysing</span> <span class="n">sub</span> <span class="n">clusters</span> <span class="k">for</span> <span class="n">parent</span> <span class="n">cluster</span> <span class="mi">0</span>
+<span class="o">-&gt;</span><span class="n">ID</span><span class="p">,</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mf">70.0</span> <span class="mf">57.0</span>
+<span class="o">-&gt;</span><span class="n">ID</span><span class="p">,</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mf">56.0</span> <span class="mf">57.0</span>
+<span class="o">|</span> <span class="n">children</span>  <span class="n">clusters</span> <span class="n">validated</span> <span class="mi">2</span>
+<span class="o">|-</span>
+</pre></div>
+</div>
+<img alt="../../../_images/denclue_deblending_example_13_3.png" src="../../../_images/denclue_deblending_example_13_3.png" />
+<div class="highlight-default"><div class="highlight"><pre><span class="o">|-</span>
+<span class="o">|</span><span class="n">debelnding</span> <span class="k">for</span> <span class="n">cluster</span> <span class="mi">1</span> <span class="n">r_cluter</span> <span class="mf">4.66908942296</span> <span class="n">r_max</span> <span class="mf">8.69104489385</span>
+<span class="o">|</span><span class="n">eps</span> <span class="mf">0.01</span>
+<span class="o">|</span><span class="n">h</span> <span class="mf">1.0</span>
+<span class="o">|</span><span class="n">denclue</span>
+<span class="o">|</span><span class="n">R_max</span> <span class="p">[</span> <span class="mf">4.80980981</span><span class="p">]</span>
+<span class="o">|</span><span class="n">running</span> <span class="n">denclue</span> <span class="k">with</span>
+<span class="o">|</span><span class="n">kernel</span>  <span class="n">gauss</span>
+<span class="o">|</span><span class="n">h</span>  <span class="mf">1.0</span>
+<span class="o">|</span><span class="n">eps</span> <span class="mf">0.01</span>
+<span class="o">|</span><span class="n">R_max</span> <span class="nb">set</span> <span class="n">to</span> <span class="p">[</span> <span class="mf">4.80980981</span><span class="p">]</span>
+<span class="o">|</span> <span class="n">find</span> <span class="n">attractors</span>
+<span class="o">|</span><span class="n">position</span> <span class="n">array</span> <span class="n">size</span>  <span class="mi">101</span>
+<span class="o">|</span><span class="n">target</span> <span class="n">position</span> <span class="n">array</span> <span class="n">size</span>  <span class="mi">101</span>
+<span class="o">|</span><span class="n">comp</span><span class="o">.</span> <span class="n">time</span> <span class="mf">0.204625844955</span>
+<span class="o">|</span><span class="n">denclue</span> <span class="n">done</span>
+<span class="o">|</span><span class="n">dbs</span> <span class="n">cl</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">x_c</span><span class="o">=</span><span class="mf">7.587454</span><span class="p">,</span> <span class="n">y_c</span><span class="o">=</span><span class="mf">8.303403</span>
+</pre></div>
+</div>
+<img alt="../../../_images/denclue_deblending_example_13_5.png" src="../../../_images/denclue_deblending_example_13_5.png" />
+<div class="highlight-default"><div class="highlight"><pre><span class="o">|-</span>
+</pre></div>
+</div>
+<img alt="../../../_images/denclue_deblending_example_13_7.png" src="../../../_images/denclue_deblending_example_13_7.png" />
+<div class="highlight-default"><div class="highlight"><pre><span class="o">|-</span>
+<span class="o">|</span><span class="n">debelnding</span> <span class="k">for</span> <span class="n">cluster</span> <span class="mi">2</span> <span class="n">r_cluter</span> <span class="mf">2.40607019623</span> <span class="n">r_max</span> <span class="mf">4.11627970058</span>
+<span class="o">|</span><span class="n">eps</span> <span class="mf">0.01</span>
+<span class="o">|</span><span class="n">h</span> <span class="mf">1.0</span>
+<span class="o">|</span><span class="n">denclue</span>
+<span class="o">|</span><span class="n">R_max</span> <span class="p">[</span> <span class="mf">4.80980981</span><span class="p">]</span>
+<span class="o">|</span><span class="n">running</span> <span class="n">denclue</span> <span class="k">with</span>
+<span class="o">|</span><span class="n">kernel</span>  <span class="n">gauss</span>
+<span class="o">|</span><span class="n">h</span>  <span class="mf">1.0</span>
+<span class="o">|</span><span class="n">eps</span> <span class="mf">0.01</span>
+<span class="o">|</span><span class="n">R_max</span> <span class="nb">set</span> <span class="n">to</span> <span class="p">[</span> <span class="mf">4.80980981</span><span class="p">]</span>
+<span class="o">|</span> <span class="n">find</span> <span class="n">attractors</span>
+<span class="o">|</span><span class="n">position</span> <span class="n">array</span> <span class="n">size</span>  <span class="mi">27</span>
+<span class="o">|</span><span class="n">target</span> <span class="n">position</span> <span class="n">array</span> <span class="n">size</span>  <span class="mi">27</span>
+<span class="o">|</span><span class="n">comp</span><span class="o">.</span> <span class="n">time</span> <span class="mf">0.026636838913</span>
+<span class="o">|</span><span class="n">denclue</span> <span class="n">done</span>
+<span class="o">|</span><span class="n">dbs</span> <span class="n">cl</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">x_c</span><span class="o">=</span><span class="mf">3.068918</span><span class="p">,</span> <span class="n">y_c</span><span class="o">=</span><span class="mf">4.376034</span>
+</pre></div>
+</div>
+<img alt="../../../_images/denclue_deblending_example_13_9.png" src="../../../_images/denclue_deblending_example_13_9.png" />
+<div class="highlight-default"><div class="highlight"><pre><span class="o">|-</span>
+</pre></div>
+</div>
+<img alt="../../../_images/denclue_deblending_example_13_11.png" src="../../../_images/denclue_deblending_example_13_11.png" />
+<div class="highlight-default"><div class="highlight"><pre><span class="o">|</span><span class="n">N</span> <span class="n">final</span> <span class="n">clusters</span><span class="o">=</span> <span class="mi">4</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span class="p">[</span><span class="o">&lt;</span><span class="n">asterism</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">clustering</span><span class="o">.</span><span class="n">source_cluster</span><span class="o">.</span><span class="n">SourceCluster2Dim</span> <span class="n">at</span> <span class="mh">0x117a83850</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="o">&lt;</span><span class="n">asterism</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">clustering</span><span class="o">.</span><span class="n">source_cluster</span><span class="o">.</span><span class="n">SourceCluster2Dim</span> <span class="n">at</span> <span class="mh">0x11705cf10</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="o">&lt;</span><span class="n">asterism</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">clustering</span><span class="o">.</span><span class="n">source_cluster</span><span class="o">.</span><span class="n">SourceCluster2Dim</span> <span class="n">at</span> <span class="mh">0x116804290</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="o">&lt;</span><span class="n">asterism</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">clustering</span><span class="o">.</span><span class="n">source_cluster</span><span class="o">.</span><span class="n">SourceCluster2Dim</span> <span class="n">at</span> <span class="mh">0x117796450</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="accessing-directly-the-do-denclue-deblending">
+<h1>Accessing directly the do_denclue_deblending()<a class="headerlink" href="#accessing-directly-the-do-denclue-deblending" title="Permalink to this headline">¶</a></h1>
+<div class="code python highlight-default"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">asterism</span> <span class="k">import</span> <span class="n">data_dir</span>
+<span class="kn">from</span> <span class="nn">asterism.core.image_manager.image</span> <span class="k">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">asterism.analysis_tasks.source_detection.background_estimation.background_estimation</span> <span class="k">import</span> <span class="n">set_thresh</span>
+<span class="kn">from</span> <span class="nn">asterism.analysis_tasks.source_detection.image_segmentation.image_segmentation</span> <span class="k">import</span> <span class="n">do_image_segmentation</span>
+<span class="kn">from</span> <span class="nn">asterism.analysis_tasks.source_detection.deblending.denclue_deblending</span> <span class="k">import</span> <span class="n">do_denclue_deblending</span>
+
+<span class="n">image</span><span class="o">=</span><span class="n">Image</span><span class="o">.</span><span class="n">from_fits_file</span><span class="p">(</span><span class="n">data_dir</span><span class="o">+</span><span class="s">&#39;/deblending_img1.fits&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span class="n">bkg_threshold</span><span class="p">,</span><span class="n">bkg_mode</span><span class="p">,</span><span class="n">bkg_sig</span><span class="o">=</span><span class="n">set_thresh</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">sub_block_frac_size</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">skewness_range</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">plot</span><span class="o">=</span><span class="k">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">|</span><span class="n">setting</span> <span class="n">threshold</span>
+<span class="o">|</span><span class="n">image</span> <span class="n">flux</span> <span class="nb">min</span> <span class="mf">0.0</span> <span class="n">image</span> <span class="n">flux</span> <span class="nb">max</span> <span class="mf">9.71633911133</span>
+<span class="o">|</span><span class="n">using</span> <span class="n">sub</span> <span class="n">blocks</span>
+<span class="o">|</span><span class="n">sub</span> <span class="n">blocks</span> <span class="n">grid</span> <span class="n">built</span>
+<span class="o">|</span><span class="n">sub</span> <span class="n">block</span> <span class="n">side</span> <span class="mi">31</span>
+<span class="o">|</span><span class="n">sub</span> <span class="n">blocks</span> <span class="n">Num</span> <span class="mi">9</span>
+<span class="o">|-</span>
+<span class="o">|</span><span class="n">skewness</span> <span class="n">minimization</span> <span class="mi">961</span>
+<span class="o">|</span><span class="n">flux</span> <span class="n">bkg</span> <span class="n">array</span>  <span class="nb">min</span><span class="p">,</span><span class="nb">max</span> <span class="mf">0.0886840820312</span> <span class="mf">0.458374023438</span>
+<span class="o">|</span><span class="n">minimization</span> <span class="n">of</span> <span class="o">|</span><span class="n">skewness</span><span class="o">|</span>
+<span class="o">|</span><span class="n">initial</span> <span class="n">skewness</span> <span class="mf">0.160161054539</span>
+<span class="o">|</span><span class="n">initial</span> <span class="n">mean</span> <span class="mf">0.250037394255</span>
+<span class="o">|</span><span class="n">initial</span> <span class="n">std</span> <span class="mf">0.0593948364258</span>
+<span class="o">|</span><span class="nb">range</span> <span class="n">of</span> <span class="n">threshold</span> <span class="k">for</span> <span class="n">skewness</span> <span class="n">minimization</span> <span class="n">th_skew</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.244098</span><span class="p">,</span><span class="mf">0.255977</span><span class="p">]</span>
+<span class="o">|</span><span class="n">start</span> <span class="n">size</span><span class="p">:</span>  <span class="mi">961</span> <span class="mf">0.250037394255</span> <span class="mf">0.0593948364258</span> <span class="mf">0.160161054539</span> <span class="mi">961</span>
+<span class="o">|</span><span class="nb">min</span> <span class="n">skewness</span><span class="o">=</span><span class="mf">0.000577</span> <span class="k">for</span> <span class="n">th_skew</span><span class="o">=</span><span class="mf">0.062649</span>
+<span class="o">|</span><span class="n">size</span> <span class="n">ratio</span><span class="o">=</span><span class="mf">0.706556</span><span class="p">,</span> <span class="n">min_size</span> <span class="n">ratio</span><span class="o">=</span><span class="mf">0.100000</span>
+<span class="o">|-</span>
+<span class="o">|</span><span class="n">bkg_lvl</span> <span class="mf">0.248482923269</span>
+<span class="o">|</span><span class="n">bkg_std</span> <span class="mf">0.0411071777344</span>
+<span class="o">|</span><span class="n">bkg_th</span> <span class="mf">0.371804456472</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span class="n">clusters_list</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">selected_coords</span><span class="o">=</span><span class="n">do_image_segmentation</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">bkg_threshold</span><span class="p">,</span><span class="n">K</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">(</span><span class="mf">1.5</span><span class="p">),</span><span class="n">K_pix</span><span class="o">=</span><span class="k">True</span><span class="p">,</span><span class="n">plot_dbscan</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">|</span><span class="n">method</span> <span class="n">dbscan_binned</span>
+<span class="o">|</span><span class="n">K</span><span class="p">,</span> <span class="mf">0.557706684708</span>
+<span class="o">|</span><span class="n">bkg</span> <span class="n">th</span> <span class="mf">0.371804456472</span>
+</pre></div>
+</div>
+<img alt="../../../_images/denclue_deblending_example_17_1.png" src="../../../_images/denclue_deblending_example_17_1.png" />
+<div class="section" id="denclue-deblendings">
+<h2>denclue deblendings<a class="headerlink" href="#denclue-deblendings" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-default"><div class="highlight"><pre><span class="n">do_denclue_deblending</span><span class="p">(</span><span class="n">clusters_list</span><span class="o">=</span><span class="n">clusters_list</span><span class="p">,</span><span class="n">do_denclue_deblending</span><span class="o">=</span><span class="k">True</span><span class="p">,</span><span class="n">gl_downsampling</span><span class="o">=</span><span class="k">True</span><span class="p">,</span><span class="n">h_frac</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">plot</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">|-</span>
+<span class="o">|</span><span class="n">debelnding</span> <span class="k">for</span> <span class="n">cluster</span> <span class="mi">0</span> <span class="n">r_cluter</span> <span class="mf">9.10082669322</span> <span class="n">r_max</span> <span class="mf">16.8050178165</span>
+<span class="o">|</span><span class="n">downsampling</span> <span class="n">start</span>
+<span class="o">|</span><span class="n">local</span> <span class="n">maxima</span> <span class="p">[[</span><span class="mi">16</span> <span class="mi">15</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">7</span> <span class="mi">22</span><span class="p">]]</span>
+<span class="o">|</span><span class="n">downsamplig</span> <span class="n">done</span>
+<span class="o">|</span><span class="n">denclue</span>
+<span class="o">|</span><span class="n">R_max</span> <span class="mf">9.10082669322</span>
+<span class="o">|</span><span class="n">comp</span><span class="o">.</span> <span class="n">time</span> <span class="mf">0.203984022141</span>
+<span class="o">|</span><span class="n">denclue</span> <span class="n">done</span>
+<span class="o">|</span><span class="n">dbs</span> <span class="n">cl</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">x_c</span><span class="o">=</span><span class="mf">15.725288</span><span class="p">,</span> <span class="n">y_c</span><span class="o">=</span><span class="mf">13.834126</span>
+<span class="o">|</span><span class="n">dbs</span> <span class="n">cl</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">x_c</span><span class="o">=</span><span class="mf">7.494492</span><span class="p">,</span> <span class="n">y_c</span><span class="o">=</span><span class="mf">21.850731</span>
+</pre></div>
+</div>
+<img alt="../../../_images/denclue_deblending_example_19_1.png" src="../../../_images/denclue_deblending_example_19_1.png" />
+<div class="highlight-default"><div class="highlight"><pre><span class="o">-&gt;</span><span class="n">ID</span><span class="p">,</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mf">69.0</span> <span class="mf">57.0</span>
+<span class="o">-&gt;</span><span class="n">ID</span><span class="p">,</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mf">70.0</span> <span class="mf">56.0</span>
+<span class="o">|</span> <span class="n">children</span>  <span class="n">clusters</span> <span class="n">validated</span> <span class="mi">2</span>
+<span class="o">|-</span>
+</pre></div>
+</div>
+<img alt="../../../_images/denclue_deblending_example_19_3.png" src="../../../_images/denclue_deblending_example_19_3.png" />
+<div class="highlight-default"><div class="highlight"><pre><span class="o">|-</span>
+<span class="o">|</span><span class="n">debelnding</span> <span class="k">for</span> <span class="n">cluster</span> <span class="mi">1</span> <span class="n">r_cluter</span> <span class="mf">4.66908942296</span> <span class="n">r_max</span> <span class="mf">8.69104489385</span>
+<span class="o">|</span><span class="n">downsampling</span> <span class="n">start</span>
+<span class="o">|</span><span class="n">local</span> <span class="n">maxima</span> <span class="p">[[</span> <span class="mi">7</span>  <span class="mi">9</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">5</span> <span class="mi">14</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">10</span>  <span class="mi">2</span><span class="p">]]</span>
+<span class="o">|</span><span class="n">downsamplig</span> <span class="n">done</span>
+<span class="o">|</span><span class="n">denclue</span>
+<span class="o">|</span><span class="n">R_max</span> <span class="mf">4.66908942296</span>
+<span class="o">|</span><span class="n">comp</span><span class="o">.</span> <span class="n">time</span> <span class="mf">0.0675599575043</span>
+<span class="o">|</span><span class="n">denclue</span> <span class="n">done</span>
+<span class="o">|</span><span class="n">dbs</span> <span class="n">cl</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">x_c</span><span class="o">=</span><span class="mf">6.874224</span><span class="p">,</span> <span class="n">y_c</span><span class="o">=</span><span class="mf">8.803077</span>
+<span class="o">|</span><span class="n">dbs</span> <span class="n">cl</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">x_c</span><span class="o">=</span><span class="mf">11.464534</span><span class="p">,</span> <span class="n">y_c</span><span class="o">=</span><span class="mf">5.122089</span>
+</pre></div>
+</div>
+<img alt="../../../_images/denclue_deblending_example_19_5.png" src="../../../_images/denclue_deblending_example_19_5.png" />
+<div class="highlight-default"><div class="highlight"><pre><span class="o">-&gt;</span><span class="n">ID</span><span class="p">,</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mf">49.0</span> <span class="mf">76.0</span>
+<span class="o">-&gt;</span><span class="n">ID</span><span class="p">,</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mf">50.0</span> <span class="mf">69.0</span>
+<span class="o">|</span> <span class="n">children</span>  <span class="n">clusters</span> <span class="n">validated</span> <span class="mi">2</span>
+<span class="o">|-</span>
+</pre></div>
+</div>
+<img alt="../../../_images/denclue_deblending_example_19_7.png" src="../../../_images/denclue_deblending_example_19_7.png" />
+<div class="highlight-default"><div class="highlight"><pre><span class="o">|-</span>
+<span class="o">|</span><span class="n">debelnding</span> <span class="k">for</span> <span class="n">cluster</span> <span class="mi">2</span> <span class="n">r_cluter</span> <span class="mf">2.40607019623</span> <span class="n">r_max</span> <span class="mf">4.11627970058</span>
+<span class="o">|</span><span class="n">downsampling</span> <span class="n">start</span>
+<span class="o">|</span><span class="n">local</span> <span class="n">maxima</span> <span class="p">[[</span><span class="mi">3</span> <span class="mi">4</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">1</span> <span class="mi">8</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">2</span> <span class="mi">6</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">5</span> <span class="mi">6</span><span class="p">]]</span>
+<span class="o">|</span><span class="n">downsamplig</span> <span class="n">done</span>
+<span class="o">|</span><span class="n">denclue</span>
+<span class="o">|</span><span class="n">R_max</span> <span class="mf">2.40607019623</span>
+<span class="o">|</span><span class="n">comp</span><span class="o">.</span> <span class="n">time</span> <span class="mf">0.00781488418579</span>
+<span class="o">|</span><span class="n">denclue</span> <span class="n">done</span>
+<span class="o">|</span><span class="n">dbs</span> <span class="n">cl</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">x_c</span><span class="o">=</span><span class="mf">3.434386</span><span class="p">,</span> <span class="n">y_c</span><span class="o">=</span><span class="mf">3.820863</span>
+</pre></div>
+</div>
+<img alt="../../../_images/denclue_deblending_example_19_9.png" src="../../../_images/denclue_deblending_example_19_9.png" />
+<div class="highlight-default"><div class="highlight"><pre><span class="o">|-</span>
+</pre></div>
+</div>
+<img alt="../../../_images/denclue_deblending_example_19_11.png" src="../../../_images/denclue_deblending_example_19_11.png" />
+<div class="highlight-default"><div class="highlight"><pre><span class="o">|</span><span class="n">N</span> <span class="n">final</span> <span class="n">clusters</span><span class="o">=</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span class="p">[</span><span class="o">&lt;</span><span class="n">asterism</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">clustering</span><span class="o">.</span><span class="n">source_cluster</span><span class="o">.</span><span class="n">SourceCluster2Dim</span> <span class="n">at</span> <span class="mh">0x1177a5a90</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="o">&lt;</span><span class="n">asterism</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">clustering</span><span class="o">.</span><span class="n">source_cluster</span><span class="o">.</span><span class="n">SourceCluster2Dim</span> <span class="n">at</span> <span class="mh">0x1181e9190</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="o">&lt;</span><span class="n">asterism</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">clustering</span><span class="o">.</span><span class="n">source_cluster</span><span class="o">.</span><span class="n">SourceCluster2Dim</span> <span class="n">at</span> <span class="mh">0x1046ddfd0</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="o">&lt;</span><span class="n">asterism</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">clustering</span><span class="o">.</span><span class="n">source_cluster</span><span class="o">.</span><span class="n">SourceCluster2Dim</span> <span class="n">at</span> <span class="mh">0x118a28d10</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="o">&lt;</span><span class="n">asterism</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">clustering</span><span class="o">.</span><span class="n">source_cluster</span><span class="o">.</span><span class="n">SourceCluster2Dim</span> <span class="n">at</span> <span class="mh">0x117694350</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+         
+<div class="col-md-3 hidden-xs" id="sidebar-wrapper">
+  <div class="sidebar hidden-xs" role="navigation" aria-label="main navigation">
+    <p class="logo"><a href="../../../index.html">
+      <img class="logo" src="../../../_static/head.png" alt="Logo"/>
+    </a></p>
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Accessing through the Task class</a><ul>
+<li><a class="reference internal" href="#loading-image">loading image</a></li>
+<li><a class="reference internal" href="#bkg-estimation">bkg estimation</a></li>
+<li><a class="reference internal" href="#image-segmenetation">image segmenetation</a></li>
+<li><a class="reference internal" href="#denclue-deblending">denclue deblending</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#accessing-directly-the-do-denclue-deblending">Accessing directly the do_denclue_deblending()</a><ul>
+<li><a class="reference internal" href="#denclue-deblendings">denclue deblendings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="denclue_deblending.html"
+                        title="previous chapter">DoDENCLUEDeblending</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="denclue_watershed_deblending.html"
+                        title="next chapter">DoDENCLUEWatershedDeblending</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/user_documentation/analysis_tasks/source_detection/denclue_deblending_example.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" role="search">
+  <h3>Quick search</h3>
+  <form class="search form-inline" action="../../../search.html" method="get">
+      <div class="input-append input-group">
+        <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+        <span class="input-group-btn">
+        <input type="submit" class="btn" value="Go" />
+        </span>
+      </div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+  </div>
+</div> 
+        
+      </div><!-- /row -->
+
+      <!-- row -->
+      <div class="row footer-relbar">
+<div id="navbar-related" class=" related navbar navbar-default" role="navigation" aria-label="related navigation">
+  <div class="navbar-inner">
+    <ul class="nav navbar-nav ">
+        <li><a href="../../../index.html">asterism 1.0.a documentation</a></li>
+    </ul>
+<ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
+      
+        <li><a href="denclue_deblending.html" title="DoDENCLUEDeblending" >previous</a></li>
+        <li><a href="denclue_watershed_deblending.html" title="DoDENCLUEWatershedDeblending" >next</a></li>
+        <li><a href="../../../genindex.html" title="General Index" >index</a></li>
+        <li><a href="../../user_documentation.html" >ASTErIsM User Documentation</a></li>
+        <li><a href="../index.html" >ASTErIsM analysis tasks</a></li>
+        <li><a href="denclue_deblending.html" >DoDENCLUEDeblending</a></li>
+        <li><a href="#">top</a></li> 
+      
+    </ul>
+  </div>
+</div>
+      </div><!-- /row -->
+
+      <!-- footer -->
+      <footer role="contentinfo">
+          &copy; Copyright 2016, andrea tramacere.
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.8.
+      </footer>
+      <!-- /footer -->
+
+    </div>
+    <!-- /container -->
+
+  </body>
+</html>

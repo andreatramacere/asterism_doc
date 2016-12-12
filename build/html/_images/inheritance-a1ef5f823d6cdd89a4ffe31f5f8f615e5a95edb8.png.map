@@ -1,4 +1,0 @@
-<map id="inheritance0ac27809d9" name="inheritance0ac27809d9">
-<area shape="rect" id="node1" href="#asterism.analysis_processes.source_detection.DoSrcDetectionProcess" target="_top" title=":class:`.AnalysisProcess` derived class that handles &#160;the tasks in the porcess:" alt="" coords="389,4,763,25"/>
-<area shape="rect" id="node2" href="asterism.pipeline_manager.analysis_processes.html#asterism.pipeline_manager.analysis_processes.AnalysisProcess" target="_top" title="This class is a base class to &#160;handle Processes. Processes are combinations of :class:`.AnalysisTask`." alt="" coords="5,4,347,25"/>
-</map>

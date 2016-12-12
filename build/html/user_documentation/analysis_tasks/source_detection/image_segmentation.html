@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    
+    <title>DoImageSegmentation &mdash; asterism 1.0.a documentation</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    
+
+<link rel="stylesheet" href="../../../_static/css/basicstrap-base.css" type="text/css" />
+<link rel="stylesheet" id="current-theme" href="../../../_static/css/bootstrap3/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" id="current-adjust-theme" type="text/css" />
+
+<link rel="stylesheet" href="../../../_static/css/font-awesome.min.css">
+
+<style type="text/css">
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+</style>
+
+<link rel="stylesheet" href="../../../_static/css/basicstrap.css" type="text/css" />
+<link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:    '../../../',
+            VERSION:     '1.0.a',
+            COLLAPSE_INDEX: false,
+            FILE_SUFFIX: '.html',
+            HAS_SOURCE:  true
+  };
+</script>
+    <script type="text/javascript" src="../../../_static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/js/bootstrap3.min.js"></script>
+<script type="text/javascript" src="../../../_static/js/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="../../../_static/js/basicstrap.js"></script>
+<script type="text/javascript">
+</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../../../index.html" />
+    <link rel="up" title="ASTErIsM analysis tasks" href="../index.html" />
+    <link rel="next" title="DoDENCLUEDeblending" href="denclue_deblending.html" />
+    <link rel="prev" title="DoSetBkgThresh" href="background_estimation.html" /> 
+  </head>
+  <body role="document">
+    <div id="navbar-top" class="navbar navbar-fixed-top navbar-default" role="navigation" aria-label="top navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../index.html">asterism 1.0.a documentation</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown visible-xs">
+                <a role="button" id="localToc" data-toggle="dropdown" data-target="#" href="#">Table Of Contents <b class="caret"></b></a>
+                <ul class="dropdown-menu localtoc sp-localtoc" role="menu" aria-labelledby="localToc">
+                <ul>
+<li><a class="reference internal" href="#">DoImageSegmentation</a><ul>
+<li><a class="reference internal" href="#algorithm">Algorithm</a></li>
+<li><a class="reference internal" href="#parameters">Parameters</a></li>
+<li><a class="reference internal" href="#conf-file-section">conf file section</a></li>
+<li><a class="reference internal" href="#accessing-through-the-task-class">Accessing through the Task class</a></li>
+<li><a class="reference internal" href="#direct-access-to-do-image-segmentation">Direct access to do_image_segmentation()</a></li>
+</ul>
+</li>
+</ul>
+
+                </ul>
+              </li>
+
+            
+              <li><a href="background_estimation.html" title="DoSetBkgThresh" accesskey="P">previous </a></li>
+              <li><a href="denclue_deblending.html" title="DoDENCLUEDeblending" accesskey="N">next </a></li>
+              <li><a href="../../../genindex.html" title="General Index" accesskey="I">index </a></li>
+              <li><a href="../../user_documentation.html" >ASTErIsM User Documentation</a></li>
+              <li><a href="../index.html" accesskey="U">ASTErIsM analysis tasks</a></li>
+            
+            <li class="visible-xs"><a href="../../../_sources/user_documentation/analysis_tasks/source_detection/image_segmentation.txt" rel="nofollow">Show Source</a></li>
+
+            <li class="visible-xs">
+                <form class="search form-search form-inline navbar-form navbar-right sp-searchbox" action="../../../search.html" method="get">
+                  <div class="input-append input-group">
+                    <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+                    <span class="input-group-btn">
+                    <input type="submit" class="btn" value="Go" />
+                    </span>
+                  </div>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </li>
+
+            
+
+          </ul>
+
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- container -->
+    <div class="container">
+
+      <!-- row -->
+      <div class="row">
+        
+        
+
+        <div class="col-md-9" id="content-wrapper">
+          <div class="document" role="main">
+            <div class="documentwrapper">
+              <div class="bodywrapper">
+                <div class="body">
+                  
+  <div class="section" id="doimagesegmentation">
+<span id="image-segmentation-task-user-guide"></span><h1>DoImageSegmentation<a class="headerlink" href="#doimagesegmentation" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#algorithm" id="id1">Algorithm</a></li>
+<li><a class="reference internal" href="#parameters" id="id2">Parameters</a></li>
+<li><a class="reference internal" href="#conf-file-section" id="id3">conf file section</a></li>
+<li><a class="reference internal" href="#accessing-through-the-task-class" id="id4">Accessing through the Task class</a></li>
+<li><a class="reference internal" href="#direct-access-to-do-image-segmentation" id="id5">Direct access to do_image_segmentation()</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="algorithm">
+<h2><a class="toc-backref" href="#id1">Algorithm</a><a class="headerlink" href="#algorithm" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="xref py py-class docutils literal"><span class="pre">ImageSegmentationTask</span></code> class implements
+the  image segmentation task. The algorithm is implemented in the <code class="xref py py-func docutils literal"><span class="pre">do_image_segmentation()</span></code> function.
+Depending on the parameters passed as input, different strategies for the image segmentation are followed.</p>
+<div class="align-center figure">
+<a class="reference internal image-reference" href="../../../_images/do_image_segmentation_alg.png"><img alt="../../../_images/do_image_segmentation_alg.png" src="../../../_images/do_image_segmentation_alg.png" style="width: 80%;" /></a>
+</div>
+</div>
+<div class="section" id="parameters">
+<h2><a class="toc-backref" href="#id2">Parameters</a><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">method</span></code> sets the segmentation method</dt>
+<dd><ul class="first last simple">
+<li>&#8216;dbscan&#8217; : the dbscan method is used</li>
+<li>&#8216;dbscan_binned&#8217; the binned dbscan method is used(default)</li>
+<li>&#8216;connected&#8217; the nearest neighbor method is used</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">bkg_threshold</span></code>: the value of estimated background threshold . All the points below this value are masked</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">dbscan_eps</span></code>: the scanning brush radius for the dbscan. (In the case of binned, it is the size of the scanning box)</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">K</span></code>: sets the segmentation threshold as <cite>K*bkg_threshold</cite></p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">K_pix</span></code>: if True,  total flux in the dbscan bursh is divided by the number of pixels in the brush, and the compared to K*bkg_threshold</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">max_image_size</span></code>:  if is not None, the image is segmented in substamps, according to <cite>bkg_threshold</cite></p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">min_sub_stamp_size</span></code>:   the minimum substamp size to perform segmentation</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">input_seg_map</span></code>: a 2dim numpy array  storing the segmentation map. In this case the segmentation will come directly from the seg_map</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">seg_map_bkg_val</span></code>: value for the bkg pixel in the seg map (default 0)</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">use_only_central_sub_stamp</span></code>: if True, only the central source is returned</p>
+</li>
+</ul>
+</div>
+<div class="section" id="conf-file-section">
+<h2><a class="toc-backref" href="#id3">conf file section</a><a class="headerlink" href="#conf-file-section" title="Permalink to this headline">¶</a></h2>
+<p>The configuration file section will read:
+.. code-block:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="p">[</span> <span class="n">task</span><span class="p">:</span> <span class="n">image_segmentation</span><span class="p">:</span> <span class="n">start</span><span class="p">]</span>
+    <span class="n">dbscan_buffer_size</span> <span class="o">=</span> <span class="k">None</span>
+    <span class="n">dbscan_eps</span> <span class="o">=</span> <span class="mf">1.5</span>
+    <span class="n">method</span> <span class="o">=</span> <span class="n">dbscan_binned</span>
+    <span class="n">verbose</span> <span class="o">=</span> <span class="k">False</span>
+    <span class="n">plot_dbscan</span> <span class="o">=</span> <span class="k">False</span>
+    <span class="n">max_image_size</span> <span class="o">=</span> <span class="mi">1000000</span>
+    <span class="n">use_only_central_sub_stamp</span> <span class="o">=</span> <span class="k">False</span>
+    <span class="n">min_sub_stamp_size</span> <span class="o">=</span> <span class="mi">25</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="mf">2.5</span>
+    <span class="n">K_pix</span> <span class="o">=</span> <span class="k">True</span>
+    <span class="n">seg_map_bkg_val</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="p">[</span> <span class="n">task</span><span class="p">:</span> <span class="n">image_segmentation</span><span class="p">:</span> <span class="n">stop</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="accessing-through-the-task-class">
+<h2><a class="toc-backref" href="#id4">Accessing through the Task class</a><a class="headerlink" href="#accessing-through-the-task-class" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">asterism</span> <span class="kn">import</span> <span class="n">data_dir</span>
+<span class="kn">from</span> <span class="nn">asterism.core.image_manager.image</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">asterism.analysis_tasks.source_detection.background_estimation.background_estimation</span> <span class="kn">import</span> <span class="n">DoSetBkgThreshTask</span>
+<span class="kn">from</span> <span class="nn">asterism.analysis_tasks.source_detection.image_segmentation.image_segmentation</span> <span class="kn">import</span> <span class="n">DoImageSegmentationTask</span>
+<span class="kn">import</span>  <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">image</span><span class="o">=</span><span class="n">Image</span><span class="o">.</span><span class="n">from_fits_file</span><span class="p">(</span><span class="n">data_dir</span><span class="o">+</span><span class="s">&#39;/galaxy.fits&#39;</span><span class="p">)</span>
+
+<span class="n">bkg_task</span><span class="o">=</span><span class="n">DoSetBkgThreshTask</span><span class="p">()</span>
+<span class="n">bkg_task</span><span class="o">.</span><span class="n">list_parameters</span><span class="p">()</span>
+<span class="n">bkg_task</span><span class="o">.</span><span class="n">set_par</span><span class="p">(</span><span class="s">&#39;plot&#39;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">bkg_task</span><span class="o">.</span><span class="n">set_par</span><span class="p">(</span><span class="s">&#39;skewness_range&#39;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">bkg_task</span><span class="o">.</span><span class="n">set_par</span><span class="p">(</span><span class="s">&#39;sub_block_frac_size&#39;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="n">bkg_threshold</span><span class="p">,</span><span class="n">bkg_mode</span><span class="p">,</span><span class="n">bkg_sig</span><span class="o">=</span><span class="n">bkg_task</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
+<span class="n">image_seg_task</span><span class="o">=</span><span class="n">DoImageSegmentationTask</span><span class="p">()</span>
+<span class="n">image_seg_task</span><span class="o">.</span><span class="n">list_parameters</span><span class="p">()</span>
+<span class="n">image_seg_task</span><span class="o">.</span><span class="n">set_par</span><span class="p">(</span><span class="s">&#39;bkg_threshold&#39;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">bkg_threshold</span><span class="p">))</span>
+<span class="n">image_seg_task</span><span class="o">.</span><span class="n">set_par</span><span class="p">(</span><span class="s">&#39;K&#39;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">image_seg_task</span><span class="o">.</span><span class="n">set_par</span><span class="p">(</span><span class="s">&#39;K_pix&#39;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">image_seg_task</span><span class="o">.</span><span class="n">set_par</span><span class="p">(</span><span class="s">&#39;plot_dbscan&#39;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">image_seg_task</span><span class="o">.</span><span class="n">list_parameters</span><span class="p">()</span>
+
+<span class="n">image_seg_task</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="direct-access-to-do-image-segmentation">
+<h2><a class="toc-backref" href="#id5">Direct access to do_image_segmentation()</a><a class="headerlink" href="#direct-access-to-do-image-segmentation" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">asterism</span> <span class="kn">import</span> <span class="n">data_dir</span>
+<span class="kn">from</span> <span class="nn">asterism.core.image_manager.image</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">asterism.analysis_tasks.source_detection.background_estimation.background_estimation</span> <span class="kn">import</span> <span class="n">set_thresh</span>
+<span class="kn">from</span> <span class="nn">asterism.analysis_tasks.source_detection.image_segmentation.image_segmentation</span> <span class="kn">import</span> <span class="n">do_image_segmentation</span>
+
+<span class="n">image</span><span class="o">=</span><span class="n">Image</span><span class="o">.</span><span class="n">from_fits_file</span><span class="p">(</span><span class="n">data_dir</span><span class="o">+</span><span class="s">&#39;/galaxy.fits&#39;</span><span class="p">)</span>
+<span class="n">bkg_threshold</span><span class="p">,</span><span class="n">bkg_mode</span><span class="p">,</span><span class="n">bkg_sig</span><span class="o">=</span><span class="n">set_thresh</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">sub_block_frac_size</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">skewness_range</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">plot</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">do_image_segmentation</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">bkg_threshold</span><span class="o">=</span><span class="n">bkg_threshold</span><span class="p">,</span><span class="n">K</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">(</span><span class="mf">1.5</span><span class="p">),</span><span class="n">K_pix</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">plot_dbscan</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+         
+<div class="col-md-3 hidden-xs" id="sidebar-wrapper">
+  <div class="sidebar hidden-xs" role="navigation" aria-label="main navigation">
+    <p class="logo"><a href="../../../index.html">
+      <img class="logo" src="../../../_static/head.png" alt="Logo"/>
+    </a></p>
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">DoImageSegmentation</a><ul>
+<li><a class="reference internal" href="#algorithm">Algorithm</a></li>
+<li><a class="reference internal" href="#parameters">Parameters</a></li>
+<li><a class="reference internal" href="#conf-file-section">conf file section</a></li>
+<li><a class="reference internal" href="#accessing-through-the-task-class">Accessing through the Task class</a></li>
+<li><a class="reference internal" href="#direct-access-to-do-image-segmentation">Direct access to do_image_segmentation()</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="background_estimation.html"
+                        title="previous chapter">DoSetBkgThresh</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="denclue_deblending.html"
+                        title="next chapter">DoDENCLUEDeblending</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/user_documentation/analysis_tasks/source_detection/image_segmentation.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" role="search">
+  <h3>Quick search</h3>
+  <form class="search form-inline" action="../../../search.html" method="get">
+      <div class="input-append input-group">
+        <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+        <span class="input-group-btn">
+        <input type="submit" class="btn" value="Go" />
+        </span>
+      </div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+  </div>
+</div> 
+        
+      </div><!-- /row -->
+
+      <!-- row -->
+      <div class="row footer-relbar">
+<div id="navbar-related" class=" related navbar navbar-default" role="navigation" aria-label="related navigation">
+  <div class="navbar-inner">
+    <ul class="nav navbar-nav ">
+        <li><a href="../../../index.html">asterism 1.0.a documentation</a></li>
+    </ul>
+<ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
+      
+        <li><a href="background_estimation.html" title="DoSetBkgThresh" >previous</a></li>
+        <li><a href="denclue_deblending.html" title="DoDENCLUEDeblending" >next</a></li>
+        <li><a href="../../../genindex.html" title="General Index" >index</a></li>
+        <li><a href="../../user_documentation.html" >ASTErIsM User Documentation</a></li>
+        <li><a href="../index.html" >ASTErIsM analysis tasks</a></li>
+        <li><a href="#">top</a></li> 
+      
+    </ul>
+  </div>
+</div>
+      </div><!-- /row -->
+
+      <!-- footer -->
+      <footer role="contentinfo">
+          &copy; Copyright 2016, andrea tramacere.
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.8.
+      </footer>
+      <!-- /footer -->
+
+    </div>
+    <!-- /container -->
+
+  </body>
+</html>

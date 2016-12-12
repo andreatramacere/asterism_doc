@@ -1,4 +1,0 @@
-<map id="inheritancea64b6ad5ed" name="inheritancea64b6ad5ed">
-<area shape="rect" id="node1" href="#asterism.analysis_processes.morphometric_feature_extraction.DoMorphometricFeaturesExtraction" target="_top" title="Derived class &#160;orchestrating the tasks" alt="" coords="329,3,764,22"/>
-<area shape="rect" id="node2" href="asterism.pipeline_manager.analysis_processes.html#asterism.pipeline_manager.analysis_processes.AnalysisProcess" target="_top" title="This class is a base class to &#160;handle Processes. Processes are combinations of :class:`.AnalysisTask`." alt="" coords="4,3,294,22"/>
-</map>

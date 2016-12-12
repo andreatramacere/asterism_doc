@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    
+    <title>DoDeblendingValidation &mdash; asterism 1.0.a documentation</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    
+
+<link rel="stylesheet" href="../../../_static/css/basicstrap-base.css" type="text/css" />
+<link rel="stylesheet" id="current-theme" href="../../../_static/css/bootstrap3/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" id="current-adjust-theme" type="text/css" />
+
+<link rel="stylesheet" href="../../../_static/css/font-awesome.min.css">
+
+<style type="text/css">
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+</style>
+
+<link rel="stylesheet" href="../../../_static/css/basicstrap.css" type="text/css" />
+<link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:    '../../../',
+            VERSION:     '1.0.a',
+            COLLAPSE_INDEX: false,
+            FILE_SUFFIX: '.html',
+            HAS_SOURCE:  true
+  };
+</script>
+    <script type="text/javascript" src="../../../_static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/js/bootstrap3.min.js"></script>
+<script type="text/javascript" src="../../../_static/js/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="../../../_static/js/basicstrap.js"></script>
+<script type="text/javascript">
+</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../../../index.html" />
+    <link rel="up" title="ASTErIsM analysis tasks" href="../index.html" />
+    <link rel="next" title="ASTErIsM analysis processes" href="../../analysis_processes/index.html" />
+    <link rel="prev" title="DoGLWDeblending" href="glw_deblending.html" /> 
+  </head>
+  <body role="document">
+    <div id="navbar-top" class="navbar navbar-fixed-top navbar-default" role="navigation" aria-label="top navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../index.html">asterism 1.0.a documentation</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown visible-xs">
+                <a role="button" id="localToc" data-toggle="dropdown" data-target="#" href="#">Table Of Contents <b class="caret"></b></a>
+                <ul class="dropdown-menu localtoc sp-localtoc" role="menu" aria-labelledby="localToc">
+                <ul>
+<li><a class="reference internal" href="#">DoDeblendingValidation</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#algorithm">Algorithm</a></li>
+<li><a class="reference internal" href="#paramters">Paramters</a></li>
+<li><a class="reference internal" href="#conf-file-section">conf file section</a></li>
+<li><a class="reference internal" href="#user-guide">User guide</a></li>
+</ul>
+</li>
+</ul>
+
+                </ul>
+              </li>
+
+            
+              <li><a href="glw_deblending.html" title="DoGLWDeblending" accesskey="P">previous </a></li>
+              <li><a href="../../analysis_processes/index.html" title="ASTErIsM analysis processes" accesskey="N">next </a></li>
+              <li><a href="../../../genindex.html" title="General Index" accesskey="I">index </a></li>
+              <li><a href="../../user_documentation.html" >ASTErIsM User Documentation</a></li>
+              <li><a href="../index.html" accesskey="U">ASTErIsM analysis tasks</a></li>
+            
+            <li class="visible-xs"><a href="../../../_sources/user_documentation/analysis_tasks/source_detection/deblending_validation.txt" rel="nofollow">Show Source</a></li>
+
+            <li class="visible-xs">
+                <form class="search form-search form-inline navbar-form navbar-right sp-searchbox" action="../../../search.html" method="get">
+                  <div class="input-append input-group">
+                    <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+                    <span class="input-group-btn">
+                    <input type="submit" class="btn" value="Go" />
+                    </span>
+                  </div>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </li>
+
+            
+
+          </ul>
+
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- container -->
+    <div class="container">
+
+      <!-- row -->
+      <div class="row">
+        
+        
+
+        <div class="col-md-9" id="content-wrapper">
+          <div class="document" role="main">
+            <div class="documentwrapper">
+              <div class="bodywrapper">
+                <div class="body">
+                  
+  <div class="section" id="dodeblendingvalidation">
+<span id="deblending-validation-task-user-guide"></span><h1>DoDeblendingValidation<a class="headerlink" href="#dodeblendingvalidation" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#introduction" id="id1">Introduction</a></li>
+<li><a class="reference internal" href="#algorithm" id="id2">Algorithm</a></li>
+<li><a class="reference internal" href="#paramters" id="id3">Paramters</a></li>
+<li><a class="reference internal" href="#conf-file-section" id="id4">conf file section</a></li>
+<li><a class="reference internal" href="#user-guide" id="id5">User guide</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="introduction">
+<h2><a class="toc-backref" href="#id1">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="xref py py-class docutils literal"><span class="pre">DoDeblendingValidationTask</span></code> class implements
+the  validation of the children clusters, i.e. the clusters produced by the partitioning of the parent cluster.</p>
+</div>
+<div class="section" id="algorithm">
+<h2><a class="toc-backref" href="#id2">Algorithm</a><a class="headerlink" href="#algorithm" title="Permalink to this headline">¶</a></h2>
+<p>The algorithm is implemented in the <code class="xref py py-func docutils literal"><span class="pre">do_deblending_validation()</span></code>   and <code class="xref py py-func docutils literal"><span class="pre">deblend_parent()</span></code>  <code class="xref py py-func docutils literal"><span class="pre">validate_children_clusters()</span></code> functions.</p>
+<div class="align-center figure">
+<a class="reference internal image-reference" href="../../../_images/deblending_validation_alg.png"><img alt="../../../_images/deblending_validation_alg.png" src="../../../_images/deblending_validation_alg.png" style="width: 100%;" /></a>
+</div>
+</div>
+<div class="section" id="paramters">
+<h2><a class="toc-backref" href="#id3">Paramters</a><a class="headerlink" href="#paramters" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">validate_children</span></code>: if  True, then the resulting denclue sub-clusters are processed by the <code class="xref py py-func docutils literal"><span class="pre">validate_children_clusters()</span></code> that validates the sub-clusters, and returns the final list of accepted subclusters.</li>
+<li><code class="docutils literal"><span class="pre">children_compact_frac_size</span></code>: fractional size in pixels, below which the children is considered <cite>compact</cite></li>
+<li><code class="docutils literal"><span class="pre">children_ext_frac_size</span></code>: fractional size in pixels, above which the children is considered <cite>extended</cite></li>
+<li><code class="docutils literal"><span class="pre">children_bright_frac_peak_flux</span></code>: fractional peak flux of the children above which the children is considered <cite>bright</cite>.(Bright sources will be validated)</li>
+<li><code class="docutils literal"><span class="pre">children_min_frac_integ_flux</span></code>: the minimum  integral flux to validate an extended source</li>
+<li><code class="docutils literal"><span class="pre">children_min_frac_peak_flux</span></code>: the minimum fractional peak flux to validate a compact source</li>
+</ul>
+</div>
+<div class="section" id="conf-file-section">
+<h2><a class="toc-backref" href="#id4">conf file section</a><a class="headerlink" href="#conf-file-section" title="Permalink to this headline">¶</a></h2>
+<p>The configuration file section will read:</p>
+<div class="highlight-none"><div class="highlight"><pre>[ task: deblending_validation: start]
+    validate_children = False
+    children_min_frac_integ_flux = 0.1
+    children_min_frac_peak_flux = 0.1
+    children_compact_frac_size = 0.1
+    children_ext_frac_size = 0.1
+    children_bright_frac_peak_flux=0.1
+[ task: deblending_validation: stop]
+</pre></div>
+</div>
+</div>
+<div class="section" id="user-guide">
+<h2><a class="toc-backref" href="#id5">User guide</a><a class="headerlink" href="#user-guide" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+         
+<div class="col-md-3 hidden-xs" id="sidebar-wrapper">
+  <div class="sidebar hidden-xs" role="navigation" aria-label="main navigation">
+    <p class="logo"><a href="../../../index.html">
+      <img class="logo" src="../../../_static/head.png" alt="Logo"/>
+    </a></p>
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">DoDeblendingValidation</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#algorithm">Algorithm</a></li>
+<li><a class="reference internal" href="#paramters">Paramters</a></li>
+<li><a class="reference internal" href="#conf-file-section">conf file section</a></li>
+<li><a class="reference internal" href="#user-guide">User guide</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="glw_deblending.html"
+                        title="previous chapter">DoGLWDeblending</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../analysis_processes/index.html"
+                        title="next chapter">ASTErIsM analysis processes</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/user_documentation/analysis_tasks/source_detection/deblending_validation.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" role="search">
+  <h3>Quick search</h3>
+  <form class="search form-inline" action="../../../search.html" method="get">
+      <div class="input-append input-group">
+        <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+        <span class="input-group-btn">
+        <input type="submit" class="btn" value="Go" />
+        </span>
+      </div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+  </div>
+</div> 
+        
+      </div><!-- /row -->
+
+      <!-- row -->
+      <div class="row footer-relbar">
+<div id="navbar-related" class=" related navbar navbar-default" role="navigation" aria-label="related navigation">
+  <div class="navbar-inner">
+    <ul class="nav navbar-nav ">
+        <li><a href="../../../index.html">asterism 1.0.a documentation</a></li>
+    </ul>
+<ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
+      
+        <li><a href="glw_deblending.html" title="DoGLWDeblending" >previous</a></li>
+        <li><a href="../../analysis_processes/index.html" title="ASTErIsM analysis processes" >next</a></li>
+        <li><a href="../../../genindex.html" title="General Index" >index</a></li>
+        <li><a href="../../user_documentation.html" >ASTErIsM User Documentation</a></li>
+        <li><a href="../index.html" >ASTErIsM analysis tasks</a></li>
+        <li><a href="#">top</a></li> 
+      
+    </ul>
+  </div>
+</div>
+      </div><!-- /row -->
+
+      <!-- footer -->
+      <footer role="contentinfo">
+          &copy; Copyright 2016, andrea tramacere.
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.8.
+      </footer>
+      <!-- /footer -->
+
+    </div>
+    <!-- /container -->
+
+  </body>
+</html>

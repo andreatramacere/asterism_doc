@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    
+    <title>src_detection process user guide &mdash; asterism 1.0.a documentation</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    
+
+<link rel="stylesheet" href="../../../_static/css/basicstrap-base.css" type="text/css" />
+<link rel="stylesheet" id="current-theme" href="../../../_static/css/bootstrap3/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" id="current-adjust-theme" type="text/css" />
+
+<link rel="stylesheet" href="../../../_static/css/font-awesome.min.css">
+
+<style type="text/css">
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+</style>
+
+<link rel="stylesheet" href="../../../_static/css/basicstrap.css" type="text/css" />
+<link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:    '../../../',
+            VERSION:     '1.0.a',
+            COLLAPSE_INDEX: false,
+            FILE_SUFFIX: '.html',
+            HAS_SOURCE:  true
+  };
+</script>
+    <script type="text/javascript" src="../../../_static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/js/bootstrap3.min.js"></script>
+<script type="text/javascript" src="../../../_static/js/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="../../../_static/js/basicstrap.js"></script>
+<script type="text/javascript">
+</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../../../index.html" />
+    <link rel="up" title="ASTErIsM analysis processes" href="../index.html" />
+    <link rel="next" title="ASTErIsM Custom pipelines" href="../../pipeline_manager/index.html" />
+    <link rel="prev" title="ASTErIsM analysis processes" href="../index.html" /> 
+  </head>
+  <body role="document">
+    <div id="navbar-top" class="navbar navbar-fixed-top navbar-default" role="navigation" aria-label="top navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../index.html">asterism 1.0.a documentation</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown visible-xs">
+                <a role="button" id="localToc" data-toggle="dropdown" data-target="#" href="#">Table Of Contents <b class="caret"></b></a>
+                <ul class="dropdown-menu localtoc sp-localtoc" role="menu" aria-labelledby="localToc">
+                <ul>
+<li><a class="reference internal" href="#">src_detection process user guide</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#tasks-userguide">Tasks userguide</a></li>
+<li><a class="reference internal" href="#processes-userguide">Processes userguide</a></li>
+<li><a class="reference internal" href="#command-line-tutorial">Command line tutorial</a></li>
+<li><a class="reference internal" href="#python-scripts-tutorial">Python scripts tutorial</a></li>
+</ul>
+</li>
+</ul>
+
+                </ul>
+              </li>
+
+            
+              <li><a href="../index.html" title="ASTErIsM analysis processes" accesskey="P">previous </a></li>
+              <li><a href="../../pipeline_manager/index.html" title="ASTErIsM Custom pipelines" accesskey="N">next </a></li>
+              <li><a href="../../../genindex.html" title="General Index" accesskey="I">index </a></li>
+              <li><a href="../../user_documentation.html" >ASTErIsM User Documentation</a></li>
+              <li><a href="../index.html" accesskey="U">ASTErIsM analysis processes</a></li>
+            
+            <li class="visible-xs"><a href="../../../_sources/user_documentation/analysis_processes/src_detection/src_detection.txt" rel="nofollow">Show Source</a></li>
+
+            <li class="visible-xs">
+                <form class="search form-search form-inline navbar-form navbar-right sp-searchbox" action="../../../search.html" method="get">
+                  <div class="input-append input-group">
+                    <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+                    <span class="input-group-btn">
+                    <input type="submit" class="btn" value="Go" />
+                    </span>
+                  </div>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </li>
+
+            
+
+          </ul>
+
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- container -->
+    <div class="container">
+
+      <!-- row -->
+      <div class="row">
+        
+        
+
+        <div class="col-md-9" id="content-wrapper">
+          <div class="document" role="main">
+            <div class="documentwrapper">
+              <div class="bodywrapper">
+                <div class="body">
+                  
+  <div class="section" id="src-detection-process-user-guide">
+<span id="id1"></span><h1>src_detection process user guide<a class="headerlink" href="#src-detection-process-user-guide" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#introduction" id="id3">Introduction</a></li>
+<li><a class="reference internal" href="#tasks-userguide" id="id4">Tasks userguide</a></li>
+<li><a class="reference internal" href="#processes-userguide" id="id5">Processes userguide</a></li>
+<li><a class="reference internal" href="#command-line-tutorial" id="id6">Command line tutorial</a></li>
+<li><a class="reference internal" href="#python-scripts-tutorial" id="id7">Python scripts tutorial</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="introduction">
+<h2><a class="toc-backref" href="#id3">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>This modules describe   the <code class="xref py py-class docutils literal"><span class="pre">DoSrcDetectionProcess</span></code>
+class used to implement the source detection process.</p>
+<dl class="docutils">
+<dt>The tasks  in the process are:</dt>
+<dd><ul class="first last simple">
+<li><code class="xref py py-class docutils literal"><span class="pre">DoImageProcessing</span></code>, Image filtering by convolution</li>
+<li><code class="xref py py-class docutils literal"><span class="pre">DoSetBkgThreshTask</span></code>, estimate of the bkg level and th.
+(<a class="reference internal" href="../../analysis_tasks/source_detection/background_estimation.html#bkg-estimation-task-user-guide"><span class="std std-ref">DoSetBkgThresh</span></a>)</li>
+<li><code class="xref py py-class docutils literal"><span class="pre">DoImageSegmentationTask</span></code>, image segmentation (dbscan,NN,seg map)
+(<a class="reference internal" href="../../analysis_tasks/source_detection/image_segmentation.html#image-segmentation-task-user-guide"><span class="std std-ref">DoImageSegmentation</span></a>)</li>
+<li><code class="xref py py-class docutils literal"><span class="pre">DoSetDeblendingMethodTask</span></code>, sets the deblending method</li>
+<li><code class="xref py py-class docutils literal"><span class="pre">DoDENCLUEDeblendingTask</span></code>, denclue-based deblending
+(<a class="reference internal" href="../../analysis_tasks/source_detection/denclue_deblending.html#denclue-deblending-task-user-guide"><span class="std std-ref">DoDENCLUEDeblending</span></a>)</li>
+<li><code class="xref py py-class docutils literal"><span class="pre">DoGLWDeblendingTask</span></code>, gauss-laplace watershed based deblending
+(<a class="reference internal" href="../../analysis_tasks/source_detection/glw_deblending.html#glw-deblending-task-user-guide"><span class="std std-ref">DoGLWDeblending</span></a>)</li>
+<li><code class="xref py py-class docutils literal"><span class="pre">DoSourceCatalogTask</span></code>, catalog production, and source filtering</li>
+<li><code class="xref py py-class docutils literal"><span class="pre">DoDeblendingValidationTask</span></code> validates the deblended products
+and produces the final list of detected source clusters (<a class="reference internal" href="../../analysis_tasks/source_detection/deblending_validation.html#deblending-validation-task-user-guide"><span class="std std-ref">DoDeblendingValidation</span></a>)</li>
+</ul>
+</dd>
+</dl>
+<p>These tasks  are orchestrated by the <code class="xref py py-func docutils literal"><span class="pre">do_src_detection_process_func()</span></code>,
+and the corresponding flow chart of the function is shown by the following diagram.</p>
+<div class="align-center figure" id="id2">
+<a class="reference internal image-reference" href="../../../_images/src_detection_process.png"><img alt="../../../_images/src_detection_process.png" src="../../../_images/src_detection_process.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-text">schematic view of the source detection pipeline flow chart</span></p>
+</div>
+<p class="rubric">Processes API</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">DoSrcDetectionProcess</span></code>([name,&nbsp;func,&nbsp;...])</td>
+<td>Class that implements the src detection process</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">do_src_detection_process_func</span></code>(process,&nbsp;image)</td>
+<td>This function implements the logic of  the algorithm for the detection :class:DoSrcDetectionProcess.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="tasks-userguide">
+<h2><a class="toc-backref" href="#id4">Tasks userguide</a><a class="headerlink" href="#tasks-userguide" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="../../analysis_tasks/source_detection/background_estimation.html#bkg-estimation-task-user-guide"><span class="std std-ref">DoSetBkgThresh</span></a></li>
+<li><a class="reference internal" href="../../analysis_tasks/source_detection/image_segmentation.html#image-segmentation-task-user-guide"><span class="std std-ref">DoImageSegmentation</span></a></li>
+<li><a class="reference internal" href="../../analysis_tasks/source_detection/denclue_deblending.html#denclue-deblending-task-user-guide"><span class="std std-ref">DoDENCLUEDeblending</span></a></li>
+<li><a class="reference internal" href="../../analysis_tasks/source_detection/glw_deblending.html#glw-deblending-task-user-guide"><span class="std std-ref">DoGLWDeblending</span></a></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="processes-userguide">
+<h2><a class="toc-backref" href="#id5">Processes userguide</a><a class="headerlink" href="#processes-userguide" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="command-line-tutorial">
+<h2><a class="toc-backref" href="#id6">Command line tutorial</a><a class="headerlink" href="#command-line-tutorial" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="python-scripts-tutorial">
+<h2><a class="toc-backref" href="#id7">Python scripts tutorial</a><a class="headerlink" href="#python-scripts-tutorial" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+         
+<div class="col-md-3 hidden-xs" id="sidebar-wrapper">
+  <div class="sidebar hidden-xs" role="navigation" aria-label="main navigation">
+    <p class="logo"><a href="../../../index.html">
+      <img class="logo" src="../../../_static/head.png" alt="Logo"/>
+    </a></p>
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">src_detection process user guide</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#tasks-userguide">Tasks userguide</a></li>
+<li><a class="reference internal" href="#processes-userguide">Processes userguide</a></li>
+<li><a class="reference internal" href="#command-line-tutorial">Command line tutorial</a></li>
+<li><a class="reference internal" href="#python-scripts-tutorial">Python scripts tutorial</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter">ASTErIsM analysis processes</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../pipeline_manager/index.html"
+                        title="next chapter">ASTErIsM Custom pipelines</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/user_documentation/analysis_processes/src_detection/src_detection.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" role="search">
+  <h3>Quick search</h3>
+  <form class="search form-inline" action="../../../search.html" method="get">
+      <div class="input-append input-group">
+        <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+        <span class="input-group-btn">
+        <input type="submit" class="btn" value="Go" />
+        </span>
+      </div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+  </div>
+</div> 
+        
+      </div><!-- /row -->
+
+      <!-- row -->
+      <div class="row footer-relbar">
+<div id="navbar-related" class=" related navbar navbar-default" role="navigation" aria-label="related navigation">
+  <div class="navbar-inner">
+    <ul class="nav navbar-nav ">
+        <li><a href="../../../index.html">asterism 1.0.a documentation</a></li>
+    </ul>
+<ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
+      
+        <li><a href="../index.html" title="ASTErIsM analysis processes" >previous</a></li>
+        <li><a href="../../pipeline_manager/index.html" title="ASTErIsM Custom pipelines" >next</a></li>
+        <li><a href="../../../genindex.html" title="General Index" >index</a></li>
+        <li><a href="../../user_documentation.html" >ASTErIsM User Documentation</a></li>
+        <li><a href="../index.html" >ASTErIsM analysis processes</a></li>
+        <li><a href="#">top</a></li> 
+      
+    </ul>
+  </div>
+</div>
+      </div><!-- /row -->
+
+      <!-- footer -->
+      <footer role="contentinfo">
+          &copy; Copyright 2016, andrea tramacere.
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.8.
+      </footer>
+      <!-- /footer -->
+
+    </div>
+    <!-- /container -->
+
+  </body>
+</html>

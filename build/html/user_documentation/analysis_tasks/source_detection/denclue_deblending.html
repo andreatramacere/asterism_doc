@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    
+    <title>DoDENCLUEDeblending &mdash; asterism 1.0.a documentation</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    
+
+<link rel="stylesheet" href="../../../_static/css/basicstrap-base.css" type="text/css" />
+<link rel="stylesheet" id="current-theme" href="../../../_static/css/bootstrap3/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" id="current-adjust-theme" type="text/css" />
+
+<link rel="stylesheet" href="../../../_static/css/font-awesome.min.css">
+
+<style type="text/css">
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+</style>
+
+<link rel="stylesheet" href="../../../_static/css/basicstrap.css" type="text/css" />
+<link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:    '../../../',
+            VERSION:     '1.0.a',
+            COLLAPSE_INDEX: false,
+            FILE_SUFFIX: '.html',
+            HAS_SOURCE:  true
+  };
+</script>
+    <script type="text/javascript" src="../../../_static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/js/bootstrap3.min.js"></script>
+<script type="text/javascript" src="../../../_static/js/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="../../../_static/js/basicstrap.js"></script>
+<script type="text/javascript">
+</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="top" title="asterism 1.0.a documentation" href="../../../index.html" />
+    <link rel="up" title="ASTErIsM analysis tasks" href="../index.html" />
+    <link rel="next" title="Accessing through the Task class" href="denclue_deblending_example.html" />
+    <link rel="prev" title="DoImageSegmentation" href="image_segmentation.html" /> 
+  </head>
+  <body role="document">
+    <div id="navbar-top" class="navbar navbar-fixed-top navbar-default" role="navigation" aria-label="top navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../index.html">asterism 1.0.a documentation</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown visible-xs">
+                <a role="button" id="localToc" data-toggle="dropdown" data-target="#" href="#">Table Of Contents <b class="caret"></b></a>
+                <ul class="dropdown-menu localtoc sp-localtoc" role="menu" aria-labelledby="localToc">
+                <ul>
+<li><a class="reference internal" href="#">DoDENCLUEDeblending</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#algorithm">Algorithm</a></li>
+<li><a class="reference internal" href="#parameters">Parameters</a></li>
+<li><a class="reference internal" href="#conf-file-section">conf file section</a></li>
+<li><a class="reference internal" href="#user-guide">User guide</a></li>
+</ul>
+</li>
+</ul>
+
+                </ul>
+              </li>
+
+            
+              <li><a href="image_segmentation.html" title="DoImageSegmentation" accesskey="P">previous </a></li>
+              <li><a href="denclue_deblending_example.html" title="Accessing through the Task class" accesskey="N">next </a></li>
+              <li><a href="../../../genindex.html" title="General Index" accesskey="I">index </a></li>
+              <li><a href="../../user_documentation.html" >ASTErIsM User Documentation</a></li>
+              <li><a href="../index.html" accesskey="U">ASTErIsM analysis tasks</a></li>
+            
+            <li class="visible-xs"><a href="../../../_sources/user_documentation/analysis_tasks/source_detection/denclue_deblending.txt" rel="nofollow">Show Source</a></li>
+
+            <li class="visible-xs">
+                <form class="search form-search form-inline navbar-form navbar-right sp-searchbox" action="../../../search.html" method="get">
+                  <div class="input-append input-group">
+                    <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+                    <span class="input-group-btn">
+                    <input type="submit" class="btn" value="Go" />
+                    </span>
+                  </div>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </li>
+
+            
+
+          </ul>
+
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- container -->
+    <div class="container">
+
+      <!-- row -->
+      <div class="row">
+        
+        
+
+        <div class="col-md-9" id="content-wrapper">
+          <div class="document" role="main">
+            <div class="documentwrapper">
+              <div class="bodywrapper">
+                <div class="body">
+                  
+  <div class="section" id="dodencluedeblending">
+<span id="denclue-deblending-task-user-guide"></span><h1>DoDENCLUEDeblending<a class="headerlink" href="#dodencluedeblending" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#introduction" id="id1">Introduction</a></li>
+<li><a class="reference internal" href="#algorithm" id="id2">Algorithm</a></li>
+<li><a class="reference internal" href="#parameters" id="id3">Parameters</a></li>
+<li><a class="reference internal" href="#conf-file-section" id="id4">conf file section</a></li>
+<li><a class="reference internal" href="#user-guide" id="id5">User guide</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="introduction">
+<h2><a class="toc-backref" href="#id1">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="xref py py-class docutils literal"><span class="pre">DoDENCLUEDeblendingTask</span></code> class implements the  Denclue-based  deblending task.
+The Denclue algorithm is used to move each pixel of the cluster to his attractor.
+The final attractors are clusered by the DBSCAN algorithm. The parent cluster is
+partitioned according to the clusters of attractors</p>
+</div>
+<div class="section" id="algorithm">
+<h2><a class="toc-backref" href="#id2">Algorithm</a><a class="headerlink" href="#algorithm" title="Permalink to this headline">¶</a></h2>
+<p>The algorithm is implemented in the <code class="xref py py-func docutils literal"><span class="pre">do_denclue_deblending()</span></code> and <code class="xref py py-func docutils literal"><span class="pre">do_denclue_of_cluster()</span></code> functions.</p>
+<div class="align-center figure">
+<a class="reference internal image-reference" href="../../../_images/denclue_debl_alg.png"><img alt="../../../_images/denclue_debl_alg.png" src="../../../_images/denclue_debl_alg.png" style="width: 100%;" /></a>
+</div>
+<ul>
+<li><dl class="first docutils">
+<dt>The <code class="xref py py-func docutils literal"><span class="pre">do_denclue_deblending()</span></code> implements the top-level algorithm for the Denclue-based deblending:</dt>
+<dd><ul class="first last simple">
+<li>Each parent cluster in the <cite>cluster_list</cite> is partitioned by the <code class="xref py py-func docutils literal"><span class="pre">do_denclue_of_cluster()</span></code> function.</li>
+<li>The number of children clusters will be equal to the number of clusters of Denclue attractors.</li>
+<li>The parent cluster with his children clusters are used to build the <code class="xref py py-class docutils literal"><span class="pre">DeblendedProducts</span></code> object</li>
+<li>a list of class:<cite>DeblendedProducts</cite> object is returned</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>The actual parent cluster deblending is  implemented  in the  <code class="xref py py-func docutils literal"><span class="pre">do_denclue_of_cluster()</span></code> function:</dt>
+<dd><ul class="first last simple">
+<li>The <code class="xref py py-func docutils literal"><span class="pre">gauss_laplace_down_sampling()</span></code> function implements the optional downsampling of the cluster image.
+It returns a downsampled array of target coordinates to use in the <code class="xref py py-class docutils literal"><span class="pre">DENCLUE</span></code> cluster partitioning.</li>
+<li>The Denclue cluster segmentation is obtained using  the <code class="xref py py-class docutils literal"><span class="pre">DENCLUE</span></code>.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="parameters">
+<h2><a class="toc-backref" href="#id3">Parameters</a><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">kernel</span></code>: sets the kernel for image convolution (gauss,uniform,logistic,etc...)</li>
+<li><code class="docutils literal"><span class="pre">h_frac</span></code>: sets the width of the kernel as a fraction of the radius of the source to deblend</li>
+<li><code class="docutils literal"><span class="pre">h_min</span></code>: kernel width obtained by <code class="docutils literal"><span class="pre">h_frac</span></code> can not be lower than <code class="docutils literal"><span class="pre">h_min</span></code></li>
+<li><code class="docutils literal"><span class="pre">h_max</span></code>: kernel width obtained by <code class="docutils literal"><span class="pre">h_frac</span></code> can not be lerger than <code class="docutils literal"><span class="pre">h_max</span></code></li>
+<li><code class="docutils literal"><span class="pre">eps</span></code>: sets the stop threshold for the recursive attractor update rule</li>
+<li><code class="docutils literal"><span class="pre">k_table_size</span></code>: if not None, the kernel is precomputed in a look-up table over a grid with size equal to  <cite>k_table_size</cite></li>
+<li><code class="docutils literal"><span class="pre">digitize_attractors</span></code>: if True, will approximate the final attractor position to the coordinate of the closest image pixel</li>
+<li><code class="docutils literal"><span class="pre">min_size</span></code>: sets the minimum size in pixels to perform a deblending</li>
+<li><code class="docutils literal"><span class="pre">gl_downsampling</span></code>:, if True, a GuassLaplace downsampling of the image is performed (to speed up the computation)</li>
+<li><code class="docutils literal"><span class="pre">mask_unchanged</span></code>: pixel whose attractors have moved to a final position with distance from the starting point less than    <code class="docutils literal"><span class="pre">mask_unchanged</span></code>
+will be ignored, and lost in the final step</li>
+</ul>
+</div>
+<div class="section" id="conf-file-section">
+<h2><a class="toc-backref" href="#id4">conf file section</a><a class="headerlink" href="#conf-file-section" title="Permalink to this headline">¶</a></h2>
+<p>The configuration file section will read:</p>
+<div class="highlight-none"><div class="highlight"><pre>[ task: denclue_deblending: start]
+    eps = 0.05
+    digitize_attractors = False
+    kernel = gauss
+    k_table_size = None
+    h_frac = 0.2
+    h_min= 1.0
+    h_max= None
+    mask_unchanged = None
+    min_size = 9
+    attr_dbs_eps = 1.0
+    attr_dbs_K = 4.0
+    verbose = True
+    plot = True
+    # mex group: R_max_method
+        R_max_frac = None
+        R_max_kern_th = None
+  [ task: denclue_deblending: stop]
+</pre></div>
+</div>
+</div>
+<div class="section" id="user-guide">
+<h2><a class="toc-backref" href="#id5">User guide</a><a class="headerlink" href="#user-guide" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="denclue_deblending_example.html">Accessing through the Task class</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="denclue_deblending_example.html#loading-image">loading image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="denclue_deblending_example.html#bkg-estimation">bkg estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="denclue_deblending_example.html#image-segmenetation">image segmenetation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="denclue_deblending_example.html#denclue-deblending">denclue deblending</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="denclue_deblending_example.html#accessing-directly-the-do-denclue-deblending">Accessing directly the do_denclue_deblending()</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="denclue_deblending_example.html#denclue-deblendings">denclue deblendings</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+         
+<div class="col-md-3 hidden-xs" id="sidebar-wrapper">
+  <div class="sidebar hidden-xs" role="navigation" aria-label="main navigation">
+    <p class="logo"><a href="../../../index.html">
+      <img class="logo" src="../../../_static/head.png" alt="Logo"/>
+    </a></p>
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">DoDENCLUEDeblending</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#algorithm">Algorithm</a></li>
+<li><a class="reference internal" href="#parameters">Parameters</a></li>
+<li><a class="reference internal" href="#conf-file-section">conf file section</a></li>
+<li><a class="reference internal" href="#user-guide">User guide</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="image_segmentation.html"
+                        title="previous chapter">DoImageSegmentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="denclue_deblending_example.html"
+                        title="next chapter">Accessing through the Task class</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/user_documentation/analysis_tasks/source_detection/denclue_deblending.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" role="search">
+  <h3>Quick search</h3>
+  <form class="search form-inline" action="../../../search.html" method="get">
+      <div class="input-append input-group">
+        <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+        <span class="input-group-btn">
+        <input type="submit" class="btn" value="Go" />
+        </span>
+      </div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+  </div>
+</div> 
+        
+      </div><!-- /row -->
+
+      <!-- row -->
+      <div class="row footer-relbar">
+<div id="navbar-related" class=" related navbar navbar-default" role="navigation" aria-label="related navigation">
+  <div class="navbar-inner">
+    <ul class="nav navbar-nav ">
+        <li><a href="../../../index.html">asterism 1.0.a documentation</a></li>
+    </ul>
+<ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
+      
+        <li><a href="image_segmentation.html" title="DoImageSegmentation" >previous</a></li>
+        <li><a href="denclue_deblending_example.html" title="Accessing through the Task class" >next</a></li>
+        <li><a href="../../../genindex.html" title="General Index" >index</a></li>
+        <li><a href="../../user_documentation.html" >ASTErIsM User Documentation</a></li>
+        <li><a href="../index.html" >ASTErIsM analysis tasks</a></li>
+        <li><a href="#">top</a></li> 
+      
+    </ul>
+  </div>
+</div>
+      </div><!-- /row -->
+
+      <!-- footer -->
+      <footer role="contentinfo">
+          &copy; Copyright 2016, andrea tramacere.
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.8.
+      </footer>
+      <!-- /footer -->
+
+    </div>
+    <!-- /container -->
+
+  </body>
+</html>

@@ -1,0 +1,43 @@
+sphinx-build -b html -d build/doctrees   source build/html
+Running Sphinx v1.2.3
+/Users/orion/astro/Programmi/Projects/Asterism_WorkDir/asterism/__init__.pyc
+loading pickled environment... done
+building [html]: targets for 0 source files that are out of date
+updating environment: 0 added, 9 changed, 0 removed
+reading sources... [ 11%] api/asterism.analysis_tasks.morphometry_features.gabor
+reading sources... [ 22%] api/asterism.core.cython_tools.denclue
+reading sources... [ 33%] api/asterism.core.machine_learning.models.classification
+reading sources... [ 44%] api/asterism.core.machine_learning.models.visualization
+reading sources... [ 55%] api/asterism.core.morphometry.non_parametric.morphology
+reading sources... [ 66%] api/asterism.core.photometry.aperture
+reading sources... [ 77%] api/asterism.core.photometry.surface_brightness_profile
+reading sources... [ 88%] api/asterism.pipeline_manager.analysis_products
+reading sources... [100%] index
+
+looking for now-outdated files... none found
+pickling environment... done
+checking consistency... done
+preparing documents... done
+writing output... [  7%] api/asterism.analysis_tasks.morphometry_features
+writing output... [ 14%] api/asterism.analysis_tasks.morphometry_features.gabor
+writing output... [ 21%] api/asterism.core.cython_tools.denclue
+writing output... [ 28%] api/asterism.core.machine_learning.models
+writing output... [ 35%] api/asterism.core.machine_learning.models.classification
+writing output... [ 42%] api/asterism.core.machine_learning.models.visualization
+writing output... [ 50%] api/asterism.core.morphometry.non_parametric
+writing output... [ 57%] api/asterism.core.morphometry.non_parametric.morphology
+writing output... [ 64%] api/asterism.core.photometry
+writing output... [ 71%] api/asterism.core.photometry.aperture
+writing output... [ 78%] api/asterism.core.photometry.surface_brightness_profile
+writing output... [ 85%] api/asterism.pipeline_manager
+writing output... [ 92%] api/asterism.pipeline_manager.analysis_products
+writing output... [100%] index
+
+writing additional files... (72 module code pages) _modules/index genindex py-modindex search
+copying static files... done
+copying extra files... done
+dumping search index... done
+dumping object inventory... done
+build succeeded, 926 warnings.
+
+Build finished. The HTML pages are in build/html.
